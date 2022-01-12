@@ -1,0 +1,9 @@
+name: OdysseyPlugin
+version: 1.0
+author: EazyEnder
+main: fr.eazyender.odyssey.OdysseyPl
+commands:
+  cgive:
+    description: Give custom item
+    permission: admin.use
+    aliases: cg
