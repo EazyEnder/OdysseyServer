@@ -13,7 +13,7 @@ public class IWand extends IItem{
 	private double[] element_boost = {1.0,1.0,1.0,1.0};
 	private int[] color = {255,255,255};
 	
-	public IWand(String name,List<String> desc, int custommodeldata, int[] color, double mana_boost, double[] element_boost) {
+	public IWand(String name, List<String> desc, int custommodeldata, int[] color, double mana_boost, double[] element_boost) {
 		super(name, desc, custommodeldata);
 		this.mana_boost = mana_boost;
 		this.element_boost = element_boost;

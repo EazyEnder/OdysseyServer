@@ -2,6 +2,7 @@ name: OdysseyPlugin
 version: 1.0
 author: EazyEnder
 main: fr.eazyender.odyssey.OdysseyPl
+api-version: 1.18
 commands:
   cgive:
     description: Give custom item

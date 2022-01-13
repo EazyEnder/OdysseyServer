@@ -194,4 +194,11 @@ public class CompassUtils implements Listener{
 	    return calcYaw;
 	  }
 
+	public static void setVisibleFalse() {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			compass_player.get(player.getUniqueId()).setVisible(false);
+			title_zone_player.get(player.getUniqueId()).setVisible(false);
+		}
+	}
+	
 }

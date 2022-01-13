@@ -18,8 +18,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
 import fr.eazyender.odyssey.gameplay.magic.spells.fire.SpellFirebolt;
@@ -34,6 +32,7 @@ public class LaunchMagicUtils implements Listener{
 	
 	
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerDraw(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
@@ -55,8 +54,6 @@ public class LaunchMagicUtils implements Listener{
 
 							@Override
 							public void run() {
-								
-							
 								if(p.isOnline() && player_runes.containsKey(p.getUniqueId())) {
 									Particle.DustOptions dustOptions = new Particle.DustOptions(Color.WHITE, 0.75F);
 									if(WandUtils.getColorOfElement(p) != null)
