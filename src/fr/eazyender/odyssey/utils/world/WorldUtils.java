@@ -14,10 +14,9 @@ public class WorldUtils {
 	public static void initWorlds() {
 		
 		//MONDE TEST
-		//Name / File name / Surface level / Biome list / Array temperature
 		Map<String, Double> temp = new HashMap<String, Double>();
 		temp.put("PLAINS", 10.0);
-		worlds.add(new IWorld("Test","world",4,null,temp));
+		worlds.add(new IWorld("Test","world",4, 0.0,true,null,temp));
 		
 	}
 	

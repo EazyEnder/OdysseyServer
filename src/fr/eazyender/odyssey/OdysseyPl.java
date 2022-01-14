@@ -4,9 +4,9 @@ package fr.eazyender.odyssey;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.eazyender.odyssey.gameplay.items.ItemCommand;
 import fr.eazyender.odyssey.gameplay.magic.MagicHandler;
 import fr.eazyender.odyssey.listener.ListenerManager;
-import fr.eazyender.odyssey.commands.CommandCustomGive;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
@@ -27,6 +27,7 @@ private static OdysseyPl odysseypl;
 	{
 		odysseypl = this;
 		PluginManager pm = getServer().getPluginManager();
+		saveDefaultConfig();
 		
 		FileTileEntity.loadFile();
 		ZoneUtils.initZoneUtils();
@@ -35,7 +36,7 @@ private static OdysseyPl odysseypl;
 		lManager = new ListenerManager(this);
 		sqlManager = new SQLManager(this);
 		MagicHandler.init(pm);
-		getCommand("cgive").setExecutor(new CommandCustomGive());
+		getCommand("item").setExecutor(new ItemCommand());
 		BlockUtils.initTileEntityLoop();
 		
 		
