@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.bukkit.util.Vector;
-
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
 import fr.eazyender.odyssey.gameplay.magic.spells.fire.SpellFirebolt;

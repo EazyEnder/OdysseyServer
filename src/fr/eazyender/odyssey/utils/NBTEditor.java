@@ -530,7 +530,7 @@ public final class NBTEditor {
 	}
 
 	// Gets the NBTTagCompound
-	private static Object getCompound( ItemStack item ) {
+	public static Object getCompound( ItemStack item ) {
 		if ( item == null ) {
 			return null;
 		}

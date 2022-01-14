@@ -8,6 +8,7 @@ import fr.eazyender.odyssey.gameplay.magic.MagicHandler;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.commands.CommandCustomGive;
 import fr.eazyender.odyssey.player.CompassUtils;
+import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.block.FileTileEntity;
 import fr.eazyender.odyssey.utils.world.WorldUtils;
@@ -19,7 +20,8 @@ public class OdysseyPl extends JavaPlugin{
 private static OdysseyPl odysseypl;
 	
 	ListenerManager lManager;
-
+	SQLManager sqlManager;
+	
 	@Override
 	public void onEnable() 
 	{
@@ -31,6 +33,7 @@ private static OdysseyPl odysseypl;
 		WorldUtils.initWorlds();
 		BlockUtils.initBlocks();
 		lManager = new ListenerManager(this);
+		sqlManager = new SQLManager(this);
 		MagicHandler.init(pm);
 		getCommand("cgive").setExecutor(new CommandCustomGive());
 		BlockUtils.initTileEntityLoop();
@@ -47,5 +50,13 @@ private static OdysseyPl odysseypl;
 	public static OdysseyPl getOdysseyPlugin() {
 		return odysseypl;
 	}
+	
+	public ListenerManager getListenerManager() {
+		return lManager;
+	}
+	public SQLManager getSqlManager() {
+		return sqlManager;
+	}
 
+	
 }

@@ -8,3 +8,7 @@ commands:
     description: Give custom item
     permission: admin.use
     aliases: cg
+  item:
+    description: Create item, give item
+    permission: admin.item
+    aliases: i
