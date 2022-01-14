@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.gameplay.items;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.entity.Player;
@@ -15,7 +16,7 @@ import fr.eazyender.odyssey.utils.NBTEditor.NBTCompound;
 public class ItemDB {
 	
 	public static void addItem(String id, ItemStack is) {
-		addItem(id, (NBTCompound) NBTEditor.getCompound(is));
+		addItem(id, (NBTCompound) NBTEditor.getItemNBTTag(is));
 	}
 
 	public static void addItem(String id, NBTCompound is) {
@@ -74,15 +75,24 @@ public class ItemDB {
 		return null;
 		
 	}
-
-	
-	public static void giveItem(Player p, String id) {
-		ItemStack item = getItem(id);
-		HashMap<Integer, ItemStack> map = p.getInventory().addItem(item);
-		if (!map.isEmpty()) {
-			p.getWorld().dropItem(p.getLocation(), item);
+	public static ArrayList<ItemStack> getItems() {
+		
+		try {
+			ArrayList<ItemStack> items = new ArrayList<>();
+		
+			String sql = "SELECT * FROM items";
+			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
+			ResultSet set = stmt.executeQuery();
+			while (set.next())
+				items.add(NBTEditor.getItemFromTag(NBTEditor.NBTCompound.fromJson(set.getString("itemNBT"))));
+			return items;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+		return null;
 		
 	}
+	
+	
 	
 }
