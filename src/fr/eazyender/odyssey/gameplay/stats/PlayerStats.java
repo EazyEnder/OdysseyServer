@@ -5,19 +5,22 @@ import java.util.HashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.utils.NBTEditor;
+
 
 public class PlayerStats {
-
+	
 	public static HashMap<Player, PlayerStats> stats = new HashMap<>();
 
+	
 	Player p;
 	HashMap<Stat, Integer> playerStats = new HashMap<>();
+	
 
 	public PlayerStats(Player p) {
 		this.p = p;
 	}
-
+	
 	public int getStat(Stat stat) {
 		if (playerStats.containsKey(stat)) {
 			return playerStats.get(stat);
@@ -26,39 +29,36 @@ public class PlayerStats {
 		}
 	}
 
+
 	public int updateStat(Stat stat) {
 		int sum = 0;
-		for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
-			if (armorPiece != null)
-				sum += ItemUtils.getStat(armorPiece, stat);
+		for(ItemStack armorPiece : p.getInventory().getArmorContents()) {
+			//sum += NBTEditor.getInt(armorPiece, stat.name());
 		}
-		if (p.getInventory().getItemInMainHand() != null)
-			sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
-
+		//sum += NBTEditor.getInt(p.getInventory().getItemInMainHand(), stat.name());
+		
 		// Adding default values to sum
-		if (stat == Stat.DAMAGE)
-			sum += 1;
-		if (stat == Stat.POWER)
-			sum += 1;
-		if (stat == Stat.HEALTH)
-			sum += 20;
-		if (stat == Stat.MP)
-			sum += 100;
-		if (stat == Stat.REGENMP)
-			sum += 25;
-		if (stat == Stat.WATER || stat == Stat.FIRE || stat == Stat.EARTH || stat == Stat.WIND || stat == Stat.LIGHT || stat == Stat.SHADOW)
-			sum += 100;
-
+		if (stat == Stat.DAMAGE) sum += 1;
+		if (stat == Stat.POWER) sum += 1;
+		if (stat == Stat.HEALTH) sum += 20;
+		if (stat == Stat.MP) sum += 100;
+		if (stat == Stat.REGENMP) sum += 25;
+		
+		
+		
+		
+		
 		playerStats.put(stat, sum);
 		CombatStats.getStats(p).updateStat(stat);
 		return sum;
 	}
 
 	public void updateStats() {
-		for (Stat stat : Stat.values()) {
+		for(Stat stat : Stat.values()) {
 			updateStat(stat);
 		}
 	}
+
 
 	public static PlayerStats getStats(Player p) {
 		if (stats.containsKey(p))
@@ -74,12 +74,19 @@ public class PlayerStats {
 		return stats;
 	}
 
+
 	public Player getPlayer() {
 		return p;
 	}
+
 
 	public HashMap<Stat, Integer> getPlayerStats() {
 		return playerStats;
 	}
 
+	
+	
+	
+	
+	
 }
