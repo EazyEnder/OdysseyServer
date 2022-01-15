@@ -1,6 +1,7 @@
 package fr.eazyender.odyssey.gameplay.items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -98,7 +99,7 @@ public class ItemCommand implements CommandExecutor {
 
 	public static void openItemGui(Player p, ItemInventoryHolder holder) {
 
-		Inventory inv = Bukkit.createInventory(holder.setState(State.ITEM).setIdItem(holder.getIdItem()), 27, holder.getIdItem());
+		Inventory inv = Bukkit.createInventory(holder.setState(State.ITEM).setIdItem(holder.getIdItem()), 36, holder.getIdItem());
 		
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
 		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
@@ -111,7 +112,11 @@ public class ItemCommand implements CommandExecutor {
 		inv.setItem(18, ItemUtils.getItem(new ItemStack(Material.OAK_SIGN), "§8Model data : " + ItemUtils.getNumericInfo(item, "CustomModelData") , null, 0));
 		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "§8Type : " + ItemUtils.getInfo(item, "type") , null, 0));
 		inv.setItem(20, ItemUtils.getItem(new ItemStack(Material.BLAZE_ROD), "§8Rank : " + ItemUtils.getInfo(item, "rank") , null, 0));
-		inv.setItem(26, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cSupprimer", null, 0));
+		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.SPRUCE_SIGN), "§8Name" , null, 0));
+		inv.setItem(22, ItemUtils.getItem(new ItemStack(Material.WRITABLE_BOOK), "§8Description" , null, 0));
+		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.CLOCK), "§6Update Lore" , null, 0));
+		
+		inv.setItem(35, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cSupprimer", null, 0));
 		p.openInventory(inv);
 
 	}
@@ -172,6 +177,26 @@ public class ItemCommand implements CommandExecutor {
 		inv.setItem(5, ItemUtils.getItem(new ItemStack(Material.ORANGE_WOOL), "§6Légendaire", null, 0));
 		
 		p.openInventory(inv);
+	}
+	
+	public static HashMap<Player, String> editingName = new HashMap<>();
+	public static HashMap<Player, String> editingLore = new HashMap<>();
+	
+	
+	public static void openNameEditor(Player p, ItemInventoryHolder holder) {
+		p.closeInventory();
+		editingName.put(p, holder.getIdItem());
+		p.sendMessage("§aEcrivez un nouveau name dans le chat ! Sneak pour cancel.");
+		
+	}
+	
+	
+	public static void openLoreEditor(Player p, ItemInventoryHolder holder) {
+		p.closeInventory();
+		editingLore.put(p, holder.getIdItem());
+		p.sendMessage("§aEcrivez une description dans le livre, puis droppez-le ! Sneak pour cancel.");
+		p.getInventory().addItem(new ItemStack(Material.WRITABLE_BOOK));
+		
 	}
 	
 }

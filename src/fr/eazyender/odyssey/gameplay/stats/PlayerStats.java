@@ -44,7 +44,7 @@ public class PlayerStats {
 			sum += 20;
 		if (stat == Stat.MP)
 			sum += 100;
-		if (stat == Stat.REGENMP)
+		if (stat == Stat.REGENMP || stat == Stat.REGENAURA)
 			sum += 25;
 		if (stat == Stat.WATER || stat == Stat.FIRE || stat == Stat.EARTH || stat == Stat.WIND || stat == Stat.LIGHT || stat == Stat.SHADOW)
 			sum += 100;

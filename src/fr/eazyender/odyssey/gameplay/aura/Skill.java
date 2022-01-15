@@ -43,7 +43,7 @@ public class Skill {
         long activeCooldown = cooldowns.get(p).get(skill.getClass());
         return (int) ((cooldownSkill - (System.currentTimeMillis() - activeCooldown)) / 1000);
     }
-	
-	
+
+  
 
 }

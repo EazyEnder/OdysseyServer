@@ -270,7 +270,6 @@ public class StatsListener implements Listener{
 			 
 			 /** TEMPERATURE LOAD */
 			 float deltaValue = 0;
-			 int signe = 1;
 			 /**EN FONCTION DU TEMPS DU JOUR*/
 			 long timeOfDay = player.getWorld().getTime();
 			 float difference = 0;
