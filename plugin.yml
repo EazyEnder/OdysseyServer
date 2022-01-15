@@ -8,3 +8,7 @@ commands:
     description: Create item, give item
     permission: admin.item
     aliases: i
+  tryspell:
+    description: Test spells
+    permission: admin.ts
+    aliases: ts

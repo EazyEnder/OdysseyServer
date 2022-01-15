@@ -5,8 +5,10 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.eazyender.odyssey.gameplay.items.ItemCommand;
+import fr.eazyender.odyssey.gameplay.magic.CommandTrySpell;
 import fr.eazyender.odyssey.gameplay.magic.MagicHandler;
 import fr.eazyender.odyssey.listener.ListenerManager;
+import fr.eazyender.odyssey.entity.EntityManager;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
@@ -33,10 +35,12 @@ private static OdysseyPl odysseypl;
 		ZoneUtils.initZoneUtils();
 		WorldUtils.initWorlds();
 		BlockUtils.initBlocks();
+		EntityManager.initLoop(3);
 		lManager = new ListenerManager(this);
 		sqlManager = new SQLManager(this);
 		MagicHandler.init(pm);
 		getCommand("item").setExecutor(new ItemCommand());
+		getCommand("tryspell").setExecutor(new CommandTrySpell());
 		BlockUtils.initTileEntityLoop();
 		
 		

@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
+import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest;
 import fr.eazyender.odyssey.gameplay.magic.spells.fire.SpellFirebolt;
 import fr.eazyender.odyssey.utils.maths.ISphericPosition;
 
@@ -134,8 +135,8 @@ public class LaunchMagicUtils implements Listener {
 						v.getCartesianLocation(player.getEyeLocation(), player.getWorld()).getZ(), 0, 0D, 0D, 0D);
 			}
 
-			if (spell instanceof SpellFirebolt) {
-				SpellFirebolt fb = new SpellFirebolt();
+			if (spell instanceof SpellTest) {
+				SpellTest fb = new SpellTest();
 				if (WandUtils.player_mana.get(player.getUniqueId()) >= SpellFirebolt.basicCost) {
 					fb.launch(player);
 				} else

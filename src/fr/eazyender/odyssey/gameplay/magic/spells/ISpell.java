@@ -2,7 +2,9 @@ package fr.eazyender.odyssey.gameplay.magic.spells;
 
 import java.util.HashMap;
 
+import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.util.Vector;
 
 public class ISpell {
 	
@@ -26,6 +28,10 @@ public class ISpell {
         } else
             return false;
     }
+    
+    public void draw(Location position, Vector velocity, double time) {}
+    
+    public void trigger(Location position, Object tr) {}
 
     public int getCooldown() {
         return cooldown;

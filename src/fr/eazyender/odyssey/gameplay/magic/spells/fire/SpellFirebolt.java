@@ -25,7 +25,7 @@ public class SpellFirebolt extends ISpell{
 	
 	public SpellFirebolt() {
 		super(basicCooldown);
-	}
+	}	
 
    public void launch(Player player) {
 	   
