@@ -4,9 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import fr.eazyender.odyssey.OdysseyPl;

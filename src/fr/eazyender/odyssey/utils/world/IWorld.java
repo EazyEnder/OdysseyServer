@@ -10,13 +10,17 @@ public class IWorld {
 	private String name;
 	private String id;
 	private int surface;
+	private double natural_radiation;
+	private boolean oxygen = false;
 	private List<String> biome_list = new ArrayList<String>();
 	private Map<String,Double> temp = new HashMap<String,Double>();
 	
-	public IWorld(String name, String id, int surface, List<String> biome_list, Map<String,Double> temp) {
+	public IWorld(String name, String id, int surface, double natural_radiation,boolean oxygen, List<String> biome_list, Map<String,Double> temp) {
 		this.name = name;
 		this.id = id;
 		this.surface = surface;
+		this.natural_radiation = natural_radiation;
+		this.oxygen = oxygen;
 		this.biome_list = biome_list;
 		this.temp = temp;
 	}
@@ -43,6 +47,22 @@ public class IWorld {
 
 	public void setSurface(int surface) {
 		this.surface = surface;
+	}
+
+	public double getNatural_radiation() {
+		return natural_radiation;
+	}
+
+	public void setNatural_radiation(double natural_radiation) {
+		this.natural_radiation = natural_radiation;
+	}
+
+	public boolean isOxygen() {
+		return oxygen;
+	}
+
+	public void setOxygen(boolean oxygen) {
+		this.oxygen = oxygen;
 	}
 
 	public List<String> getBiome_list() {

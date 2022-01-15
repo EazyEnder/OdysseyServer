@@ -111,6 +111,7 @@ public class ItemCommand implements CommandExecutor {
 		inv.setItem(18, ItemUtils.getItem(new ItemStack(Material.OAK_SIGN), "§8Model data : " + ItemUtils.getNumericInfo(item, "CustomModelData") , null, 0));
 		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "§8Type : " + ItemUtils.getInfo(item, "type") , null, 0));
 		inv.setItem(20, ItemUtils.getItem(new ItemStack(Material.BLAZE_ROD), "§8Rank : " + ItemUtils.getInfo(item, "rank") , null, 0));
+		inv.setItem(26, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cSupprimer", null, 0));
 		p.openInventory(inv);
 
 	}

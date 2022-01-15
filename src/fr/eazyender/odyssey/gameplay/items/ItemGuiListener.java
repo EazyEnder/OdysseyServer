@@ -59,6 +59,13 @@ public class ItemGuiListener implements Listener {
 						ItemCommand.openRankEditor(p, holder);
 						return;
 					}
+					
+					if (e.getSlot() == 26) {
+						ItemDB.removeItem(holder.getIdItem());
+						ItemCommand.openItemsGui(p, holder.getPage());
+						return;
+					}
+					
 					if (e.getCurrentItem().getItemMeta() != null && e.getCurrentItem().getItemMeta().hasDisplayName()
 							&& Stat.valueOf(e.getCurrentItem().getItemMeta().getDisplayName().split(" ")[0]) != null) {
 						ItemCommand.openStatEditor(p, holder,
