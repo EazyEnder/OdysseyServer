@@ -70,13 +70,15 @@ public class WandUtils implements Listener {
 							bossBar.setProgress((double) (0));
 							bossBar.setVisible(true);
 							element.put(player.getUniqueId(), bossBar);
-						}
+						}else {
 
 						BossBar e = element.get(player.getUniqueId());
 						e.setTitle(getASCIElement(element_choose.get(player.getUniqueId())));
+						if(player_mana.get(player.getUniqueId()) / (double) stats.getStat(Stat.MP)<=1)
 						e.setProgress(player_mana.get(player.getUniqueId()) / (double) stats.getStat(Stat.MP));
 						e.setVisible(true);
 						element.replace(player.getUniqueId(), e);
+						}
 
 					} else {
 						if (element.containsKey(player.getUniqueId())) {
@@ -170,6 +172,14 @@ public class WandUtils implements Listener {
 		}
 
 		return color;
+	}
+	
+	public static void setVisibleFalse(Player player) {
+		if (element.containsKey(player.getUniqueId())) {
+		BossBar e = element.get(player.getUniqueId());
+		e.setVisible(false);
+		element.replace(player.getUniqueId(), e);
+		}
 	}
 
 }

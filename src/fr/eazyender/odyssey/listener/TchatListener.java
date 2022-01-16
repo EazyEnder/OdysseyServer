@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.OdysseyPl;
@@ -26,7 +27,9 @@ public class TchatListener implements Listener {
 
 	// 0 = INFO; 1 = ALL; 2 = LOCAL/RP
 	public static Map<UUID, Integer> player_tchat = new HashMap<UUID, Integer>();
-
+	
+	public static Map<UUID, BukkitRunnable> bubbles = new HashMap<UUID, BukkitRunnable>();
+	
 	public TchatListener() {
 
 		emotes.put(":small_earth:", "\uEff1");
@@ -50,7 +53,6 @@ public class TchatListener implements Listener {
 					msg = msg.replaceAll(emote_id, emotes.get(emote_id));
 				}
 			}
-
 			int tchat = player_tchat.get(p.getUniqueId());
 			if (tchat == 0) {
 				p.sendMessage(TextUtils.server + "Vous avez enlevé les messages, faites /t all.");
@@ -59,14 +61,15 @@ public class TchatListener implements Listener {
 				for (UUID uuid : getTchatPlayerList(1)) {
 					Bukkit.getPlayer(uuid).sendMessage(TextUtils.hrp + " " + p.getDisplayName() + ": " + msg);
 				}
-				p.sendMessage(TextUtils.hrp + " " + p.getDisplayName() + ": " + msg);
-				event.setCancelled(true);
-			} else if (tchat == 2) {
-				createBubble(p, msg);
-				for (Player p2 : Bukkit.getOnlinePlayers()) {
-					if (p2 != p && p2.getLocation().getWorld() == p.getLocation().getWorld()) {
-						if (p.getLocation().distance(p2.getLocation()) <= 50) {
-							p2.sendMessage(TextUtils.local + " " + p.getDisplayName() + ": " + msg);
+			p.sendMessage(TextUtils.hrp + p.getDisplayName() + ": "+msg);
+			event.setCancelled(true);
+		}else if(tchat == 2) {
+			if(bubbles.containsKey(p.getUniqueId())) {bubbles.get(p.getUniqueId()).runTask(OdysseyPl.getOdysseyPlugin()); bubbles.remove(p.getUniqueId());}
+			createBubble(p,msg);
+			for (Player p2 : Bukkit.getOnlinePlayers()) {
+				if(p2!=p && p2.getLocation().getWorld()==p.getLocation().getWorld()) {
+					if(p.getLocation().distance(p2.getLocation()) <= 50) {
+						p2.sendMessage(TextUtils.local + p.getDisplayName() + ": "+msg);
 						}
 					}
 				}
@@ -85,10 +88,10 @@ public class TchatListener implements Listener {
 		}
 		return players;
 	}
-
-	public static void createBubble(Player player, String text) {
-		ArmorStand as = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(new Vector(0, 0.5, 0)),
-				EntityType.ARMOR_STAND);
+	
+	public static void createBubble(Player player,String text) {
+		
+		ArmorStand as = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(new Vector(0,0.5,0)), EntityType.ARMOR_STAND);
 		as.setGravity(false);
 		as.setCanPickupItems(false);
 		as.setCustomName("\uEAD4");
@@ -101,29 +104,39 @@ public class TchatListener implements Listener {
 		as1.setCustomName(text);
 		as1.setCustomNameVisible(true);
 		as1.setVisible(false);
-
-		int timermax = 20 * 5;
-
-		new BukkitRunnable() {
-
-			int timer = 0;
-
+		
+		player.addPassenger(as);
+		player.addPassenger(as1);
+		
+		BukkitRunnable brun = new BukkitRunnable() {
+			
 			@Override
 			public void run() {
-
-				as.teleport(player.getLocation().add(new Vector(0, 0.5, 0)));
-				as1.teleport(player.getLocation().add(new Vector(0, 0.5, 0)));
-				if (timer >= timermax) {
-					as.remove();
-					as1.remove();
-					this.cancel();
-				} else {
-					timer += 2;
+				
+							
+				as.remove();
+				as1.remove();
+				
+			}
+			
+		};
+		
+		new BukkitRunnable() {
+			
+			@Override
+			public void run() {
+				
+				if(as != null && as1 != null) {			
+				as.remove();
+				as1.remove();
 				}
 
 			}
-
-		}.runTaskTimer(OdysseyPl.getOdysseyPlugin(), 0, 4);
+			
+		}.runTaskLater(OdysseyPl.getOdysseyPlugin(), 4*20);
+		
+		if(!bubbles.containsKey(player.getUniqueId())) bubbles.put(player.getUniqueId(), brun);
+		
 	}
 
 }

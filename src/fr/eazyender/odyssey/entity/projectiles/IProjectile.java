@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.entity.projectiles;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -103,7 +104,7 @@ public class IProjectile {
 			
 			if(trigger.equals(ProjectileProps.ProjectileTrigger.ENTITY)) {
 			  for (int j = 0; j < position.getWorld().getEntities().size(); j++) {
-					if(!(position.getWorld().getEntities().get(j).equals(sender)) && position.getWorld().getEntities().get(j) instanceof LivingEntity) {
+					if(!(position.getWorld().getEntities().get(j).equals(sender)) &&  !(position.getWorld().getEntities().get(j) instanceof ArmorStand) && position.getWorld().getEntities().get(j) instanceof LivingEntity) {
 						if(position.distance(position.getWorld().getEntities().get(j).getLocation()) < trigger_info) {
 							 trig =  position.getWorld().getEntities().get(j);
 						}
