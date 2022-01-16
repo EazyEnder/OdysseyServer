@@ -1,11 +1,17 @@
 package fr.eazyender.odyssey.gameplay.stats;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.magic.WandUtils;
 
 public class PlayerStats {
 
@@ -32,7 +38,7 @@ public class PlayerStats {
 			if (armorPiece != null)
 				sum += ItemUtils.getStat(armorPiece, stat);
 		}
-		if (p.getInventory().getItemInMainHand() != null)
+		if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) 
 			sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
 
 		// Adding default values to sum
@@ -42,7 +48,7 @@ public class PlayerStats {
 			sum += 1;
 		if (stat == Stat.HEALTH)
 			sum += 20;
-		if (stat == Stat.MP)
+		if (stat == Stat.MP || stat == Stat.AURA)
 			sum += 100;
 		if (stat == Stat.REGENMP || stat == Stat.REGENAURA)
 			sum += 25;
@@ -81,5 +87,76 @@ public class PlayerStats {
 	public HashMap<Stat, Integer> getPlayerStats() {
 		return playerStats;
 	}
+	
+	public static HashMap<Player, ItemStack> itemHeld = new HashMap<>();
+	public static HashMap<Player, ArrayList<ItemStack>> armor = new HashMap<>();
 
+	public static void init() {
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			itemHeld.put(p,ItemUtils.cloneIfNotNull( p.getInventory().getItemInMainHand()));
+			armor.put(p, ItemUtils.cloneIfNotNull(p.getInventory().getArmorContents()));
+		}
+		new BukkitRunnable() {
+			@SuppressWarnings("unchecked")
+			public void run() {
+				for(Player p : Bukkit.getOnlinePlayers()) {
+						if (!isSame(itemHeld.get(p), p.getInventory().getItemInMainHand())) {
+							if (itemHeld.get(p) != null && !isArmor(itemHeld.get(p))) {
+								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) - ItemUtils.getStat(itemHeld.get(p), Stat.AURA));
+								WandUtils.setMana(p, WandUtils.getMana(p) - ItemUtils.getStat(itemHeld.get(p), Stat.MP));
+							}
+							if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) {
+								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.AURA));
+								WandUtils.setMana(p, WandUtils.getMana(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.MP));
+							}
+							itemHeld.put(p, p.getInventory().getItemInMainHand());
+							
+						}
+					
+					int slot = 0;
+					for(ItemStack armorPiece : (ArrayList<ItemStack>) armor.get(p).clone()) {
+						if (!isSame(armorPiece, p.getInventory().getArmorContents()[slot])) {
+							if (armorPiece != null) {
+								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) - ItemUtils.getStat(armorPiece, Stat.AURA));
+								WandUtils.setMana(p, WandUtils.getMana(p) - ItemUtils.getStat(armorPiece, Stat.MP));
+							}
+							if (p.getInventory().getArmorContents()[slot] != null) {
+								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) + ItemUtils.getStat(p.getInventory().getArmorContents()[slot], Stat.AURA));
+								WandUtils.setMana(p, WandUtils.getMana(p) + ItemUtils.getStat(p.getInventory().getArmorContents()[slot], Stat.MP));
+							}
+							ArrayList<ItemStack> armorNew = armor.get(p);
+							armorNew.set(slot, p.getInventory().getArmorContents()[slot]);
+							armor.replace(p, armorNew);
+						}
+						slot++;
+					}
+					
+					PlayerStats.getStats(p).updateStats();
+				}
+			}
+		}.runTaskTimer(OdysseyPl.getOdysseyPlugin(), 0, 1);
+	}
+	
+	public static boolean isSame(ItemStack is, ItemStack is2) {
+		if (is == null && is2 != null) return false;
+		if (is != null && is2 == null) return false;
+		if (is == null && is2 == null) return true;
+		if (is.isSimilar(is2)) return true;
+		return false;
+	}
+	
+    public static boolean isArmor(final ItemStack itemStack) {
+        if (itemStack == null)
+            return false;
+        final String typeNameString = itemStack.getType().name();
+        if (typeNameString.endsWith("_HELMET")
+                || typeNameString.endsWith("_CHESTPLATE")
+                || typeNameString.endsWith("_LEGGINGS")
+                || typeNameString.endsWith("_BOOTS")) {
+            return true;
+            }
+
+        return false;
+    }
+	
 }

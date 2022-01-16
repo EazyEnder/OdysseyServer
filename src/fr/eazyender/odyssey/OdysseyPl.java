@@ -1,15 +1,17 @@
 package fr.eazyender.odyssey;
 
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
+import fr.eazyender.odyssey.gameplay.aura.AuraHandler;
 import fr.eazyender.odyssey.gameplay.items.ItemCommand;
 import fr.eazyender.odyssey.gameplay.magic.CommandTrySpell;
 import fr.eazyender.odyssey.gameplay.magic.MagicHandler;
 import fr.eazyender.odyssey.gameplay.magic.WandUtils;
+import fr.eazyender.odyssey.gameplay.stats.PlayerStats;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
 import fr.eazyender.odyssey.entity.EntityManager;
@@ -39,10 +41,12 @@ private static OdysseyPl odysseypl;
 		ZoneUtils.initZoneUtils();
 		WorldUtils.initWorlds();
 		BlockUtils.initBlocks();
+		PlayerStats.init();
 		EntityManager.initLoop(3);
 		lManager = new ListenerManager(this);
 		sqlManager = new SQLManager(this);
 		MagicHandler.init(pm);
+		AuraHandler.init(pm);
 		getCommand("item").setExecutor(new ItemCommand());
 		getCommand("tryspell").setExecutor(new CommandTrySpell());
 		BlockUtils.initTileEntityLoop();
@@ -53,12 +57,10 @@ private static OdysseyPl odysseypl;
 	public void onDisable() 
 	{
 		CompassUtils.setVisibleFalse();
+		WandUtils.setVisibleFalse();
+		AuraHUD.setVisibleFalse();
 		FileTileEntity.saveFile();
-		
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			WandUtils.setVisibleFalse(player);
-			if(TchatListener.bubbles.containsKey(player.getUniqueId())) TchatListener.bubbles.get(player.getUniqueId()).run();
-			}
+		TchatListener.runRunnables();
 	}
 	
 	public static OdysseyPl getOdysseyPlugin() {

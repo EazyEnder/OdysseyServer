@@ -16,6 +16,7 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.items.ItemType;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
@@ -45,6 +46,8 @@ public class WandUtils implements Listener {
 					CombatStats stats = CombatStats.getStats(player);
 					if (!player_mana.containsKey(player.getUniqueId())) {
 						player_mana.put(player.getUniqueId(), (double) stats.getStat(Stat.MP));
+					if (player_mana.get(player.getUniqueId()) < 0)
+						player_mana.replace(player.getUniqueId(), (double)0);
 					} else {
 						if (player_mana.get(player.getUniqueId()) < stats.getStat(Stat.MP)) {
 							if (player_mana.get(player.getUniqueId())
@@ -55,10 +58,12 @@ public class WandUtils implements Listener {
 										+ ((double) stats.getStat(Stat.REGENMP) / 100));
 							}
 						}
+						else if (player_mana.get(player.getUniqueId()) > stats.getStat(Stat.MP)) {
+							player_mana.put(player.getUniqueId(), (double) stats.getStat(Stat.MP));
+						}
 					}
 
-					if (player.getItemInHand() != null
-							&& ItemUtils.getInfo(player.getItemInHand(), "type") != null && ItemUtils.getInfo(player.getItemInHand(), "type").equals("MAGIE")) {
+					if (player.getItemInHand() != null && ItemUtils.getType(player.getItemInHand()) != null &&  ItemUtils.getType(player.getItemInHand()) == ItemType.MAGIE) {
 
 						if (!element_choose.containsKey(player.getUniqueId())) {
 							element_choose.put(player.getUniqueId(), 1);
@@ -103,7 +108,7 @@ public class WandUtils implements Listener {
 				|| LaunchMagicUtils.player_runes.get(p.getUniqueId()).isEmpty())) {
 
 			if (p.getItemInHand() != null
-					&& ItemUtils.getInfo(p.getItemInHand(), "type") != null && ItemUtils.getInfo(p.getItemInHand(), "type").equals("MAGIE")) 
+					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == ItemType.MAGIE) 
 
 				changeElement(p);
 
@@ -173,6 +178,14 @@ public class WandUtils implements Listener {
 
 		return color;
 	}
+	public static double getMana(Player p) {
+		return player_mana.get(p.getUniqueId());
+	}
+
+	public static void setMana(Player p, double aura) {
+		player_mana.put(p.getUniqueId(), aura);
+	}
+
 	
 	public static void setVisibleFalse(Player player) {
 		if (element.containsKey(player.getUniqueId())) {
@@ -180,6 +193,10 @@ public class WandUtils implements Listener {
 		e.setVisible(false);
 		element.replace(player.getUniqueId(), e);
 		}
+	}
+	
+	public static void setVisibleFalse() {
+		for(Player p : Bukkit.getOnlinePlayers()) setVisibleFalse(p);
 	}
 
 }

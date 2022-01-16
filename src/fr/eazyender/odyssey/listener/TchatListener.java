@@ -139,4 +139,10 @@ public class TchatListener implements Listener {
 		
 	}
 
+	public static void runRunnables() {
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			if(TchatListener.bubbles.containsKey(p.getUniqueId())) TchatListener.bubbles.get(p.getUniqueId()).run();
+		}
+	}
+	
 }
