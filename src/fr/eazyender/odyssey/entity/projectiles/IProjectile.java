@@ -1,32 +1,32 @@
 package fr.eazyender.odyssey.entity.projectiles;
 
-import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.Particle;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import org.checkerframework.common.returnsreceiver.qual.This;
 
 import fr.eazyender.odyssey.entity.EntityManager;
+import fr.eazyender.odyssey.entity.aoe.AOEProps;
+import fr.eazyender.odyssey.entity.aoe.AoeManager;
+import fr.eazyender.odyssey.entity.aoe.IAoe;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
-import fr.eazyender.odyssey.utils.maths.ISphericPosition;
 
 public class IProjectile {
 	
 	private ISpell spell;
 	private Player sender;
-	private Location position;
+	public Location position;
 	//SI > per second
 	private Vector force;
 	private Vector velocity;
 	private ProjectileProps.ProjectileTrigger trigger;
 	//timer or distance
 	private Double trigger_info;
-	private ProjectileProps.ProjectileSource source;
+	public ProjectileProps.ProjectileSource source;
 	//distance of repulsion / attraction
-	private Double source_distance, source_intensity;
+	public Double source_distance;
+	public Double source_intensity;
 	private ProjectileProps.ProjectileExtendedType type;
 	
 	private ProjectileProps.System system;
@@ -61,7 +61,7 @@ public class IProjectile {
 
 		Vector updated_force = this.force.clone();
 		
-		if(this.type== null || (this.type!=null && !this.type.equals(ProjectileProps.ProjectileExtendedType.STATIC)))
+		if(this.type== null || (this.type!=null && !this.type.equals(ProjectileProps.ProjectileExtendedType.STATIC))) {
 			for (IProjectile proj : ProjectilesManager.projectiles.values()) {
 				if(proj != this) {
 					
@@ -73,6 +73,18 @@ public class IProjectile {
 					
 				}
 			}
+			for (IAoe aoe : AoeManager.aoes.values()) {
+				
+					if(aoe.source.equals(AOEProps.Source.ATTRACTIVE) && this.position.distance(aoe.position)<aoe.source_distance) {
+						updated_force = updated_force.add(aoe.position.toVector().clone().subtract(this.position.toVector().clone()).normalize().multiply((Double)(1/this.position.distance(aoe.position))).multiply(10*aoe.source_intensity));
+					}else if(aoe.source.equals(AOEProps.Source.REPULSION) && this.position.distance(aoe.position)<aoe.source_distance) {
+						updated_force = updated_force.add(aoe.position.toVector().clone().subtract(this.position.toVector().clone()).normalize().multiply((Double)(1/this.position.distance(aoe.position))).multiply(-10*aoe.source_intensity));
+					}else if(aoe.source.equals(AOEProps.Source.REFLECTIVE) && Math.abs(this.position.getY()-aoe.position.getY()) < aoe.source_distance && (Math.abs(this.position.getX()-aoe.position.getX()) <= aoe.size && Math.abs(this.position.getZ()-aoe.position.getZ()) <= aoe.size)) {
+						this.velocity.setY(this.velocity.getY()*-1).add(aoe.velocity).multiply(aoe.source_intensity);
+					}
+				
+			}
+		}
 		
 		updated_force.multiply((double)(delta_t)/20.0);
 		

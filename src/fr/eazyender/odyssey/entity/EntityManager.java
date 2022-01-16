@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.entity.aoe.AoeManager;
 import fr.eazyender.odyssey.entity.projectiles.ProjectilesManager;
 
 public class EntityManager {
@@ -20,6 +21,7 @@ public class EntityManager {
 			public void run() {
 				
 				ProjectilesManager.refreshProjectiles();
+				AoeManager.refreshAoes();
 				
 			}
 		 }.runTaskTimer(OdysseyPl.getOdysseyPlugin(), 0, period);

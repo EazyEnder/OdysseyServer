@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest;
 import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest2;
+import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest3;
 
 public class CommandTrySpell implements CommandExecutor {
 
@@ -23,6 +24,8 @@ public class CommandTrySpell implements CommandExecutor {
 						SpellTest fb = new SpellTest(); fb.launch(p);
 					}else if(Integer.parseInt(args[1]) == 2) {
 						SpellTest2 fb = new SpellTest2(); fb.launch(p);
+					}else if(Integer.parseInt(args[1]) == 3) {
+						SpellTest3 fb = new SpellTest3(); fb.launch(p);
 					}else {
 						
 					}
