@@ -57,7 +57,7 @@ public class BlockUtils implements Listener{
 	public static void initBlocks() {
 		
 		// NAME - ID - SOURCE - MATERIAL - SOUND - MINING - TOOL
-		//Example :blocks.add(new IBlock("§f"+"Relai", 1, 4, Material.NOTE_BLOCK, 2, Sound.BLOCK_WOOD_PLACE, 0, 0));
+		//Example :blocks.add(new IBlock("Â§f"+"Relai", 1, 4, Material.NOTE_BLOCK, 2, Sound.BLOCK_WOOD_PLACE, 0, 0));
 		
 	}
 	

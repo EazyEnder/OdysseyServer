@@ -5,8 +5,8 @@ import net.md_5.bungee.api.ChatColor;
 
 public enum Stat {
 	
-	HEALTH("§7Vie"),DEFENSE("§7Défense"),DAMAGE("§7Dégats"),AURA("§6Aura"),REGENAURA("§6Regen Aura"),POWER("§7Dégats magiques"),MP("§bMana"),REGENMP("§bRegen Mana"),
-	FIRE(ChatColor.RED + "Element Feu"), WATER(ChatColor.of("#2990f0") + "Element Eau"), WIND(ChatColor.of("#c7edea") + "Element Vent"), EARTH(ChatColor.of("#8c4414") + "Element Terre"), LIGHT(ChatColor.of("#fff673") + "Element Lumière"), SHADOW(ChatColor.of("#4a4d54") + "Element Ombres");
+	HEALTH("Â§7Vie"),DEFENSE("Â§7DÃ©fense"),DAMAGE("Â§7DÃ©gats"),AURA("Â§6Aura"),REGENAURA("Â§6Regen Aura"),POWER("Â§7DÃ©gats magiques"),MP("Â§bMana"),REGENMP("Â§bRegen Mana"),
+	FIRE(ChatColor.RED + "Element Feu"), WATER(ChatColor.of("#2990f0") + "Element Eau"), WIND(ChatColor.of("#c7edea") + "Element Vent"), EARTH(ChatColor.of("#8c4414") + "Element Terre"), LIGHT(ChatColor.of("#fff673") + "Element LumiÃ¨re"), SHADOW(ChatColor.of("#4a4d54") + "Element Ombres");
 
 	String showing;
 	

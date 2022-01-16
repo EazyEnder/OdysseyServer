@@ -55,7 +55,7 @@ public class TchatListener implements Listener {
 			}
 			int tchat = player_tchat.get(p.getUniqueId());
 			if (tchat == 0) {
-				p.sendMessage(TextUtils.server + "Vous avez enlevé les messages, faites /t all.");
+				p.sendMessage(TextUtils.server + "Vous avez enlevÃ© les messages, faites /t all.");
 				event.setCancelled(true);
 			} else if (tchat == 1) {
 				for (UUID uuid : getTchatPlayerList(1)) {

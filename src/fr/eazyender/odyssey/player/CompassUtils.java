@@ -60,7 +60,7 @@ public class CompassUtils implements Listener{
 					BossBar title_zone = title_zone_player.get(player.getUniqueId());
 					IZone pzone = ZoneUtils.getZoneOfPlayer(player);
 					if(pzone != null) {title_zone.setVisible(true);
-					title_zone.setTitle(ZoneUtils.getImgOfZone(pzone.getType()) + " §f§l" + pzone.getName());}
+					title_zone.setTitle(ZoneUtils.getImgOfZone(pzone.getType()) + " Â§fÂ§l" + pzone.getName());}
 					else {title_zone.setVisible(false);}
 					title_zone_player.replace(player.getUniqueId(), title_zone);
 					
@@ -110,19 +110,19 @@ public class CompassUtils implements Listener{
 			boolean flag = true; 
 			
 			switch(Math.round(yaw + (i*(180/resolution)))) {
-			case -90 : point = " §lE§r ";flag = false; break; 
+			case -90 : point = " Â§lEÂ§r ";flag = false; break; 
 			case -45 : point = "SE ";flag = false; break; 
-			case 0 : point = " §lS§r ";flag = false; break; 
+			case 0 : point = " Â§lSÂ§r ";flag = false; break; 
 			case 45 : point = "SW ";flag = false; break; 
-			case 90 : point = " §lW§r ";flag = false; break; 
+			case 90 : point = " Â§lWÂ§r ";flag = false; break; 
 			case 135 : point = "NW ";flag = false; break; 
-			case 180 : point = " §lN§r ";flag = false; break; 
+			case 180 : point = " Â§lNÂ§r ";flag = false; break; 
 			case 225 : point = "NE ";flag = false; break;
-			case 270 : point = " §lE§r ";flag = false; break; 
+			case 270 : point = " Â§lEÂ§r ";flag = false; break; 
 			case 315 : point = "SE ";flag = false; break; 
-			case 360 : point = " §lS§r ";flag = false; break; 
+			case 360 : point = " Â§lSÂ§r ";flag = false; break; 
 			case 360 + 45 : point = "SW ";flag = false; break; 
-			case 360 + 90 : point = " §lW§r ";flag = false; break; 
+			case 360 + 90 : point = " Â§lWÂ§r ";flag = false; break; 
 			}
 			
 			if(flag) {

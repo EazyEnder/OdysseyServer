@@ -211,7 +211,7 @@ public class ItemGuiListener implements Listener {
 		if (ItemCommand.editingLore.containsKey(e.getPlayer()) || ItemCommand.editingName.containsKey(e.getPlayer())) {
 			ItemCommand.editingLore.remove(e.getPlayer());
 			ItemCommand.editingName.remove(e.getPlayer());
-			e.getPlayer().sendMessage("§cCancel !");
+			e.getPlayer().sendMessage("Â§cCancel !");
 		}
 	}
 	
@@ -220,7 +220,7 @@ public class ItemGuiListener implements Listener {
 		if (ItemCommand.editingName.containsKey(e.getPlayer())) {
 			e.setCancelled(true);
 			Player p = e.getPlayer();
-			String name = e.getMessage().replace("&", "§");
+			String name = e.getMessage().replace("&", "Â§");
 			ItemStack item = ItemDB.getItem(ItemCommand.editingName.get(p));
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName(name);
@@ -228,7 +228,7 @@ public class ItemGuiListener implements Listener {
 			ItemDB.updateItem(ItemCommand.editingName.get(p), NBTEditor.getItemNBTTag(item));
 			Bukkit.getScheduler().runTaskLater(OdysseyPl.getOdysseyPlugin(), () -> ItemCommand.openItemGui(p, new ItemInventoryHolder(State.ITEM, ItemCommand.editingName.get(p))), 1);
 			ItemCommand.editingName.remove(p);
-			p.sendMessage("§aNom enregistré.");
+			p.sendMessage("Â§aNom enregistrÃ©.");
 		}
 	}
 
@@ -251,7 +251,7 @@ public class ItemGuiListener implements Listener {
 				ItemCommand.editingLore.remove(p);
 				e.setCancelled(true);
 				p.getInventory().remove(Material.WRITABLE_BOOK);
-				p.sendMessage("§aDescription enregistré");
+				p.sendMessage("Â§aDescription enregistrÃ©");
 				
 				
 			}

@@ -38,14 +38,14 @@ public class ItemCommand implements CommandExecutor {
 						ItemStack is = p.getInventory().getItemInMainHand();
 						is = NBTEditor.set(is, id, "id");
 						ItemDB.addItem(id, is);
-						p.sendMessage("§aItem ajouté !");
+						p.sendMessage("Â§aItem ajoutÃ© !");
 
 					} else {
-						p.sendMessage("§cItem invalide");
+						p.sendMessage("Â§cItem invalide");
 						return false;
 					}
 				} else {
-					p.sendMessage("§cCet item existe déjà !");
+					p.sendMessage("Â§cCet item existe dÃ©jÃ  !");
 					return false;
 				}
 			} else if (args[0].equalsIgnoreCase("this")) {
@@ -53,16 +53,16 @@ public class ItemCommand implements CommandExecutor {
 				if (ItemUtils.getInfo(p.getInventory().getItemInMainHand(), "id") != null) {
 					if (ItemDB.getItem(ItemUtils.getInfo(p.getInventory().getItemInMainHand(), "id")) != null) {
 						openItemGui(p,  new ItemInventoryHolder(State.ITEM, 0).setIdItem(ItemUtils.getInfo(p.getInventory().getItemInMainHand(), "id")));
-					} else p.sendMessage("§cItem non trouvé dans la bdd");
+					} else p.sendMessage("Â§cItem non trouvÃ© dans la bdd");
 					
-				} else p.sendMessage("§cCet item n'a pas d'id !");
+				} else p.sendMessage("Â§cCet item n'a pas d'id !");
 				
 			} else {
 				String id = args[0];
 				if (ItemDB.getItem(id) != null) {
 					openItemGui(p,  new ItemInventoryHolder(State.ITEM, 0).setIdItem(id));
 				} else
-					p.sendMessage("§cCet item n'existe pas !");
+					p.sendMessage("Â§cCet item n'existe pas !");
 				return false;
 			}
 
@@ -102,21 +102,21 @@ public class ItemCommand implements CommandExecutor {
 		Inventory inv = Bukkit.createInventory(holder.setState(State.ITEM).setIdItem(holder.getIdItem()), 36, holder.getIdItem());
 		
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
-		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
-		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.DISPENSER), "§aGive l'item", null, 0));
+		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "Â§8Retour", null, 0));
+		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.DISPENSER), "Â§aGive l'item", null, 0));
 		int slot = 2;
 		for(Stat stat : Stat.values()) {
 			inv.setItem(slot, ItemUtils.getItem(new ItemStack(Material.BOOK), stat.name() + " : " + ItemUtils.getStat(item, stat), null, 0));
 			slot++;
 		}
-		inv.setItem(18, ItemUtils.getItem(new ItemStack(Material.OAK_SIGN), "§8Model data : " + ItemUtils.getNumericInfo(item, "CustomModelData") , null, 0));
-		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "§8Type : " + ItemUtils.getInfo(item, "type") , null, 0));
-		inv.setItem(20, ItemUtils.getItem(new ItemStack(Material.BLAZE_ROD), "§8Rank : " + ItemUtils.getInfo(item, "rank") , null, 0));
-		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.SPRUCE_SIGN), "§8Name" , null, 0));
-		inv.setItem(22, ItemUtils.getItem(new ItemStack(Material.WRITABLE_BOOK), "§8Description" , null, 0));
-		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.CLOCK), "§6Update Lore" , null, 0));
+		inv.setItem(18, ItemUtils.getItem(new ItemStack(Material.OAK_SIGN), "Â§8Model data : " + ItemUtils.getNumericInfo(item, "CustomModelData") , null, 0));
+		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "Â§8Type : " + ItemUtils.getInfo(item, "type") , null, 0));
+		inv.setItem(20, ItemUtils.getItem(new ItemStack(Material.BLAZE_ROD), "Â§8Rank : " + ItemUtils.getInfo(item, "rank") , null, 0));
+		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.SPRUCE_SIGN), "Â§8Name" , null, 0));
+		inv.setItem(22, ItemUtils.getItem(new ItemStack(Material.WRITABLE_BOOK), "Â§8Description" , null, 0));
+		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.CLOCK), "Â§6Update Lore" , null, 0));
 		
-		inv.setItem(35, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cSupprimer", null, 0));
+		inv.setItem(35, ItemUtils.getItem(new ItemStack(Material.BARRIER), "Â§cSupprimer", null, 0));
 		p.openInventory(inv);
 
 	}
@@ -125,42 +125,42 @@ public class ItemCommand implements CommandExecutor {
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
 		Inventory inv = null;
 		if (stat != null)
-			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§l" + stat.name() + " : " + ItemUtils.getStat(item, stat));
+			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "Â§l" + stat.name() + " : " + ItemUtils.getStat(item, stat));
 		else 
-			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§lModel data : " + ItemUtils.getNumericInfo(item, "CustomModelData"));
+			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "Â§lModel data : " + ItemUtils.getNumericInfo(item, "CustomModelData"));
 		
-		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
+		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "Â§8Retour", null, 0));
 		
 		if (stat != null)
-			inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§l" + stat.name() + " : " + ItemUtils.getStat(item, stat), null, 0));
-		else inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§lCustom model data : " +  ItemUtils.getNumericInfo(item, "CustomModelData"), null, 0));
+			inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "Â§l" + stat.name() + " : " + ItemUtils.getStat(item, stat), null, 0));
+		else inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "Â§lCustom model data : " +  ItemUtils.getNumericInfo(item, "CustomModelData"), null, 0));
 		
 		
-		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-1", null, 0));
-		inv.setItem(12, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-5", null, 0));
-		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-10", null, 0));
-		inv.setItem(30, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-25", null, 0));
-		inv.setItem(39, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-50", null, 0));
-		inv.setItem(48, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-100", null, 0));
+		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-1", null, 0));
+		inv.setItem(12, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-5", null, 0));
+		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-10", null, 0));
+		inv.setItem(30, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-25", null, 0));
+		inv.setItem(39, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-50", null, 0));
+		inv.setItem(48, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "Â§c-100", null, 0));
 		
-		inv.setItem(5, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+1", null, 0));
-		inv.setItem(14, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+5", null, 0));
-		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+10", null, 0));
-		inv.setItem(32, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+25", null, 0));
-		inv.setItem(41, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+50", null, 0));
-		inv.setItem(50, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "§a+100", null, 0));
+		inv.setItem(5, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+1", null, 0));
+		inv.setItem(14, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+5", null, 0));
+		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+10", null, 0));
+		inv.setItem(32, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+25", null, 0));
+		inv.setItem(41, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+50", null, 0));
+		inv.setItem(50, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL), "Â§a+100", null, 0));
 		
 		p.openInventory(inv);
 	}
 	
 	public static void openTypeEditor(Player p, ItemInventoryHolder holder) {
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
-		Inventory inv = Bukkit.createInventory(holder.setState(State.TYPE), 9, "§lType : "  + ItemUtils.getInfo(item, "type"));
-		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
-		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.GLASS_BOTTLE), "§eMagie", null, 0));
-		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.IRON_SWORD), "§eGuerrier", null, 0));
-		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.BOW), "§eArcher", null, 0));
-		inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.SHIELD), "§eTank", null, 0));
+		Inventory inv = Bukkit.createInventory(holder.setState(State.TYPE), 9, "Â§lType : "  + ItemUtils.getInfo(item, "type"));
+		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "Â§8Retour", null, 0));
+		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.GLASS_BOTTLE), "Â§eMagie", null, 0));
+		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.IRON_SWORD), "Â§eGuerrier", null, 0));
+		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.BOW), "Â§eArcher", null, 0));
+		inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.SHIELD), "Â§eTank", null, 0));
 		
 		
 		p.openInventory(inv);
@@ -168,13 +168,13 @@ public class ItemCommand implements CommandExecutor {
 	
 	public static void openRankEditor(Player p, ItemInventoryHolder holder) {
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
-		Inventory inv = Bukkit.createInventory(holder.setState(State.RANK), 9, "§lRank : "  + ItemUtils.getInfo(item, "rank"));
-		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
-		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.LIGHT_GRAY_WOOL), "§7Commun", null, 0));
-		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.BLUE_WOOL), "§1Rare", null, 0));
-		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.PURPLE_WOOL), "§dEpic", null, 0));
-		inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.YELLOW_WOOL), "§eUnique", null, 0));
-		inv.setItem(5, ItemUtils.getItem(new ItemStack(Material.ORANGE_WOOL), "§6Légendaire", null, 0));
+		Inventory inv = Bukkit.createInventory(holder.setState(State.RANK), 9, "Â§lRank : "  + ItemUtils.getInfo(item, "rank"));
+		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "Â§8Retour", null, 0));
+		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.LIGHT_GRAY_WOOL), "Â§7Commun", null, 0));
+		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.BLUE_WOOL), "Â§1Rare", null, 0));
+		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.PURPLE_WOOL), "Â§dEpic", null, 0));
+		inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.YELLOW_WOOL), "Â§eUnique", null, 0));
+		inv.setItem(5, ItemUtils.getItem(new ItemStack(Material.ORANGE_WOOL), "Â§6LÃ©gendaire", null, 0));
 		
 		p.openInventory(inv);
 	}
@@ -186,7 +186,7 @@ public class ItemCommand implements CommandExecutor {
 	public static void openNameEditor(Player p, ItemInventoryHolder holder) {
 		p.closeInventory();
 		editingName.put(p, holder.getIdItem());
-		p.sendMessage("§aEcrivez un nouveau name dans le chat ! Sneak pour cancel.");
+		p.sendMessage("Â§aEcrivez un nouveau name dans le chat ! Sneak pour cancel.");
 		
 	}
 	
@@ -194,7 +194,7 @@ public class ItemCommand implements CommandExecutor {
 	public static void openLoreEditor(Player p, ItemInventoryHolder holder) {
 		p.closeInventory();
 		editingLore.put(p, holder.getIdItem());
-		p.sendMessage("§aEcrivez une description dans le livre, puis droppez-le ! Sneak pour cancel.");
+		p.sendMessage("Â§aEcrivez une description dans le livre, puis droppez-le ! Sneak pour cancel.");
 		p.getInventory().addItem(new ItemStack(Material.WRITABLE_BOOK));
 		
 	}

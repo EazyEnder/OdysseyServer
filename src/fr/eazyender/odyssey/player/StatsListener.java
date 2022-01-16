@@ -138,9 +138,9 @@ public class StatsListener implements Listener{
 						String tempRound = df.format(temperature);
 						
 						if(temperature <= 0) {
-						action_bar += "\uEAA3" + temp_color + " §l" + tempRound + "°C§r ";
+						action_bar += "\uEAA3" + temp_color + " Â§l" + tempRound + "Â§CÂ§r ";
 						}else {
-						action_bar += "\uEAA2" + temp_color + " §l" + tempRound + "°C§r ";
+						action_bar += "\uEAA2" + temp_color + " Â§l" + tempRound + "Â§CÂ§r ";
 						}
 						
 						String water_color = ""+ChatColor.of(new Color(106, 176, 76));
@@ -150,7 +150,7 @@ public class StatsListener implements Listener{
 						else if(water > 20 && water < 40) {water_color = ""+ChatColor.of(new Color(235, 77, 75));}
 						else if(water <= 20) {water_color = ""+ChatColor.of(new Color(160, 19, 19));}
 						String water_round = df.format(water);
-						action_bar += "\uEAA4" + water_color + " §l" + water_round + "%§r ";
+						action_bar += "\uEAA4" + water_color + " Â§l" + water_round + "%Â§r ";
 					
 					player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(action_bar));
 					
