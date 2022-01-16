@@ -100,6 +100,8 @@ public class ItemUtils {
 				double value = getStat(is, stat);
 				NumberFormat nf = new DecimalFormat("##.###");
 				 
+				String sign = "+";
+				if (value < 0) sign = "";
 				String percentage = "";
 				if (stat == Stat.REGENAURA || stat == Stat.REGENMP) {
 					value = (value / 25) * 100;
@@ -108,7 +110,7 @@ public class ItemUtils {
 				else if (stat == Stat.FIRE || stat == Stat.WATER || stat == Stat.EARTH || stat == Stat.WIND || stat == Stat.LIGHT || stat == Stat.SHADOW) {
 					percentage = "%";
 				} 
-				lore.add(stat.getShowing() + " : §f+" + nf.format(value) + percentage);
+				lore.add(stat.getShowing() + " : §f" + sign + nf.format(value) + percentage);
 			}
 		}
 

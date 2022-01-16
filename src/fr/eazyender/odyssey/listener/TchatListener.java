@@ -57,20 +57,20 @@ public class TchatListener implements Listener {
 				event.setCancelled(true);
 			} else if (tchat == 1) {
 				for (UUID uuid : getTchatPlayerList(1)) {
-					Bukkit.getPlayer(uuid).sendMessage(TextUtils.hrp + p.getDisplayName() + ": " + msg);
+					Bukkit.getPlayer(uuid).sendMessage(TextUtils.hrp + " " + p.getDisplayName() + ": " + msg);
 				}
-				p.sendMessage(TextUtils.hrp + p.getDisplayName() + ": " + msg);
+				p.sendMessage(TextUtils.hrp + " " + p.getDisplayName() + ": " + msg);
 				event.setCancelled(true);
 			} else if (tchat == 2) {
 				createBubble(p, msg);
 				for (Player p2 : Bukkit.getOnlinePlayers()) {
 					if (p2 != p && p2.getLocation().getWorld() == p.getLocation().getWorld()) {
 						if (p.getLocation().distance(p2.getLocation()) <= 50) {
-							p2.sendMessage(TextUtils.local + p.getDisplayName() + ": " + msg);
+							p2.sendMessage(TextUtils.local + " " + p.getDisplayName() + ": " + msg);
 						}
 					}
 				}
-				p.sendMessage(TextUtils.local + p.getDisplayName() + ": " + msg);
+				p.sendMessage(TextUtils.local + " " + p.getDisplayName() + ": " + msg);
 				event.setCancelled(true);
 			}
 		}
