@@ -12,3 +12,11 @@ commands:
     description: Test spells
     permission: admin.ts
     aliases: ts
+  group:
+    description: Add a friend to your group
+    permission: player.use
+    aliases: friend
+  accept:
+    description: Accept friend request
+    permission: player.use
+    aliases: yes

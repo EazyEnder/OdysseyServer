@@ -16,6 +16,8 @@ import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
 import fr.eazyender.odyssey.entity.EntityManager;
 import fr.eazyender.odyssey.player.CompassUtils;
+import fr.eazyender.odyssey.player.group.CommandAccept;
+import fr.eazyender.odyssey.player.group.CommandGroup;
 import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.block.FileTileEntity;
@@ -49,6 +51,8 @@ private static OdysseyPl odysseypl;
 		AuraHandler.init(pm);
 		getCommand("item").setExecutor(new ItemCommand());
 		getCommand("tryspell").setExecutor(new CommandTrySpell());
+		getCommand("accept").setExecutor(new CommandAccept());
+		getCommand("group").setExecutor(new CommandGroup());
 		BlockUtils.initTileEntityLoop();
 		
 		

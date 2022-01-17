@@ -40,5 +40,14 @@ public class ParticleUtils {
 			target.getWorld().spawnParticle(Particle.REDSTONE, target.getX()-Math.random()*radius,target.getY()+Math.random()*radius, target.getZ()+Math.random()*radius, 0, 0D, 0D, 0D, option);
 		}
 	}
+	
+	public static void drawPlanParticle(DustOptions option, Location target, int intensity, double size) {
+		for (int i = 0; i < intensity; i++) {
+			target.getWorld().spawnParticle(Particle.REDSTONE, target.clone().add(new Vector(Math.random()*size,0,Math.random()*size)),1, 0, 0D, 0D, 0D, option, true);
+			target.getWorld().spawnParticle(Particle.REDSTONE, target.clone().add(new Vector(-Math.random()*size,0,-Math.random()*size)),1, 0, 0D, 0D, 0D, option, true);
+			target.getWorld().spawnParticle(Particle.REDSTONE, target.clone().add(new Vector(-Math.random()*size,0,Math.random()*size)),1, 0, 0D, 0D, 0D, option, true);
+			target.getWorld().spawnParticle(Particle.REDSTONE, target.clone().add(new Vector(Math.random()*size,0,-Math.random()*size)),1, 0, 0D, 0D, 0D, option, true);
+		}
+	}
 
 }
