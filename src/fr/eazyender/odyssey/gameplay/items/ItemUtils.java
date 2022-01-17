@@ -144,7 +144,7 @@ public class ItemUtils {
 
 	public static final Pattern HEX_PATTERN = Pattern.compile("&#(\\w{5}[0-9a-f])");
 
-	public String translateHexCodes(String textToTranslate) {
+	public static String translateHexCodes(String textToTranslate) {
 		Matcher matcher = HEX_PATTERN.matcher(textToTranslate);
 		StringBuffer buffer = new StringBuffer();
 		while (matcher.find())
