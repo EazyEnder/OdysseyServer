@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.player.group.PlayerGroup;
 import fr.eazyender.odyssey.utils.zone.IZone;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
 
@@ -127,9 +128,10 @@ public class CompassUtils implements Listener{
 			
 			if(flag) {
 				
-				int rad = 100;
+				int rad = 500;
 				List<IZone> zones = ZoneUtils.getZoneInRadius(player, null, rad);
 				boolean flag2 = true;
+				//Opti todo : if distance instant after loop
 				for (IZone zone : zones) {
 					if(flag2) {
 					
@@ -163,6 +165,39 @@ public class CompassUtils implements Listener{
 						}
 						
 					}
+				}
+				if(PlayerGroup.getGroupOfAPlayer(player)!=null)
+				for (Player p : PlayerGroup.getGroupOfAPlayer(player).getPlayers()) {
+					
+						Vector vector_member = p.getLocation().toVector().clone().subtract(player.getLocation().toVector());
+						vector_member.normalize();
+						Vector vector_north = new Vector(0,0,-1).normalize();
+						
+						
+						
+						double scalar_product = vector_member.getX()*vector_north.getX()+vector_member.getZ()*vector_north.getZ();
+						double costeta = scalar_product/(Math.sqrt((vector_member.getX()*vector_member.getX())+(vector_member.getZ()*vector_member.getZ())) * Math.sqrt((vector_north.getX()*vector_north.getX())+(vector_north.getZ()*vector_north.getZ())));
+						double teta = Math.acos(costeta)/(Math.PI/180);
+					
+						if(p.getLocation().getX() < player.getLocation().getX()) {
+							teta = -teta;
+						}
+						
+						double angle = 180.0F + teta;
+						if(angle % (180/resolution) != 0) {
+					    	double t = angle / (180/resolution);
+					    	angle = (180/resolution) * Math.round(t);
+					    }
+						
+						if(Math.round(yaw + (i*(180/resolution))) == angle || angle-360==Math.round(yaw + (i*(180/resolution))) || angle+360==Math.round(yaw + (i*(180/resolution)))){
+							if(player.getLocation().distance(p.getLocation()) < rad/3)
+								point = "\uEfc5";
+							else if(player.getLocation().distance(p.getLocation()) < rad/2)
+								point = "\uEfc6";
+							else if(player.getLocation().distance(p.getLocation()) <= rad)
+								point = "\uEfc7";
+						}
+						
 				}
 				
 				

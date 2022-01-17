@@ -6,6 +6,7 @@ import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.StatsListener;
+import fr.eazyender.odyssey.player.group.PlayerGroupSave;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
 
@@ -20,6 +21,7 @@ public class ListenerManager {
 	BlockUtils bUtils;
 	AuraCastListener auraListener;
 	ItemGuiListener itemGuiListener;
+	PlayerGroupSave playerGroupHandler;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -31,6 +33,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(bUtils = new BlockUtils(), pl);
 		pl.getServer().getPluginManager().registerEvents(auraListener = new AuraCastListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(itemGuiListener = new ItemGuiListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(playerGroupHandler = new PlayerGroupSave(), pl);
 	}
 
 	public OdysseyPl getPl() {
