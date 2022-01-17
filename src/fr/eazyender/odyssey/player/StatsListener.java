@@ -140,9 +140,9 @@ public class StatsListener implements Listener {
 							String tempRound = df.format(temperature);
 						
 						if(temperature <= 0) {
-						action_bar += "\uEAA3" + temp_color + " §l" + tempRound + "§C§r ";
+						action_bar += "\uEAA3" + temp_color + " §l" + tempRound + "°C§r ";
 						}else {
-						action_bar += "\uEAA2" + temp_color + " §l" + tempRound + "§C§r ";
+						action_bar += "\uEAA2" + temp_color + " §l" + tempRound + "°C§r ";
 						}
 						
 							String water_color = ""+ChatColor.of(new Color(106, 176, 76));

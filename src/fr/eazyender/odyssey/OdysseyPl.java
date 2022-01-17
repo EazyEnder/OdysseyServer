@@ -15,6 +15,7 @@ import fr.eazyender.odyssey.gameplay.stats.PlayerStats;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
 import fr.eazyender.odyssey.entity.EntityManager;
+import fr.eazyender.odyssey.player.CompassCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.group.CommandAccept;
 import fr.eazyender.odyssey.player.group.CommandGroup;
@@ -53,7 +54,9 @@ private static OdysseyPl odysseypl;
 		getCommand("tryspell").setExecutor(new CommandTrySpell());
 		getCommand("accept").setExecutor(new CommandAccept());
 		getCommand("group").setExecutor(new CommandGroup());
+		getCommand("compass").setExecutor(new CompassCommand());
 		BlockUtils.initTileEntityLoop();
+		
 		
 		
 	}

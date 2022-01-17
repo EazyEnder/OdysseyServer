@@ -10,6 +10,9 @@ import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,13 +25,14 @@ import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.player.group.PlayerGroup;
 import fr.eazyender.odyssey.utils.zone.IZone;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
+import net.md_5.bungee.api.ChatColor;
 
 public class CompassUtils implements Listener{
 	
 	public static Map<UUID, BossBar> compass_player = new HashMap<UUID, BossBar>();
 	public static Map<UUID, BossBar> title_zone_player = new HashMap<UUID, BossBar>();
+	protected static Map<UUID, Integer> compass_resolution = new HashMap<UUID, Integer>();
 	
-	private static int resolution = 18;
 	private int refresh = 2;
 	
 	public CompassUtils() {
@@ -39,6 +43,11 @@ public class CompassUtils implements Listener{
 			public void run() {
 				
 				for (Player player : Bukkit.getOnlinePlayers()) {
+					
+					if(!compass_resolution.containsKey(player.getUniqueId())) {
+						compass_resolution.put(player.getUniqueId(), 18);
+					}
+					
 					if(!compass_player.containsKey(player.getUniqueId())) {
 						BossBar bossBar = Bukkit.createBossBar("----", BarColor.PURPLE, BarStyle.SOLID);
 						bossBar.addPlayer(player);
@@ -106,24 +115,24 @@ public class CompassUtils implements Listener{
 	public static String getCompassString(Player player) {
 		String compass = "\uEfb1";
 		float yaw = calcYaw(player);
-		for (int i = -resolution/2; i < resolution/2; i++) {
-			String point = " \u2219 ";
+		for (int i = -compass_resolution.get(player.getUniqueId())/2; i < compass_resolution.get(player.getUniqueId())/2; i++) {
+			String point = ChatColor.of("#D8A97F") + " \u2219 ";
 			boolean flag = true; 
 			
-			switch(Math.round(yaw + (i*(180/resolution)))) {
-			case -90 : point = " §lE§r ";flag = false; break; 
-			case -45 : point = "SE ";flag = false; break; 
-			case 0 : point = " §lS§r ";flag = false; break; 
-			case 45 : point = "SW ";flag = false; break; 
-			case 90 : point = " §lW§r ";flag = false; break; 
-			case 135 : point = "NW ";flag = false; break; 
-			case 180 : point = " §lN§r ";flag = false; break; 
-			case 225 : point = "NE ";flag = false; break;
-			case 270 : point = " §lE§r ";flag = false; break; 
-			case 315 : point = "SE ";flag = false; break; 
-			case 360 : point = " §lS§r ";flag = false; break; 
-			case 360 + 45 : point = "SW ";flag = false; break; 
-			case 360 + 90 : point = " §lW§r ";flag = false; break; 
+			switch(Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId()))))) {
+			case -90 : point = ChatColor.of("#AB8662") + " §lE§r ";flag = false; break; 
+			case -45 : point = ChatColor.of("#D8A97F") + "SE ";flag = false; break; 
+			case 0 : point = ChatColor.of("#AB8662") + " §lS§r ";flag = false; break; 
+			case 45 : point = ChatColor.of("#D8A97F") + " SW ";flag = false; break; 
+			case 90 : point = ChatColor.of("#AB8662") + " §lW§r ";flag = false; break; 
+			case 135 : point = ChatColor.of("#D8A97F") + " NW ";flag = false; break; 
+			case 180 : point = ChatColor.of("#AB8662") + " §lN§r ";flag = false; break; 
+			case 225 : point = ChatColor.of("#D8A97F") + " NE ";flag = false; break;
+			case 270 : point = ChatColor.of("#AB8662") + " §lE§r ";flag = false; break; 
+			case 315 : point = ChatColor.of("#D8A97F") + " SE ";flag = false; break; 
+			case 360 : point = ChatColor.of("#AB8662") + " §lS§r ";flag = false; break; 
+			case 360 + 45 : point = ChatColor.of("#D8A97F") + "SW ";flag = false; break; 
+			case 360 + 90 : point = ChatColor.of("#AB8662") + " §lW§r ";flag = false; break; 
 			}
 			
 			if(flag) {
@@ -150,12 +159,12 @@ public class CompassUtils implements Listener{
 						}
 						
 						double angle = 180.0F + teta;
-						if(angle % (180/resolution) != 0) {
-					    	double t = angle / (180/resolution);
-					    	angle = (180/resolution) * Math.round(t);
+						if(angle % (180/compass_resolution.get(player.getUniqueId())) != 0) {
+					    	double t = angle / (180/compass_resolution.get(player.getUniqueId()));
+					    	angle = (180/compass_resolution.get(player.getUniqueId())) * Math.round(t);
 					    }
 						
-						if(Math.round(yaw + (i*(180/resolution))) == angle || angle-360==Math.round(yaw + (i*(180/resolution))) || angle+360==Math.round(yaw + (i*(180/resolution)))){
+						if(Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) == angle || angle-360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) || angle+360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId()))))){
 							if(player.getLocation().distance(zone.getCenter()) < rad/3)
 							point = ZoneUtils.getLogoOfZone(zone.getType(),1);
 							else if(player.getLocation().distance(zone.getCenter()) < rad/2)
@@ -184,12 +193,12 @@ public class CompassUtils implements Listener{
 						}
 						
 						double angle = 180.0F + teta;
-						if(angle % (180/resolution) != 0) {
-					    	double t = angle / (180/resolution);
-					    	angle = (180/resolution) * Math.round(t);
+						if(angle % (180/compass_resolution.get(player.getUniqueId())) != 0) {
+					    	double t = angle / (180/compass_resolution.get(player.getUniqueId()));
+					    	angle = (180/compass_resolution.get(player.getUniqueId())) * Math.round(t);
 					    }
 						
-						if(Math.round(yaw + (i*(180/resolution))) == angle || angle-360==Math.round(yaw + (i*(180/resolution))) || angle+360==Math.round(yaw + (i*(180/resolution)))){
+						if(Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) == angle || angle-360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) || angle+360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId()))))){
 							if(player.getLocation().distance(p.getLocation()) < rad/3)
 								point = "\uEfc5";
 							else if(player.getLocation().distance(p.getLocation()) < rad/2)
@@ -221,9 +230,9 @@ public class CompassUtils implements Listener{
 	    	calcYaw -= 360.0F;
 	    }
 	    
-	    if(calcYaw % (180/resolution) != 0) {
-	    	double t = calcYaw / (180/resolution);
-	    	calcYaw = (180/resolution) * Math.round(t);
+	    if(calcYaw % (180/compass_resolution.get(player.getUniqueId())) != 0) {
+	    	double t = calcYaw / (180/compass_resolution.get(player.getUniqueId()));
+	    	calcYaw = (180/compass_resolution.get(player.getUniqueId())) * Math.round(t);
 	    }
 	    
 	    return calcYaw;
@@ -237,3 +246,4 @@ public class CompassUtils implements Listener{
 	}
 	
 }
+

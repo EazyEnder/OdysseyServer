@@ -20,3 +20,7 @@ commands:
     description: Accept friend request
     permission: player.use
     aliases: yes
+  compass:
+    description: Change compass resolution
+    permission: player.use
+    aliases: yes
