@@ -123,7 +123,7 @@ public class StatsListener implements Listener {
 
 					// Action Bar
 					DecimalFormat df = new DecimalFormat("###");
-					if (AuraCastListener.getCast(player) == null) {
+					if (AuraCastListener.casts.get(player) == null) {
 						String action_bar = "";
 						
 							String temp_color = ""+ChatColor.of(new Color(106, 176, 76));

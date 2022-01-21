@@ -32,7 +32,7 @@ public class CommandGroup implements CommandExecutor {
                 		if(args[0].equalsIgnoreCase("leave")) {
     									List<UUID> newGroup = group.getGroup();
     									newGroup.remove(player.getUniqueId());
-    									player.sendMessage(srv_msg  + "Vous avez quitté le groupe");
+    									player.sendMessage(srv_msg  + "Vous avez quitté le groupe.");
     									
     					}
                     	else if(args[0].equalsIgnoreCase("list")) {
@@ -57,7 +57,7 @@ public class CommandGroup implements CommandExecutor {
                 		
                 		PlayerGroup group = PlayerGroupSave.getPlayerGroup().getGroup(player);
                 		
-                		if(args[0].equalsIgnoreCase("invit")) {
+                		if(args[0].equalsIgnoreCase("invite")) {
                 			
                 			if(args.length >= 2) {
                 				
@@ -77,14 +77,14 @@ public class CommandGroup implements CommandExecutor {
                 							requests.put(target.getUniqueId(), asks);
                 						}
                 						player.sendMessage(srv_msg + "Vous avez invité " + target.getName());
-                						target.sendMessage(srv_msg + player.getName() + " vous a invité, pour accepter faites : /accept <player>");
+                						target.sendMessage(srv_msg + player.getName() + " vous a invité dans son groupe ! Pour accepter, faites : /accept <player>");
                 						player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 										target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
                 						
-                					}else player.sendMessage(srv_msg + "Le joueur appartient déja à un groupe");
-                				}else player.sendMessage(srv_msg + "Le joueur n'est pas valide");
+                					}else player.sendMessage(srv_msg + "Le joueur appartient déja à un groupe.");
+                				}else player.sendMessage(srv_msg + "Le joueur n'est pas valide.");
                 				
-                			}else player.sendMessage(srv_msg + "Usage : /group invit <Player>");
+                			}else player.sendMessage(srv_msg + "Usage : /group invite <Player>");
 
                 			
                 		}
@@ -98,12 +98,12 @@ public class CommandGroup implements CommandExecutor {
 										List<UUID> newGroup = group.getGroup();
 										newGroup.remove(group.getGroup().get(i));
 										PlayerGroupSave.getPlayerGroup().getGroup(player).setGroup(newGroup);
-										player.sendMessage(srv_msg  + "Vous avez exclue le joueur " + name);
+										player.sendMessage(srv_msg  + "Vous avez exclu le joueur " + name + ".");
 										
 										contain = true;
 									}
 								}
-                				if(!contain) player.sendMessage(srv_msg + "Le membre ne fait pas parti de votre groupe ou alors n'existe pas");
+                				if(!contain) player.sendMessage(srv_msg + "Le membre ne fait pas parti de votre groupe ou alors n'existe pas.");
                 			}else {
                 				player.sendMessage(srv_msg + "Usage : /group kick <player>");
                 			}
@@ -122,7 +122,7 @@ public class CommandGroup implements CommandExecutor {
                 					", " + members);
                 			
                 		}else {
-                			player.sendMessage(srv_msg + "Usage : /group <invit/kick/list>");
+                			player.sendMessage(srv_msg + "Usage : /group <invite/kick/list>");
                 		}
                 		
                 	}
@@ -131,7 +131,7 @@ public class CommandGroup implements CommandExecutor {
                 	if(PlayerGroup.aGroupContainPlayer(player.getUniqueId()))
                 		player.sendMessage(srv_msg + "Usage : /group <leave/list>");
                 	else 
-                		player.sendMessage(srv_msg + "Usage : /group <invit/kick/list>");
+                		player.sendMessage(srv_msg + "Usage : /group <invite/kick/list>");
                 }
 
                 return true;

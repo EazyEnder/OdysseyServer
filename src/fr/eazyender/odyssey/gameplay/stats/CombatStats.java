@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
+import fr.eazyender.odyssey.gameplay.masteries.Mastery;
+
 
 public class CombatStats {
 	

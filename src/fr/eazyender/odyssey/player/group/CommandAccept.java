@@ -36,23 +36,23 @@ public class CommandAccept implements CommandExecutor {
 											members.add(player.getUniqueId());
 											PlayerGroupSave.getPlayerGroup().getGroup(target).setGroup(members);
 											
-											player.sendMessage(srv_msg + "Vous avez rejoins le groupe de " + name);
-											target.sendMessage(srv_msg + player.getName() + " a rejoins votre groupe");
+											player.sendMessage(srv_msg + "Vous avez rejoint le groupe de " + name + ".");
+											target.sendMessage(srv_msg + player.getName() + " a rejoint votre groupe.");
 											
 											player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 											target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 											
 											CommandGroup.requests.remove(player.getUniqueId());
 											
-										}else player.sendMessage(srv_msg + "Le groupe possède déja 5 joueurs");
+										}else player.sendMessage(srv_msg + "Le groupe possède déja 5 joueurs.");
 										
-									}else player.sendMessage(srv_msg + "Vous n'avez aucune demande venant de ce joueur");
-								}else player.sendMessage(srv_msg + "Vous n'avez aucune demande");
+									}else player.sendMessage(srv_msg + "Vous n'avez aucune demande venant de ce joueur.");
+								}else player.sendMessage(srv_msg + "Vous n'avez aucune demande.");
 							}else player.sendMessage(srv_msg + "Joueur invalide");
 						}else {
 							player.sendMessage(srv_msg + "Usage : /group yes <player>");
 						}
-					}else player.sendMessage(srv_msg + "Vous êtes déja dans un groupe, faites /group leave pour le quitter");
+					}else player.sendMessage(srv_msg + "Vous êtes déja dans un groupe, faites /group leave pour le quitter.");
 	            }
 	            return true;
 		  }

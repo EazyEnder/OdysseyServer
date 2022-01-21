@@ -43,7 +43,7 @@ public class PlayerGroupSave implements Listener{
 					PlayerGroup.getGroupOfAPlayer(player).setGroup(newGroup);
 					for (Player mate : group.getPlayers()) {
 						mate.playSound(mate.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
-						mate.sendMessage(CommandGroup.srv_msg + "Le joueur " + player.getName() + " s'est déconnecté et a donc quitté le groupe");
+						mate.sendMessage(CommandGroup.srv_msg + "Le joueur " + player.getName() + " s'est déconnecté et a donc quitté le groupe.");
 					}
 					
 				}

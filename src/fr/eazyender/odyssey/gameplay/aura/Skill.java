@@ -4,9 +4,14 @@ import java.util.HashMap;
 
 import org.bukkit.entity.LivingEntity;
 
+import fr.eazyender.odyssey.gameplay.masteries.Mastery;
+
 public class Skill {
 	
+	public static HashMap<String, Skill> patterns = new HashMap<>();
+	
     public static HashMap<LivingEntity, HashMap<Class<? extends Skill>, Long>> cooldowns = new HashMap<>();
+    
 
     public int cooldown;
     public String pattern;
@@ -14,6 +19,7 @@ public class Skill {
     public Skill(String pattern, int cooldown) {
         this.cooldown = cooldown;
         this.pattern = pattern;
+        patterns.put(pattern, this);
     }
 
     public boolean launch(LivingEntity p, Class<? extends Skill> spell) {
@@ -44,6 +50,10 @@ public class Skill {
         return (int) ((cooldownSkill - (System.currentTimeMillis() - activeCooldown)) / 1000);
     }
 
+    public static Skill getSkill(String pattern) {
+    	return patterns.get(pattern);
+    }
   
 
+	
 }
