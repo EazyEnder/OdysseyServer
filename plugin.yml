@@ -24,3 +24,5 @@ commands:
     description: Change compass resolution
     permission: player.use
     aliases: yes
+  dstaff:
+    description: Manage dungeons

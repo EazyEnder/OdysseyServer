@@ -49,6 +49,7 @@ public class IProjectile {
 		
 	}
 	
+	@SuppressWarnings("removal")
 	public Object updateProjectile() {
 		
 		//Draw part

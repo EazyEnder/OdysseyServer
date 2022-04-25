@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import org.bukkit.entity.LivingEntity;
 
-import fr.eazyender.odyssey.gameplay.masteries.Mastery;
-
 public class Skill {
 	
 	public static HashMap<String, Skill> patterns = new HashMap<>();

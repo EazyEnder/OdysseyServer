@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
-
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
 import fr.eazyender.odyssey.utils.maths.ISphericPosition;
 

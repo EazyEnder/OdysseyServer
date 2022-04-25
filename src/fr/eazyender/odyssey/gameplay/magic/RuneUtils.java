@@ -11,7 +11,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
 import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest;
-import fr.eazyender.odyssey.gameplay.magic.spells.fire.SpellFirebolt;
 import fr.eazyender.odyssey.utils.maths.ISphericPosition;
 
 public class RuneUtils {

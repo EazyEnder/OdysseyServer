@@ -45,6 +45,7 @@ public class SpellTest2 extends ISpell{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void draw(Location pos, Vector velocity, double time) {
 		

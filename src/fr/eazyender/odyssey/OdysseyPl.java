@@ -2,6 +2,7 @@ package fr.eazyender.odyssey;
 
 
 
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,6 +15,8 @@ import fr.eazyender.odyssey.gameplay.magic.WandUtils;
 import fr.eazyender.odyssey.gameplay.stats.PlayerStats;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
+import fr.eazyender.odyssey.dungeons.CommandDungeon;
+import fr.eazyender.odyssey.dungeons.Dungeon;
 import fr.eazyender.odyssey.entity.EntityManager;
 import fr.eazyender.odyssey.player.CompassCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
@@ -39,6 +42,7 @@ private static OdysseyPl odysseypl;
 		odysseypl = this;
 		PluginManager pm = getServer().getPluginManager();
 		saveDefaultConfig();
+		ConfigurationSerialization.registerClass(Dungeon.class, "Dungeon");
 		
 		FileTileEntity.loadFile();
 		ZoneUtils.initZoneUtils();
@@ -55,6 +59,7 @@ private static OdysseyPl odysseypl;
 		getCommand("accept").setExecutor(new CommandAccept());
 		getCommand("group").setExecutor(new CommandGroup());
 		getCommand("compass").setExecutor(new CompassCommand());
+		getCommand("dstaff").setExecutor(new CommandDungeon());
 		BlockUtils.initTileEntityLoop();
 		
 		

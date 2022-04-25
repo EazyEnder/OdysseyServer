@@ -455,7 +455,7 @@ public class StatsListener implements Listener {
 				}
 
 			} else {
-				deltaValue += 10;
+				deltaValue += 0;
 			}
 
 			DecimalFormat df = new DecimalFormat("###.##");
