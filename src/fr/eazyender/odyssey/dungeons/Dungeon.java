@@ -12,17 +12,35 @@ import org.bukkit.configuration.serialization.SerializableAs;
 public class Dungeon implements ConfigurationSerializable {
 
 	String id;
+	String name;
 	HashMap<Integer, Location> startLocs;
 	HashMap<Integer, String> offsets;
 	HashMap<Location, String> mobs;
+	String song;
 	
 
 	public Dungeon(String id, HashMap<Integer, Location> startLocs, HashMap<Integer, String> offsets,
-			HashMap<Location, String> mobs) {
+			HashMap<Location, String> mobs, String song, String name) {
 		this.id = id;
 		this.startLocs = startLocs;
 		this.offsets = offsets;
 		this.mobs = mobs;
+		this.song = song;
+		this.name = name;
+	}
+
+
+
+
+	public String getSong() {
+		return song;
+	}
+
+
+
+
+	public void setSong(String song) {
+		this.song = song;
 	}
 
 
@@ -67,6 +85,22 @@ public class Dungeon implements ConfigurationSerializable {
 		this.mobs = mobs;
 	}
 
+	
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
 
 	@Override
 	public Map<String, Object> serialize() {
@@ -76,8 +110,8 @@ public class Dungeon implements ConfigurationSerializable {
 		map.put("startLocs", startLocs);
 		map.put("mobs", mobs);
 		map.put("offsets", offsets);
-		
-		
+		map.put("song", song);
+		map.put("name", name);
 		
 		
 		
@@ -90,7 +124,9 @@ public class Dungeon implements ConfigurationSerializable {
 	     	HashMap<Integer,Location> startLocs = (HashMap<Integer,Location>) map.get("startLocs");
 	     	HashMap<Integer, String> offsets =  (HashMap<Integer, String>) map.get("offsets");
 	     	HashMap<Location, String> mobs = (HashMap<Location, String>) map.get("mobs");
-	     	return new Dungeon(id,startLocs,offsets,mobs);
+	     	String song = (String) map.get("song");
+	     	String name = (String) map.get("name");
+	     	return new Dungeon(id,startLocs,offsets,mobs, song, name);
 	    }
 
 	

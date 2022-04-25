@@ -28,7 +28,7 @@ public class CommandDungeon implements CommandExecutor {
 						dungeonFile.getParentFile().mkdirs();
 						try {
 							dungeonFile.createNewFile();
-							Dungeon dungeon = new Dungeon(args[1], new HashMap<>(), new HashMap<>(), new HashMap<>());
+							Dungeon dungeon = new Dungeon(args[1], new HashMap<>(), new HashMap<>(), new HashMap<>(), null, null);
 							refreshDungeonYaml(dungeon);
 						} catch (IOException e) {
 							
@@ -80,7 +80,7 @@ public class CommandDungeon implements CommandExecutor {
 					ArrayList<Player> players = new ArrayList<>();
 					players.add((Player) sender);
 					
-					DungeonInstance instance = new DungeonInstance(players, "lul", 1);
+					DungeonInstance instance = new DungeonInstance(players, DungeonConfig.getDungeon("lul"), 1);
 					instance.run();
 				}
 
