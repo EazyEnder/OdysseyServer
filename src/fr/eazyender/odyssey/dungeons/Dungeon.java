@@ -17,16 +17,18 @@ public class Dungeon implements ConfigurationSerializable {
 	HashMap<Integer, String> offsets;
 	HashMap<Location, String> mobs;
 	String song;
+	ArrayList<String> doors;
 	
 
 	public Dungeon(String id, HashMap<Integer, Location> startLocs, HashMap<Integer, String> offsets,
-			HashMap<Location, String> mobs, String song, String name) {
+			HashMap<Location, String> mobs, String song, String name, ArrayList<String> doors) {
 		this.id = id;
 		this.startLocs = startLocs;
 		this.offsets = offsets;
 		this.mobs = mobs;
 		this.song = song;
 		this.name = name;
+		this.doors = doors;
 	}
 
 
@@ -92,6 +94,17 @@ public class Dungeon implements ConfigurationSerializable {
 		return name;
 	}
 
+	public ArrayList<String> getDoors() {
+		return doors;
+	}
+
+
+
+
+	public void setDoors(ArrayList<String> doors) {
+		this.doors = doors;
+	}
+
 
 
 
@@ -112,7 +125,7 @@ public class Dungeon implements ConfigurationSerializable {
 		map.put("offsets", offsets);
 		map.put("song", song);
 		map.put("name", name);
-		
+		map.put("doors", doors);
 		
 		
 		return map;
@@ -126,7 +139,8 @@ public class Dungeon implements ConfigurationSerializable {
 	     	HashMap<Location, String> mobs = (HashMap<Location, String>) map.get("mobs");
 	     	String song = (String) map.get("song");
 	     	String name = (String) map.get("name");
-	     	return new Dungeon(id,startLocs,offsets,mobs, song, name);
+	     	ArrayList<String> doors = (ArrayList<String>) map.get("doors");
+	     	return new Dungeon(id,startLocs,offsets,mobs, song, name, doors);
 	    }
 
 	

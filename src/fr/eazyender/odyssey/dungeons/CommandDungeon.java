@@ -28,7 +28,7 @@ public class CommandDungeon implements CommandExecutor {
 						dungeonFile.getParentFile().mkdirs();
 						try {
 							dungeonFile.createNewFile();
-							Dungeon dungeon = new Dungeon(args[1], new HashMap<>(), new HashMap<>(), new HashMap<>(), null, null);
+							Dungeon dungeon = new Dungeon(args[1], new HashMap<>(), new HashMap<>(), new HashMap<>(), null, null, new ArrayList<>());
 							refreshDungeonYaml(dungeon);
 						} catch (IOException e) {
 							
