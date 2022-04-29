@@ -1,22 +1,26 @@
 package fr.eazyender.odyssey.dungeons;
 
+import java.util.ArrayList;
+
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class SongRepeater extends BukkitRunnable {
 
-	DungeonInstance instance;
+	ArrayList<Player> players;
+	Dungeon dungeon;
 	
 	
-	public SongRepeater(DungeonInstance instance) {
-		this.instance = instance;
+	public SongRepeater(ArrayList<Player> players, Dungeon dungeon) {
+		this.players = players;
+		this.dungeon = dungeon;
 	}
 
 
 	@Override
 	public void run() {
-		for(Player p : instance.getPlayers())
-			p.playSound(p.getLocation(), instance.getDungeon().getSong().split("_")[0], 500f, 1f);
+		for(Player p : players)
+			p.playSound(p.getLocation(), dungeon.getSong().split("_")[0], 500f, 1f);
 		
 	}
 

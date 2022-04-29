@@ -1,93 +1,70 @@
 package fr.eazyender.odyssey.player.group;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class PlayerGroup {
-	
+
+	public static ArrayList<PlayerGroup> groups = new ArrayList<>();
+
 	Player host;
-	List<UUID> group = new ArrayList<UUID>();
-	
+	ArrayList<Player> members = new ArrayList<Player>();
+
 	public PlayerGroup(Player host) {
 		this.host = host;
+		groups.add(this);
 	}
-	
-	public PlayerGroup(Player host,List<UUID> group) {
+
+	public PlayerGroup(Player host, ArrayList<Player> members) {
 		this.host = host;
-		this.group = group;
+		this.members = members;
 	}
 
 	public Player getHost() {
 		return host;
 	}
 
-	public void setHost(Player host) {
-		this.host = host;
+	public ArrayList<Player> getMembers() {
+		return members;
 	}
 
-	public List<UUID> getGroup() {
-		return group;
+	public ArrayList<Player> getPlayers() {
+		ArrayList<Player> players = new ArrayList<>();
+		players.addAll(members);
+		players.add(host);
+		return players;
 	}
 
-	public void setGroup(List<UUID> group) {
-		this.group = group;
-	}
-	
-	public static boolean aGroupContainPlayer(UUID id) {
-		for (int i = 0; i < PlayerGroupSave.getPlayerGroup().getAllGroup().size(); i++) {
-			if(PlayerGroupSave.getPlayerGroup().getAllGroup().get(i).getGroup().contains(id)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public static PlayerGroup getGroupOfAPlayer(Player player) {
-		for (int i = 0; i < PlayerGroupSave.getPlayerGroup().getAllGroup().size(); i++) {
-			if(PlayerGroupSave.getPlayerGroup().getAllGroup().get(i).getGroup().contains(player.getUniqueId()) || PlayerGroupSave.getPlayerGroup().getAllGroup().get(i).getHost().equals(player)) {
-				return PlayerGroupSave.getPlayerGroup().getAllGroup().get(i);
-			}
+	public static PlayerGroup getGroup(Player p) {
+		for (PlayerGroup group : groups) {
+			if (group.getPlayers().contains(p))
+				return group;
 		}
 		return null;
 	}
 
-	public List<Player> getPlayers(){
-		List<Player> players = new ArrayList<Player>();
-		players.add(host);
-		for (int i = 0; i < group.size(); i++) {
-			if(Bukkit.getPlayer(group.get(i)) != null)
-				players.add(Bukkit.getPlayer(group.get(i)));
-			else
-				try {
-					players.add((Player)Bukkit.getOfflinePlayer(group.get(i)));	
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+	public void leave(Player p) {
+		if (getHost() == p) {
+			dissolve();
+			return;
+		} else {
+			members.remove(p);
+			for (Player player : getPlayers()) {
+				player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+				player.sendMessage(CommandGroup.srv_msg + "Le joueur " + p.getName() + "  a quitté le groupe.");
+			}
 		}
-		return players;
 
 	}
-	
-	public List<Player> getOnlinePlayers(){
-		List<Player> players = new ArrayList<Player>();
-		players.add(host);
-		for (int i = 0; i < group.size(); i++) {
-			if(Bukkit.getPlayer(group.get(i)) != null)
-				players.add(Bukkit.getPlayer(group.get(i)));
-		}
-		return players;
 
+	public void dissolve() {
+		for (Player member : getMembers()) {
+			member.playSound(member.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+			member.sendMessage(CommandGroup.srv_msg + "Le chef a quitté le groupe, vous avez donc été exclu.");
+		}
+		PlayerGroup.groups.remove(this);
 	}
-	
-	public boolean containPlayer(UUID id) {
-		return group.contains(id);
-	}
-	
-	
 
 }

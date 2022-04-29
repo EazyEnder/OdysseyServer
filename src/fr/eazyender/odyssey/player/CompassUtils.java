@@ -175,8 +175,8 @@ public class CompassUtils implements Listener{
 						
 					}
 				}
-				if(PlayerGroup.getGroupOfAPlayer(player)!=null)
-				for (Player p : PlayerGroup.getGroupOfAPlayer(player).getPlayers()) {
+				if(PlayerGroup.getGroup(player) !=null)
+				for (Player p : PlayerGroup.getGroup(player).getPlayers()) {
 					
 						Vector vector_member = p.getLocation().toVector().clone().subtract(player.getLocation().toVector());
 						vector_member.normalize();

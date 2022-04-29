@@ -15,8 +15,9 @@ import fr.eazyender.odyssey.gameplay.magic.WandUtils;
 import fr.eazyender.odyssey.gameplay.stats.PlayerStats;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
-import fr.eazyender.odyssey.dungeons.CommandDungeon;
 import fr.eazyender.odyssey.dungeons.Dungeon;
+import fr.eazyender.odyssey.dungeons.DungeonStaffCommand;
+import fr.eazyender.odyssey.dungeons.gui.DungeonCommand;
 import fr.eazyender.odyssey.entity.EntityManager;
 import fr.eazyender.odyssey.player.CompassCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
@@ -59,7 +60,8 @@ private static OdysseyPl odysseypl;
 		getCommand("accept").setExecutor(new CommandAccept());
 		getCommand("group").setExecutor(new CommandGroup());
 		getCommand("compass").setExecutor(new CompassCommand());
-		getCommand("dstaff").setExecutor(new CommandDungeon());
+		getCommand("dstaff").setExecutor(new DungeonStaffCommand());
+		getCommand("dj").setExecutor(new DungeonCommand());
 		BlockUtils.initTileEntityLoop();
 		
 		

@@ -23,6 +23,10 @@ commands:
   compass:
     description: Change compass resolution
     permission: player.use
-    aliases: yes
   dstaff:
     description: Manage dungeons
+    permission: dungeons.manage
+  dj:
+    description: Enter dungeons
+    aliases: dungeons
+    permission: player.use

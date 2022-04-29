@@ -2,9 +2,7 @@ package fr.eazyender.odyssey.player.group;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -15,130 +13,105 @@ import org.bukkit.entity.Player;
 
 public class CommandGroup implements CommandExecutor {
 
-	public static Map<UUID, List<UUID>> requests = new HashMap<UUID, List<UUID>>();
+	public static Map<Player, HashMap<Player, PlayerGroup>> requests = new HashMap<Player, HashMap<Player, PlayerGroup>>();
 	public static final String srv_msg = "§f[§e§lGroupe§r§f] : ";
-	
+
 	@Override
-    public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
+	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 
-        if (cmd.getName().equalsIgnoreCase("group")) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if(args.length >= 1) {
-                	
-                	if(PlayerGroup.aGroupContainPlayer(player.getUniqueId())) {
-                		
-                		PlayerGroup group = PlayerGroup.getGroupOfAPlayer(player);
-                		if(args[0].equalsIgnoreCase("leave")) {
-    									List<UUID> newGroup = group.getGroup();
-    									newGroup.remove(player.getUniqueId());
-    									player.sendMessage(srv_msg  + "Vous avez quitté le groupe.");
-    									
-    					}
-                    	else if(args[0].equalsIgnoreCase("list")) {
-                    			
-                    			String members = "";
-                    			for (int i = 0; i < group.getGroup().size(); i++) {
-    								if(i == group.getGroup().size()-1) {
-    									members = members + Bukkit.getPlayer(group.getGroup().get(i)).getName();
-    								}else {
-    									members = members + Bukkit.getPlayer(group.getGroup().get(i)).getName() + ", ";
-    								}
-    							}
-                    			player.sendMessage(srv_msg + "Votre groupe est composé de : (Leader)" + group.getHost().getName() + 
-                    					", " + members);
-                    		
-                		}else {
-                			player.sendMessage(srv_msg + "Usage : /group <leave/list>");
-                		}
-                		
-                		
-                	}else {
-                		
-                		PlayerGroup group = PlayerGroupSave.getPlayerGroup().getGroup(player);
-                		
-                		if(args[0].equalsIgnoreCase("invite")) {
-                			
-                			if(args.length >= 2) {
-                				
-                				String name = args[1];
-                				Player target = Bukkit.getPlayer(name);
-                				if(target != null) {
-                					if(PlayerGroupSave.getPlayerGroup().getGroup(target).getGroup().size() <= 0 &&
-                							!PlayerGroup.aGroupContainPlayer(target.getUniqueId())) {
-                						
-                						if(requests.containsKey(target.getUniqueId())) {
-                							List<UUID> asks = requests.get(target.getUniqueId());
-                							asks.add(player.getUniqueId());
-                							requests.put(target.getUniqueId(), asks);
-                						}else {
-                							List<UUID> asks = new ArrayList<UUID>();
-                							asks.add(player.getUniqueId());
-                							requests.put(target.getUniqueId(), asks);
-                						}
-                						player.sendMessage(srv_msg + "Vous avez invité " + target.getName());
-                						target.sendMessage(srv_msg + player.getName() + " vous a invité dans son groupe ! Pour accepter, faites : /accept <player>");
-                						player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
+		if (cmd.getName().equalsIgnoreCase("group")) {
+			if (sender instanceof Player) {
+				Player p = (Player) sender;
+				if (args.length >= 1) {
+
+					if (PlayerGroup.getGroup(p) == null && !args[0].equalsIgnoreCase("invite")) {
+						p.sendMessage(srv_msg + "Vous n'êtes pas dans un groupe !");
+						return false;
+					}
+					if (args[0].equalsIgnoreCase("invite")) {
+
+						if (args.length >= 2) {
+
+							String name = args[1];
+							Player target = Bukkit.getPlayer(name);
+
+							if (target != null) {
+								if (target != p) {
+									if (PlayerGroup.getGroup(target) == null) {
+
+										PlayerGroup group = new PlayerGroup(p);
+										HashMap<Player, PlayerGroup> asks = new HashMap<Player, PlayerGroup>();
+										if (requests.containsKey(target)) {
+											asks = requests.get(target);
+											asks.put(p, group);
+										} else {
+											asks.put(p, group);
+										}
+										requests.put(target, asks);
+										p.sendMessage(srv_msg + "Vous avez invité " + target.getName());
+										target.sendMessage(srv_msg + p.getName()
+												+ " vous a invité dans son groupe ! Pour accepter, faites : /accept <player>");
+										p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
 										target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1);
-                						
-                					}else player.sendMessage(srv_msg + "Le joueur appartient déja à un groupe.");
-                				}else player.sendMessage(srv_msg + "Le joueur n'est pas valide.");
-                				
-                			}else player.sendMessage(srv_msg + "Usage : /group invite <Player>");
+									} else
+										p.sendMessage(srv_msg + "Ce joueur appartient déja à un groupe.");
+								} else
+									p.sendMessage(srv_msg + "Vous ne pouvez pas vous inviter vous-même !");
 
-                			
-                		}
-                		else if(args[0].equalsIgnoreCase("kick")) {
-                			if(args.length >= 2) {
-                				String name = args[1];
-                				boolean contain = false;
-                				for (int i = 0; i < group.getGroup().size(); i++) {
-									Player member = Bukkit.getPlayer(group.getGroup().get(i));
-									if(member.getName() == name) {
-										List<UUID> newGroup = group.getGroup();
-										newGroup.remove(group.getGroup().get(i));
-										PlayerGroupSave.getPlayerGroup().getGroup(player).setGroup(newGroup);
-										player.sendMessage(srv_msg  + "Vous avez exclu le joueur " + name + ".");
-										
-										contain = true;
-									}
-								}
-                				if(!contain) player.sendMessage(srv_msg + "Le membre ne fait pas parti de votre groupe ou alors n'existe pas.");
-                			}else {
-                				player.sendMessage(srv_msg + "Usage : /group kick <player>");
-                			}
-                		}
-                		else if(args[0].equalsIgnoreCase("list")) {
-                			
-                			String members = "";
-                			for (int i = 0; i < group.getGroup().size(); i++) {
-								if(i == group.getGroup().size()-1) {
-									members = members + Bukkit.getPlayer(group.getGroup().get(i)).getName();
-								}else {
-									members = members + Bukkit.getPlayer(group.getGroup().get(i)).getName() + ", ";
-								}
-							}
-                			player.sendMessage(srv_msg + "Votre groupe est composé de : (Leader)" + group.getHost().getName() + 
-                					", " + members);
-                			
-                		}else {
-                			player.sendMessage(srv_msg + "Usage : /group <invite/kick/list>");
-                		}
-                		
-                	}
-                	
-                }else {
-                	if(PlayerGroup.aGroupContainPlayer(player.getUniqueId()))
-                		player.sendMessage(srv_msg + "Usage : /group <leave/list>");
-                	else 
-                		player.sendMessage(srv_msg + "Usage : /group <invite/kick/list>");
-                }
+							} else
+								p.sendMessage(srv_msg + "Le joueur n'est pas valide.");
 
-                return true;
-            }
-        }
+						} else
+							p.sendMessage(srv_msg + "Usage : /group invite <Player>");
+						return false;
 
-        return false;
-    }
+					}
+
+					PlayerGroup group = PlayerGroup.getGroup(p);
+					if (args[0].equalsIgnoreCase("leave")) {
+						group.leave(p);
+						p.sendMessage(srv_msg + "Vous avez quitté le groupe.");
+
+					}
+
+					if (args[0].equalsIgnoreCase("list")) {
+
+						String members = "";
+						for (int i = 0; i < group.getMembers().size(); i++) {
+							members = ", " + members + group.getMembers().get(i).getName();
+
+						}
+						p.sendMessage(srv_msg + "Votre groupe est composé de : (Leader)" + group.getHost().getName()
+								+ members);
+
+					}
+
+					if (args[0].equalsIgnoreCase("kick")) {
+						if (args.length >= 2) {
+							String name = args[1];
+							if (Bukkit.getPlayer(name) != null) {
+								Player target = Bukkit.getPlayer(name);
+								if (group.getMembers().contains(target)) {
+
+									group.getMembers().remove(target);
+									p.sendMessage(srv_msg + "Vous avez exclu le joueur " + name + ".");
+
+								} else
+									p.sendMessage(srv_msg + "Ce joueur n'est pas dans votre groupe.");
+
+							} else
+								p.sendMessage(srv_msg + "Ce joueur n'existe pas.");
+
+						} else {
+							p.sendMessage(srv_msg + "Usage : /group kick <player>");
+						}
+					}
+				} else
+					p.sendMessage(srv_msg + "/group invite/kick/list");
+			}
+
+		}
+		return false;
+	}
 
 }
