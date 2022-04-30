@@ -117,6 +117,23 @@ public class DungeonInstance implements Listener {
 			if (getDoor(doorName).isOpen())
 				BigDoors.get().toggleDoor(getDoor(doorName).getDoorUID());
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void quit(Player p) {
+		players.remove(p);
+		p.teleport(previousLoc.get(p));
+		if (players.size() == 0) {
+			stop();
+		}
+		for (Player pl : players) {
+			if (pl.getGameMode() != GameMode.SPECTATOR)
+				return;
+		}
+		for (Player pl : players) {
+			pl.sendTitle(ChatColor.of("#ff0000") + "Vous avez échoué", null);
+			Bukkit.getScheduler().runTaskLater(OdysseyPl.getOdysseyPlugin(), () -> stop(), 60);
+		}
+	}
 
 	public void setupDoors() {
 		for (String doorName : dungeon.getDoors()) {
@@ -160,23 +177,10 @@ public class DungeonInstance implements Listener {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		if (players.contains(e.getPlayer())) {
-			players.remove(e.getPlayer());
-			e.getPlayer().teleport(previousLoc.get(e.getPlayer()));
-			if (players.size() == 0) {
-				stop();
-			}
-			for (Player p : players) {
-				if (p.getGameMode() != GameMode.SPECTATOR)
-					return;
-			}
-			for (Player p : players) {
-				p.sendTitle(ChatColor.of("#ff0000") + "Vous avez échoué", null);
-				Bukkit.getScheduler().runTaskLater(OdysseyPl.getOdysseyPlugin(), () -> stop(), 60);
-			}
+			quit(e.getPlayer());
 		}
 	}
 
@@ -260,4 +264,14 @@ public class DungeonInstance implements Listener {
 		return null;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	
+	
 }

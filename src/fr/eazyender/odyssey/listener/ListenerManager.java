@@ -2,6 +2,7 @@ package fr.eazyender.odyssey.listener;
 
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
 import fr.eazyender.odyssey.player.CompassUtils;
@@ -22,7 +23,7 @@ public class ListenerManager {
 	AuraCastListener auraListener;
 	ItemGuiListener itemGuiListener;
 	GroupListener playerGroupHandler;
-	
+	DungeonGuiListener dungeonGuiListener;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -35,6 +36,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(auraListener = new AuraCastListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(itemGuiListener = new ItemGuiListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(playerGroupHandler = new GroupListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(dungeonGuiListener = new DungeonGuiListener(), pl);
 	}
 
 	public OdysseyPl getPl() {
