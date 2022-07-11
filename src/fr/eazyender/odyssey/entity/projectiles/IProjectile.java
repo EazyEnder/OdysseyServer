@@ -1,6 +1,7 @@
 package fr.eazyender.odyssey.entity.projectiles;
 
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -31,6 +32,8 @@ public class IProjectile {
 	
 	private ProjectileProps.System system;
 	
+	private Double bounce = 0.0;
+	
 	private double timer;
 	
 	public IProjectile(ISpell spell, Player sender, Location position, Vector force, Vector velocity,ProjectileProps.ProjectileTrigger trigger, Double trigger_info, ProjectileProps.ProjectileSource source, Double source_distance, Double source_intensity, ProjectileProps.ProjectileExtendedType type) {
@@ -56,6 +59,8 @@ public class IProjectile {
 		spell.draw(this.position, this.velocity, this.timer);
 		
 		timer+=new Double(EntityManager.getPeriod())/20;
+		
+		Vector prevelocity = this.velocity.clone();
 		
 		//Refresh part
 		long delta_t = EntityManager.getPeriod();
@@ -97,6 +102,18 @@ public class IProjectile {
 			//ISphericPosition p = new ISphericPosition(
 				//	
 				//	);
+		}
+		
+		if(this.bounce > 0.0) {
+			Location hypo_pos = this.position.clone().add(this.velocity);
+			Block bc = hypo_pos.getBlock();
+			if(!bc.getType().isAir()) {
+				Vector diff = hypo_pos.toVector().clone().subtract(this.position.toVector());
+				Vector diff_pos = bc.getLocation().toVector().clone().subtract(this.position.toVector());
+				
+				
+			}
+			
 		}
 		
 		this.position.add(this.velocity);

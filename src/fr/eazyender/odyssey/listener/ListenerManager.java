@@ -4,6 +4,7 @@ package fr.eazyender.odyssey.listener;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
+import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.StatsListener;
@@ -22,6 +23,7 @@ public class ListenerManager {
 	BlockUtils bUtils;
 	AuraCastListener auraListener;
 	ItemGuiListener itemGuiListener;
+	HammerHandler hammerHandler;
 	GroupListener playerGroupHandler;
 	DungeonGuiListener dungeonGuiListener;
 	
@@ -35,6 +37,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(bUtils = new BlockUtils(), pl);
 		pl.getServer().getPluginManager().registerEvents(auraListener = new AuraCastListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(itemGuiListener = new ItemGuiListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(hammerHandler = new HammerHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(playerGroupHandler = new GroupListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(dungeonGuiListener = new DungeonGuiListener(), pl);
 	}
