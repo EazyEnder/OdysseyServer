@@ -14,6 +14,7 @@ import fr.eazyender.odyssey.gameplay.items.ItemCommand;
 import fr.eazyender.odyssey.gameplay.magic.CommandTrySpell;
 import fr.eazyender.odyssey.gameplay.magic.MagicHandler;
 import fr.eazyender.odyssey.gameplay.magic.WandUtils;
+import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.gameplay.stats.PlayerStats;
 import fr.eazyender.odyssey.listener.ListenerManager;
 import fr.eazyender.odyssey.listener.TchatListener;
@@ -65,6 +66,7 @@ private static OdysseyPl odysseypl;
 		getCommand("dstaff").setExecutor(new DungeonStaffCommand());
 		getCommand("dj").setExecutor(new DungeonCommand());
 		getCommand("build").setExecutor(new BuildingCommand());
+		getCommand("classe").setExecutor(new ClasseCommand());
 		BlockUtils.initTileEntityLoop();
 		BuildManager.initBuildManager();
 		

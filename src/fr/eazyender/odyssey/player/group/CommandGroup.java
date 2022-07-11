@@ -1,6 +1,5 @@
 package fr.eazyender.odyssey.player.group;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

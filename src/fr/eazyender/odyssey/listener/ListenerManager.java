@@ -6,6 +6,7 @@ import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
+import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.StatsListener;
 import fr.eazyender.odyssey.player.group.GroupListener;
@@ -26,6 +27,7 @@ public class ListenerManager {
 	HammerHandler hammerHandler;
 	GroupListener playerGroupHandler;
 	DungeonGuiListener dungeonGuiListener;
+	ClasseCommand classeCommand;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -40,6 +42,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(hammerHandler = new HammerHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(playerGroupHandler = new GroupListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(dungeonGuiListener = new DungeonGuiListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(classeCommand = new ClasseCommand(), pl);
 	}
 
 	public OdysseyPl getPl() {

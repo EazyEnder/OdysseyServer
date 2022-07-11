@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,6 +13,7 @@ import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.magic.WandUtils;
+import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
 
 public class PlayerStats {
 
@@ -36,10 +38,16 @@ public class PlayerStats {
 		int sum = 0;
 		for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
 			if (armorPiece != null)
-				sum += ItemUtils.getStat(armorPiece, stat);
+				if (ItemUtils.getType(armorPiece) == null || ItemUtils.getType(armorPiece).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
+					sum += ItemUtils.getStat(armorPiece, stat);
 		}
+		
 		if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) 
-			sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
+			if (ItemUtils.getType(p.getInventory().getItemInMainHand()) == null || ItemUtils.getType(p.getInventory().getItemInMainHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
+				sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
+		if (p.getInventory().getItemInOffHand() != null && p.getInventory().getItemInOffHand().getType() == Material.SHIELD && p.isBlocking())
+			if (ItemUtils.getType(p.getInventory().getItemInOffHand()) == null || ItemUtils.getType(p.getInventory().getItemInOffHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
+				sum += ItemUtils.getStat(p.getInventory().getItemInOffHand(), stat);
 
 		// Adding default values to sum
 		if (stat == Stat.DAMAGE)
@@ -100,6 +108,7 @@ public class PlayerStats {
 			@SuppressWarnings("unchecked")
 			public void run() {
 				for(Player p : Bukkit.getOnlinePlayers()) {
+					
 						if (!isSame(itemHeld.get(p), p.getInventory().getItemInMainHand())) {
 							if (itemHeld.get(p) != null && !isArmor(itemHeld.get(p))) {
 								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) - ItemUtils.getStat(itemHeld.get(p), Stat.AURA));
@@ -109,10 +118,13 @@ public class PlayerStats {
 								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.AURA));
 								WandUtils.setMana(p, WandUtils.getMana(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.MP));
 							}
+							
 							itemHeld.put(p, p.getInventory().getItemInMainHand());
 							
 						}
 					
+						
+						
 					int slot = 0;
 					for(ItemStack armorPiece : (ArrayList<ItemStack>) armor.get(p).clone()) {
 						if (!isSame(armorPiece, p.getInventory().getArmorContents()[slot])) {

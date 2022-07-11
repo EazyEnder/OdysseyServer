@@ -73,7 +73,6 @@ public class Cast {
 
 			@Override
 			public void run() {
-				Bukkit.broadcastMessage("cancelled");
 				cancelCast();
 			}
 

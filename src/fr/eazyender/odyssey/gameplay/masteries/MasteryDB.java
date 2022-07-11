@@ -9,11 +9,12 @@ public class MasteryDB {
 
 	public static void initPlayer(String uuid) {
 		try {
-			String sql = "INSERT INTO masteries (uuid, warrior, archer, tank, fire, water, earth, wind, light, shadow) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO masteries (uuid, warrior, archer, tank, fire, water, earth, wind, light, shadow, classe) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
-			for(int i = 2; i < 10; i++)
+			for(int i = 2; i < 11; i++)
 				stmt.setInt(i, 0);
+			stmt.setString(11, "null");
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -72,5 +73,38 @@ public class MasteryDB {
 		
 	}
 	
+	public static String getClass(String uuid) {
+		
+		try {
+			String sql = "SELECT * FROM masteries WHERE uuid=?;";
+			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
+			stmt.setString(1, uuid);
+			ResultSet set = stmt.executeQuery();
+			while (set.next())
+				return set.getString("classe");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		initPlayer(uuid);
+		return "null";
+		
+	}
+	
+	
+	public static void setClass(String uuid, String classe) {
+		
+		if (!hasMasteryInit(uuid)) initPlayer(uuid);
+		try {
+			String sql = "UPDATE masteries SET classe=? WHERE uuid=?;";
+			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
+			stmt.setString(1, classe);
+			stmt.setString(2, uuid);
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

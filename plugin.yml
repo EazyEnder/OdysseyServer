@@ -26,11 +26,13 @@ commands:
   build:
     description: Manage building gameplay
     permission: player.use
-    aliases: yes
   dstaff:
     description: Manage dungeons
     permission: dungeons.manage
   dj:
     description: Enter dungeons
     aliases: dungeons
+    permission: player.use
+  classe:
+    description: Changer de classe
     permission: player.use

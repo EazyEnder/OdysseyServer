@@ -63,7 +63,7 @@ public class WandUtils implements Listener {
 						}
 					}
 
-					if (player.getItemInHand() != null && ItemUtils.getType(player.getItemInHand()) != null &&  ItemUtils.getType(player.getItemInHand()) == ItemType.MAGIE) {
+					if (player.getItemInHand() != null && ItemUtils.getType(player.getItemInHand()) != null &&  ItemUtils.getType(player.getItemInHand()) == ItemType.MAGE) {
 
 						if (!element_choose.containsKey(player.getUniqueId())) {
 							element_choose.put(player.getUniqueId(), 1);
@@ -108,7 +108,7 @@ public class WandUtils implements Listener {
 				|| LaunchMagicUtils.player_runes.get(p.getUniqueId()).isEmpty())) {
 
 			if (p.getItemInHand() != null
-					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == ItemType.MAGIE) 
+					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == ItemType.MAGE) 
 
 				changeElement(p);
 

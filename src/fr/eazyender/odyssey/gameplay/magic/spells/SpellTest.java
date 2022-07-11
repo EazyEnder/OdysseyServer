@@ -1,5 +1,8 @@
 package fr.eazyender.odyssey.gameplay.magic.spells;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;

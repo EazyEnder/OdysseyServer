@@ -10,6 +10,8 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 import fr.eazyender.odyssey.gameplay.items.ItemType;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
+import net.md_5.bungee.api.ChatColor;
 
 public class AuraCastListener implements Listener {
 
@@ -37,10 +39,16 @@ public class AuraCastListener implements Listener {
 					if (ItemUtils.getType(e.getItem()) == ItemType.ARCHER && e.getAction().name().contains("RIGHT"))
 						return;
 
-					cast = new Cast(e.getPlayer(), ItemUtils.getType(e.getItem()));
-					cast.setPattern("" + Cast.getClick(e.getAction()));
-					cast.animate();
-					e.setCancelled(true);
+					if (ItemUtils.getType(e.getItem()).name()
+							.equals(MasteryDB.getClass(e.getPlayer().getUniqueId().toString()))) {
+
+						cast = new Cast(e.getPlayer(), ItemUtils.getType(e.getItem()));
+						cast.setPattern("" + Cast.getClick(e.getAction()));
+						cast.animate();
+						e.setCancelled(true);
+					} else {
+						e.getPlayer().sendMessage(ChatColor.of("#FF0000") + "Tu ne peux pas utiliser cet item avec ta classe actuelle !");
+					}
 
 				}
 			}
@@ -54,5 +62,5 @@ public class AuraCastListener implements Listener {
 			casts.get(e.getPlayer()).cast();
 		}
 	}
-	
+
 }
