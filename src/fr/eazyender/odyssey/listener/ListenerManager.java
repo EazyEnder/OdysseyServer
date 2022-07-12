@@ -10,6 +10,7 @@ import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.StatsListener;
 import fr.eazyender.odyssey.player.group.GroupListener;
+import fr.eazyender.odyssey.player.harvest.HarvestHandler;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
 
@@ -28,6 +29,7 @@ public class ListenerManager {
 	GroupListener playerGroupHandler;
 	DungeonGuiListener dungeonGuiListener;
 	ClasseCommand classeCommand;
+	HarvestHandler harvestListener;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -42,6 +44,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(hammerHandler = new HammerHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(playerGroupHandler = new GroupListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(dungeonGuiListener = new DungeonGuiListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(harvestListener = new HarvestHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(classeCommand = new ClasseCommand(), pl);
 	}
 

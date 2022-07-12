@@ -26,6 +26,7 @@ import fr.eazyender.odyssey.player.CompassCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.group.CommandAccept;
 import fr.eazyender.odyssey.player.group.CommandGroup;
+import fr.eazyender.odyssey.player.harvest.HarvestHandler;
 import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.block.FileTileEntity;
@@ -69,6 +70,7 @@ private static OdysseyPl odysseypl;
 		getCommand("classe").setExecutor(new ClasseCommand());
 		BlockUtils.initTileEntityLoop();
 		BuildManager.initBuildManager();
+		HarvestHandler.initHandler();
 		
 		
 		
@@ -81,6 +83,8 @@ private static OdysseyPl odysseypl;
 		AuraHUD.setVisibleFalse();
 		FileTileEntity.saveFile();
 		TchatListener.runRunnables();
+		
+		HarvestHandler.forceRespawnAllRegenBlocks();
 	}
 	
 	public static OdysseyPl getOdysseyPlugin() {
