@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.player.harvest;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -44,7 +45,7 @@ public class HarvestHandler implements Listener{
 		
 		//----------------------------------------------------------------------
 		
-		int delay = 1;
+		int delay = 30;
 		new BukkitRunnable() {
 
 			@Override
@@ -90,7 +91,7 @@ public class HarvestHandler implements Listener{
 	public static void onPlayerHarvest(BlockBreakEvent event) {
 		
 		Player player = event.getPlayer();
-		if(player != null) {
+		if(player != null && !player.getGameMode().equals(GameMode.CREATIVE)) {
 		
 			Block block = event.getBlock();
 			boolean cancel = true;
@@ -107,7 +108,7 @@ public class HarvestHandler implements Listener{
 				}
 			}
 			
-			if(cancel && !player.isOp()) {
+			if(cancel) {
 				event.setCancelled(true);
 			}else {
 				event.setDropItems(false);
