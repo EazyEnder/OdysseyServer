@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
 import fr.eazyender.odyssey.gameplay.aura.AuraHandler;
+import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
 import fr.eazyender.odyssey.gameplay.city.building.BuildManager;
 import fr.eazyender.odyssey.gameplay.city.building.BuildingCommand;
 import fr.eazyender.odyssey.gameplay.items.ItemCommand;
@@ -68,6 +69,7 @@ private static OdysseyPl odysseypl;
 		getCommand("dj").setExecutor(new DungeonCommand());
 		getCommand("build").setExecutor(new BuildingCommand());
 		getCommand("classe").setExecutor(new ClasseCommand());
+		getCommand("skills").setExecutor(new SkillsCommand());
 		BlockUtils.initTileEntityLoop();
 		BuildManager.initBuildManager();
 		HarvestHandler.initHandler();

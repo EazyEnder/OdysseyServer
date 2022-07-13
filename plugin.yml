@@ -36,3 +36,6 @@ commands:
   classe:
     description: Changer de classe
     permission: player.use
+  skills:
+    description: Voir ses skills
+    permission: player.use

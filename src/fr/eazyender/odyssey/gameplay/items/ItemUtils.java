@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -28,6 +29,7 @@ public class ItemUtils {
 				loreL.add(line.replace("&", "§"));
 			meta.setLore(loreL);
 		}
+		
 		meta.setCustomModelData(modelData);
 		is.setItemMeta(meta);
 
