@@ -22,6 +22,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.city.building.BuildManager;
+import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
 import fr.eazyender.odyssey.player.group.PlayerGroup;
 import fr.eazyender.odyssey.utils.zone.IZone;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
@@ -139,12 +141,12 @@ public class CompassUtils implements Listener{
 				
 				int rad = 500;
 				List<IZone> zones = ZoneUtils.getZoneInRadius(player, null, rad);
-				boolean flag2 = true;
+				List<IDynamicBuild> builds = BuildManager.getDynamicBuild(player.getUniqueId());
 				//Opti todo : if distance instant after loop
-				for (IZone zone : zones) {
-					if(flag2) {
+				for (IDynamicBuild build : builds) {
+					if(build.getPos().distance(player.getLocation().toVector()) > 20) {
 					
-						Vector vector_zone = zone.getCenter().toVector().clone().subtract(player.getLocation().toVector());
+						Vector vector_zone = build.getPos().clone().subtract(player.getLocation().toVector());
 						vector_zone.normalize();
 						Vector vector_north = new Vector(0,0,-1).normalize();
 						
@@ -154,7 +156,7 @@ public class CompassUtils implements Listener{
 						double costeta = scalar_product/(Math.sqrt((vector_zone.getX()*vector_zone.getX())+(vector_zone.getZ()*vector_zone.getZ())) * Math.sqrt((vector_north.getX()*vector_north.getX())+(vector_north.getZ()*vector_north.getZ())));
 						double teta = Math.acos(costeta)/(Math.PI/180);
 					
-						if(zone.getCenter().getX() < player.getLocation().getX()) {
+						if(build.getPos().getX() < player.getLocation().getX()) {
 							teta = -teta;
 						}
 						
@@ -165,12 +167,8 @@ public class CompassUtils implements Listener{
 					    }
 						
 						if(Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) == angle || angle-360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId())))) || angle+360==Math.round(yaw + (i*(180/compass_resolution.get(player.getUniqueId()))))){
-							if(player.getLocation().distance(zone.getCenter()) < rad/3)
-							point = ZoneUtils.getLogoOfZone(zone.getType(),1);
-							else if(player.getLocation().distance(zone.getCenter()) < rad/2)
-								point = ZoneUtils.getLogoOfZone(zone.getType(),2);
-							else if(player.getLocation().distance(zone.getCenter()) <= rad)
-								point = ZoneUtils.getLogoOfZone(zone.getType(),3);
+							if(player.getLocation().toVector().distance(build.getPos()) < rad/3)
+							point = "\uEfc9";
 						}
 						
 					}

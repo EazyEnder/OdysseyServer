@@ -85,8 +85,8 @@ private static OdysseyPl odysseypl;
 		AuraHUD.setVisibleFalse();
 		FileTileEntity.saveFile();
 		TchatListener.runRunnables();
-		
 		HarvestHandler.forceRespawnAllRegenBlocks();
+		BuildManager.saveFile();
 	}
 	
 	public static OdysseyPl getOdysseyPlugin() {

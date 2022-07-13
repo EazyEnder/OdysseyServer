@@ -77,7 +77,20 @@ public class IBuildingSettings {
 			
 		}
 		
-		if(HammerHandler.in_works.putIfAbsent(playerid, new IBuildUnderConstruction(playerid, Bukkit.getPlayer(playerid).getWorld(), pos, rotationY, build, 1)) == null) {
+		
+		if(!HammerHandler.in_works.containsKey(playerid)) {
+			
+			
+			IDynamicBuild dynamicbuild = new IDynamicBuild(player.getUniqueId(),
+						getPos(),
+						getRotationY(),
+						player.getWorld(),
+						getBuild(),
+						0);
+			
+			BuildManager.dynamic_builds.add(dynamicbuild);
+			
+			HammerHandler.in_works.put(playerid, new IBuildUnderConstruction(playerid, Bukkit.getPlayer(playerid).getWorld(), pos, rotationY, build, dynamicbuild, 1));
 			
 			//Remove items
 			if(!build.getUpgrade().isEmpty())
@@ -317,6 +330,44 @@ public class IBuildingSettings {
 		return rotationY;
 	}
 	
+	
+	
+	public UUID getPlayerid() {
+		return playerid;
+	}
+
+	public void setPlayerid(UUID playerid) {
+		this.playerid = playerid;
+	}
+
+	public Vector getPos() {
+		return pos;
+	}
+
+	public void setPos(Vector pos) {
+		this.pos = pos;
+	}
+
+	public IBuild getBuild() {
+		return build;
+	}
+
+	public void setBuild(IBuild build) {
+		this.build = build;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public void setRotationY(int rotationY) {
+		this.rotationY = rotationY;
+	}
+
 	private void gen(String sc) {
 		
 		File src = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(),sc + ".nbt");

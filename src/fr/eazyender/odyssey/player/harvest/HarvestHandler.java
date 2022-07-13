@@ -16,6 +16,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.city.building.BuildManager;
+import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
 
 public class HarvestHandler implements Listener{
 	
@@ -91,36 +93,43 @@ public class HarvestHandler implements Listener{
 	public static void onPlayerHarvest(BlockBreakEvent event) {
 		
 		Player player = event.getPlayer();
+		
 		if(player != null && !player.getGameMode().equals(GameMode.CREATIVE)) {
 		
-			Block block = event.getBlock();
-			boolean cancel = true;
-			double max_timer = 0;
-			List<ItemStack> items = new ArrayList<ItemStack>();
-			for (IHarvestingResource res : resources) {
-				if(res.getBlocks().contains(block.getType())) {
-					Double chance = res.getDrops().get(res.getBlocks().indexOf(block.getType()));
-					if(Math.random() <= chance) {
-						items.add(res.getResource());
+			IDynamicBuild dbuild = BuildManager.getDynamicBuild(player.getWorld(), event.getBlock().getLocation().toVector());
+			if(dbuild == null) {
+				
+				Block block = event.getBlock();
+				boolean cancel = true;
+				double max_timer = 0;
+				List<ItemStack> items = new ArrayList<ItemStack>();
+				for (IHarvestingResource res : resources) {
+					if(res.getBlocks().contains(block.getType())) {
+						Double chance = res.getDrops().get(res.getBlocks().indexOf(block.getType()));
+						if(Math.random() <= chance) {
+							items.add(res.getResource());
+						}
+						max_timer = Math.max(max_timer, res.getTimer());
+						cancel = false;
 					}
-					max_timer = Math.max(max_timer, res.getTimer());
-					cancel = false;
 				}
-			}
-			
-			if(cancel) {
-				event.setCancelled(true);
+				
+				if(cancel) {
+					event.setCancelled(true);
+				}else {
+					event.setDropItems(false);
+					event.setExpToDrop(0);
+				
+					for (ItemStack item : items) {
+						block.getWorld().dropItem(block.getLocation(), item);
+					}
+					
+					
+					IRegenBlock regen = new IRegenBlock(block.getType(),block.getBlockData(), block.getLocation() ,max_timer);
+					regen_blocks.add(regen);
+				}
 			}else {
-				event.setDropItems(false);
-				event.setExpToDrop(0);
-			
-				for (ItemStack item : items) {
-					block.getWorld().dropItem(block.getLocation(), item);
-				}
-				
-				
-				IRegenBlock regen = new IRegenBlock(block.getType(),block.getBlockData(), block.getLocation() ,max_timer);
-				regen_blocks.add(regen);
+				event.setCancelled(true);
 			}
 			
 			

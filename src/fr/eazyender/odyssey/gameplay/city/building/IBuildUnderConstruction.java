@@ -38,6 +38,7 @@ public class IBuildUnderConstruction {
 	private Vector pos;
 	private int rotationY;
 	private IBuild build;
+	private IDynamicBuild dynamicbuild;
 	private int next_tier;
 	
 	private ArmorStand holo;
@@ -45,12 +46,13 @@ public class IBuildUnderConstruction {
 	
 	
 	
-	public IBuildUnderConstruction(UUID owner, World world, Vector pos, int rotationY, IBuild build, int next_tier) {
+	public IBuildUnderConstruction(UUID owner, World world, Vector pos, int rotationY, IBuild build, IDynamicBuild dynamicbuild, int next_tier) {
 		this.owner = owner;
 		this.world = world;
 		this.pos = pos;
 		this.rotationY = rotationY;
 		this.build = build;
+		this.dynamicbuild = dynamicbuild;
 		this.next_tier = next_tier;
 		
 		Location holo_loc = new Location(world,
@@ -116,7 +118,7 @@ public class IBuildUnderConstruction {
 		
 	}
 	
-	private void gen(String sc) {
+	private Palette gen(String sc) {
 			
 			File src = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(),sc + ".nbt");
 		
@@ -135,10 +137,13 @@ public class IBuildUnderConstruction {
 	        		world.getBlockAt(data.getLocation().add(pos).add(new Vector(0,-1,0))).setType(Material.AIR);
 	        	}
 	        }
+	        
+	        return blockPalette;
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 			Bukkit.getPlayer(owner).sendMessage(TextUtils.aide + "La structure n'a pas réussi à être générée.");
+			return null;
 			}
 			
 	  
@@ -162,7 +167,11 @@ public class IBuildUnderConstruction {
 	public void finishBuildConstruction() {
 		
 		String shem_name = build.getSchem_path() + "_" + next_tier;
-		gen(shem_name);
+		Palette block_pal = gen(shem_name);
+		
+		dynamicbuild.upgrade_components(block_pal);
+		
+		HammerHandler.in_works.remove(owner);
 		
 		Player player = Bukkit.getPlayer(owner);
 		if(player != null && player.isOnline()) {

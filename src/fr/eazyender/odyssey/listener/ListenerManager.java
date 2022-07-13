@@ -6,6 +6,7 @@ import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
+import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
 import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
@@ -32,6 +33,8 @@ public class ListenerManager {
 	ClasseCommand classeCommand;
 	HarvestHandler harvestListener;
 	SkillsCommand skillsCommand;
+	BuildObjectListener bolistener;
+	
 
 	public ListenerManager(OdysseyPl pl) {
 		this.pl = pl;
@@ -48,6 +51,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(harvestListener = new HarvestHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(classeCommand = new ClasseCommand(), pl);
 		pl.getServer().getPluginManager().registerEvents(skillsCommand = new SkillsCommand(), pl);
+		pl.getServer().getPluginManager().registerEvents(bolistener = new BuildObjectListener(), pl);
 	}
 
 	public OdysseyPl getPl() {
