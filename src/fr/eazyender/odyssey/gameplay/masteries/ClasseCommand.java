@@ -14,7 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -30,15 +32,15 @@ public class ClasseCommand implements CommandExecutor, Listener {
 		Inventory inv = Bukkit.createInventory(new ClasseCommandHolder(), 9,
 				ChatColor.of("#034efc") + "Changement de classe");
 
-		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), "", null, 0));
+		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), " ", null, 0));
 		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cFermer", null, 0));
-		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), "", null, 0));
+		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), " ", null, 0));
 		inv.setItem(3, getGlow(p, ItemUtils.getItem(new ItemStack(Material.IRON_SWORD), "§cGuerrier", null, 0), 1));
 		inv.setItem(4, getGlow(p, ItemUtils.getItem(new ItemStack(Material.GLASS_BOTTLE), "§bMage", null, 0), 2));
 		inv.setItem(5, getGlow(p, ItemUtils.getItem(new ItemStack(Material.BOW), "§fArcher", null, 0), 3));
 		inv.setItem(6, getGlow(p, ItemUtils.getItem(new ItemStack(Material.SHIELD), "§eTank", null, 0), 4));
-		inv.setItem(7, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), "", null, 0));
-		inv.setItem(8, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), "", null, 0));
+		inv.setItem(7, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), " ", null, 0));
+		inv.setItem(8, ItemUtils.getItem(new ItemStack(Material.WHITE_STAINED_GLASS_PANE), " ", null, 0));
 
 		p.openInventory(inv);
 
@@ -63,12 +65,17 @@ public class ClasseCommand implements CommandExecutor, Listener {
 		if (classeNum == 4)
 			if (classe.equals("TANK"))
 				glow = true;
+		ItemStack isRenvoi = is.clone();
+		ItemMeta meta = isRenvoi.getItemMeta();
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+		isRenvoi.setItemMeta(meta);
 		if (glow) {
-			ItemStack isRenvoi = is.clone();
-			isRenvoi.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1);
+			
+			isRenvoi.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
 			return isRenvoi;
 		} else
-			return is;
+			return isRenvoi;
 
 	}
 
