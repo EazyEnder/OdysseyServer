@@ -18,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.items.ItemInventoryHolder.State;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
 import fr.eazyender.odyssey.utils.NBTEditor;
 
@@ -171,7 +172,7 @@ public class ItemGuiListener implements Listener {
 						ItemCommand.openItemGui(p, holder);
 						return;
 					}
-					ItemType type = ItemType.values()[e.getSlot() - 1];
+					Classe type = Classe.values()[e.getSlot() - 1];
 
 					ItemStack is = ItemDB.getItem(holder.getIdItem());
 					is = NBTEditor.set(is, type.name(), "type");

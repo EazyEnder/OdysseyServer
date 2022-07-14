@@ -9,10 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
 import fr.eazyender.odyssey.utils.NBTEditor;
 import net.md_5.bungee.api.ChatColor;
@@ -49,10 +49,10 @@ public class ItemUtils {
 		return NBTEditor.getInt(is, stat.name());
 	}
 
-	public static ItemType getType(ItemStack is) {
+	public static Classe getType(ItemStack is) {
 		if (NBTEditor.getString(is, "type") == null)
 			return null;
-		return ItemType.valueOf(NBTEditor.getString(is, "type"));
+		return Classe.valueOf(NBTEditor.getString(is, "type"));
 	}
 
 	public static ItemRank getRank(ItemStack is) {

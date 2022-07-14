@@ -2,7 +2,6 @@ package fr.eazyender.odyssey.gameplay.aura;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
@@ -12,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import fr.eazyender.odyssey.OdysseyPl;
-import fr.eazyender.odyssey.gameplay.items.ItemType;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import net.md_5.bungee.api.ChatColor;
 
 public class Cast {
@@ -20,12 +19,12 @@ public class Cast {
 	public static ArrayList<Player> castAnimation = new ArrayList<>();
 
 	Player p;
-	ItemType type;
+	Classe type;
 	String pattern = "";
 	BukkitTask expired = null;
 	long time = 0;
 
-	Cast(Player p, ItemType type) {
+	Cast(Player p, Classe type) {
 		this.p = p;
 		this.type = type;
 		AuraCastListener.casts.put(p, this);
@@ -39,11 +38,11 @@ public class Cast {
 		this.p = p;
 	}
 
-	public ItemType getType() {
+	public Classe getType() {
 		return type;
 	}
 
-	public void setType(ItemType type) {
+	public void setType(Classe type) {
 		this.type = type;
 	}
 
@@ -66,7 +65,7 @@ public class Cast {
 			castAnimation.remove(p);
 		}
 		AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);
-
+		p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 0.3f, 10f);
 		if (expired != null)
 			expired.cancel();
 		expired = new BukkitRunnable() {
@@ -80,39 +79,47 @@ public class Cast {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	public void cast() {
-		Skill skill = Skill.getSkill(getPattern());
-		BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
-		if (skill != null) {
-			bar.setTitle(generateText(true, true));
-			bar.setColor(BarColor.RED);
-			skill.launch(p, null);
-		} else {
-			bar.setColor(BarColor.WHITE);
-			p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 1);
+		try {
+			Class<? extends Skill> skillClass = Skill.getSkill(this);
+			BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
+			if (skillClass != null) {
+				bar.setTitle(generateText(true, true));
+				bar.setColor(BarColor.RED);
+				skillClass.newInstance().launch(p, null);
+			} else {
+				bar.setColor(BarColor.WHITE);
+				p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 1);
+			}
+			
+
+
+			AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);
+			castAnimation.add(p);
+			if (expired != null) expired.cancel();
+			new BukkitRunnable() {
+
+				@Override
+				public void run() {
+					if (castAnimation.contains(p)) {
+						BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
+						bar.setTitle("");
+						bar.setColor(BarColor.YELLOW);
+						AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);
+						castAnimation.remove(p);
+					}
+				}
+
+			}.runTaskLater(OdysseyPl.getOdysseyPlugin(), 20);
+			
+			
+			
+			AuraCastListener.casts.remove(p);
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
 		}
 
-		AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);
-		castAnimation.add(p);
-		if (expired != null) expired.cancel();
-		new BukkitRunnable() {
-
-			@Override
-			public void run() {
-				if (castAnimation.contains(p)) {
-					BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
-					bar.setTitle("");
-					bar.setColor(BarColor.YELLOW);
-					AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);
-					castAnimation.remove(p);
-				}
-			}
-
-		}.runTaskLater(OdysseyPl.getOdysseyPlugin(), 20);
-		
-		
-		
-		AuraCastListener.casts.remove(p);
 
 	}
 

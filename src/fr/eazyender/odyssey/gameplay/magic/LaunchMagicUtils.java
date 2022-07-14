@@ -18,12 +18,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import fr.eazyender.odyssey.OdysseyPl;
-import fr.eazyender.odyssey.gameplay.items.ItemType;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.magic.spells.ISpell;
 import fr.eazyender.odyssey.gameplay.magic.spells.SpellTest;
 import fr.eazyender.odyssey.gameplay.magic.spells.fire.SpellFirebolt;
 import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.utils.maths.ISphericPosition;
 import net.md_5.bungee.api.ChatColor;
 
@@ -39,7 +39,7 @@ public class LaunchMagicUtils implements Listener {
 		Player p = event.getPlayer();
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 			if (p.getItemInHand() != null
-					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == ItemType.MAGE) {
+					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == Classe.MAGE) {
 				if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
 					event.setCancelled(true);
 					p.sendMessage(ChatColor.of("#FF0000") + "Tu ne peux pas utiliser cet item avec ta classe actuelle !");

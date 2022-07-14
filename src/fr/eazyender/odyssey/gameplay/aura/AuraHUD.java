@@ -13,8 +13,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
-import fr.eazyender.odyssey.gameplay.items.ItemType;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
 
@@ -52,9 +52,9 @@ public class AuraHUD implements Listener {
 					}
 
 					if (player.getItemInHand() != null) {
-						ItemType type = ItemUtils.getType(player.getItemInHand());
+						Classe type = ItemUtils.getType(player.getItemInHand());
 						if (type != null
-								&& (type == ItemType.ARCHER || type == ItemType.GUERRIER || type == ItemType.TANK)) {
+								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK)) {
 							if (!player_bossbars.containsKey(player.getUniqueId())) {
 								BossBar bossBar = Bukkit.createBossBar("", BarColor.YELLOW, BarStyle.SOLID);
 										bossBar.addPlayer(player);

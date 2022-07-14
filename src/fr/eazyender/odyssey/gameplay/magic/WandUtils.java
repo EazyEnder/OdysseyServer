@@ -16,8 +16,8 @@ import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
-import fr.eazyender.odyssey.gameplay.items.ItemType;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
 
@@ -63,7 +63,7 @@ public class WandUtils implements Listener {
 						}
 					}
 
-					if (player.getItemInHand() != null && ItemUtils.getType(player.getItemInHand()) != null &&  ItemUtils.getType(player.getItemInHand()) == ItemType.MAGE) {
+					if (player.getItemInHand() != null && ItemUtils.getType(player.getItemInHand()) != null &&  ItemUtils.getType(player.getItemInHand()) == Classe.MAGE) {
 
 						if (!element_choose.containsKey(player.getUniqueId())) {
 							element_choose.put(player.getUniqueId(), 1);
@@ -108,7 +108,7 @@ public class WandUtils implements Listener {
 				|| LaunchMagicUtils.player_runes.get(p.getUniqueId()).isEmpty())) {
 
 			if (p.getItemInHand() != null
-					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == ItemType.MAGE) 
+					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == Classe.MAGE) 
 
 				changeElement(p);
 
