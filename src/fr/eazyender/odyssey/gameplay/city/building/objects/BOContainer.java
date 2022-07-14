@@ -2,19 +2,26 @@ package fr.eazyender.odyssey.gameplay.city.building.objects;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Sound;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
@@ -25,11 +32,15 @@ import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
 import fr.eazyender.odyssey.utils.NBTEditor;
 import net.md_5.bungee.api.ChatColor;
 
-public class BOContainer extends IBuildObject{
+public class BOContainer extends IBuildObject implements Listener{
 
 	private List<ItemStack> container;
 	private int ligne;
 	private String name;
+	
+	public BOContainer() {
+		
+	}
 	
 	public BOContainer(IDynamicBuild build_owner, UUID owner, Vector pos) {
 		super(build_owner, owner, pos);
@@ -70,7 +81,7 @@ public class BOContainer extends IBuildObject{
 	
 	@Override
 	public void trigger(Player player) {
-		player.sendMessage("cliqué sur " + this.name);
+		createGui(player);
 	}
 	
 	 @Override
@@ -142,15 +153,78 @@ public class BOContainer extends IBuildObject{
 		 
 		 str += ligne + "!!obj;";
 		for (int i = 0; i < container.size(); i++) {
-			if(i != 0) str += "!!obj_interne;";
 			ItemStack item = container.get(i);
-			NBTEditor.getItemNBTTag(item).toJson();
+			if(item != null) { if(i != 0)str += "!!obj_interne;";
+			str += NBTEditor.getItemNBTTag(item).toJson();
+			}
 		}
 		 
 		 
 		 return str;
-		 }
+		}
+	 
+	 public void createGui(Player player) {
+			if(ligne > 6)ligne = 6;
+			Inventory inv = Bukkit.createInventory(new BOContainerHolder(this, 1), 9*ligne , "\uEfc8" + " §l" + ChatColor.of(new Color(124, 117, 82)) + name);
+			
+			for (int i = 0; i < container.size(); i++) {
+				inv.setItem(i, container.get(i));
+			}
+	
+			player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1, 1);
+			player.openInventory(inv);
+		}
+		
+	@EventHandler
+	 public static void leaveGui(InventoryCloseEvent event) {
+	       Player player = (Player)event.getPlayer();
+	       Inventory inv = event.getInventory();
+	       
+	       if(inv.getHolder() instanceof BOContainerHolder) {
+	    	   BOContainerHolder holder = (BOContainerHolder) inv.getHolder();
+	    	   
+	    	   holder.getObject().container = Arrays.asList(inv.getContents());
+	       }
+	       
+	       
+	 }
 	 
 	 
 
+}
+
+class BOContainerHolder implements InventoryHolder{
+
+	private BOContainer object;
+	private int page;
+	
+	public BOContainerHolder(BOContainer object, int page) {
+		this.object = object;
+		this.page = page;
+	}
+	
+	@Override
+	public Inventory getInventory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public BOContainer getObject() {
+		return object;
+	}
+
+	public void setObject(BOContainer object) {
+		this.object = object;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+	
+	
+	
 }

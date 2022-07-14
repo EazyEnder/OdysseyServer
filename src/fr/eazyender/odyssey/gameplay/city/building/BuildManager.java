@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,6 +16,7 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.city.building.objects.BOContainer;
 
 public class BuildManager {
 
@@ -31,6 +31,8 @@ public class BuildManager {
 		builds.add(new IBuild("Magasin","village/shop","plain",new double[]{17,7,21},"t",new ArrayList<List<ItemStack>>(),shop_work_time));
 		
 		loadFile();
+		
+		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOContainer(), OdysseyPl.getOdysseyPlugin());
 	}
 	
 	public static IBuild getBuildByName(String name) {
@@ -99,6 +101,9 @@ public class BuildManager {
 	
 	public static void saveFile() {
         File file = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(), "/builds"+".txt");
+        
+        //file.delete();
+        
         try {
         FileWriter writer = new FileWriter(file.getAbsoluteFile());
         

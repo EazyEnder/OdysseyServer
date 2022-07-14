@@ -13,6 +13,10 @@ public class IBuildObject {
 	protected UUID owner;
 	protected Vector pos;
 	
+	public IBuildObject() {
+		
+	}
+	
 	public IBuildObject(IDynamicBuild build_owner, UUID owner, Vector pos) {
 		this.build_owner = build_owner;
 		this.owner = owner;

@@ -1,5 +1,6 @@
 package fr.eazyender.odyssey.player.harvest;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.city.building.BuildManager;
 import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
+import net.md_5.bungee.api.ChatColor;
 
 public class HarvestHandler implements Listener{
 	
@@ -28,16 +30,45 @@ public class HarvestHandler implements Listener{
 		
 		
 		
-		ItemStack fibre = new ItemStack(Material.PAPER, 1);
+		ItemStack fibre = new ItemStack(Material.RED_DYE, 1);
 		ItemMeta fibre_meta = fibre.getItemMeta();
 		fibre_meta.setCustomModelData(1);
-		fibre_meta.setDisplayName("Fibre");
+		fibre_meta.setDisplayName(ChatColor.of(new Color(172, 188, 122)) + "Fibre végétale");
 		List<String> fibre_lore = new ArrayList<String>();
+		fibre_lore.add(ChatColor.of(new Color(175, 186, 141)) +"Expansion cellulaire possédant d'intéressantes");
+		fibre_lore.add(ChatColor.of(new Color(175, 186, 141)) +"propriétés mécaniques et thermiques.");
 		fibre_meta.setLore(fibre_lore);
 		fibre.setItemMeta(fibre_meta);
-		IHarvestingResource fibre_rs = new IHarvestingResource("fibre", fibre, Material.OAK_LEAVES, 0.5, "", 10);
-		
+		List<Material> leaves = new ArrayList<Material>();
+		List<Double> fibre_drops = new ArrayList<Double>();
+		leaves.add(Material.OAK_LEAVES); fibre_drops.add(0.5);
+		leaves.add(Material.SPRUCE_LEAVES); fibre_drops.add(0.5);
+		leaves.add(Material.BIRCH_LEAVES); fibre_drops.add(0.5);
+		leaves.add(Material.DARK_OAK_LEAVES); fibre_drops.add(0.5);
+		leaves.add(Material.ACACIA_LEAVES); fibre_drops.add(0.5);
+		leaves.add(Material.JUNGLE_LEAVES); fibre_drops.add(0.5);
+		IHarvestingResource fibre_rs = new IHarvestingResource("fibre", fibre, leaves, fibre_drops, "", 60*10);
 		resources.add(fibre_rs);
+		
+		ItemStack bois = new ItemStack(Material.OAK_LOG, 1);
+		ItemMeta bois_meta = bois.getItemMeta();
+		bois_meta.setDisplayName(ChatColor.of(new Color(187, 131, 80)) + "Bois");
+		List<String> bois_lore = new ArrayList<String>();
+		bois_lore.add(ChatColor.of(new Color(157, 86, 67)) +"Matériau d'origine végétale résistant");
+		bois_lore.add(ChatColor.of(new Color(157, 86, 67)) +"utile dans beaucoup de cas dont la");
+		bois_lore.add(ChatColor.of(new Color(157, 86, 67)) +"construction.");
+		bois_meta.setLore(bois_lore);
+		bois.setItemMeta(bois_meta);
+		List<Material> woods = new ArrayList<Material>();
+		List<Double> bois_drops = new ArrayList<Double>();
+		woods.add(Material.OAK_LOG); bois_drops.add(1.0);
+		woods.add(Material.SPRUCE_LOG); bois_drops.add(1.0);
+		woods.add(Material.BIRCH_LOG); bois_drops.add(1.0);
+		woods.add(Material.DARK_OAK_LOG); bois_drops.add(1.0);
+		woods.add(Material.ACACIA_LOG); bois_drops.add(1.0);
+		woods.add(Material.JUNGLE_LOG); bois_drops.add(1.0);
+		IHarvestingResource bois_rs = new IHarvestingResource("bois", bois, woods, bois_drops, "", 60*60);
+		resources.add(bois_rs);
 		
 		
 		
