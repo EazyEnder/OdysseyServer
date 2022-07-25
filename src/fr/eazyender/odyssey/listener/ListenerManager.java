@@ -13,6 +13,7 @@ import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.StatsListener;
 import fr.eazyender.odyssey.player.group.GroupListener;
 import fr.eazyender.odyssey.player.harvest.HarvestHandler;
+import fr.eazyender.odyssey.sounds.SoundsManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.zone.ZoneUtils;
 
@@ -34,6 +35,7 @@ public class ListenerManager {
 	HarvestHandler harvestListener;
 	SkillsCommand skillsCommand;
 	BuildObjectListener bolistener;
+	SoundsManager soManager;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -52,6 +54,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(classeCommand = new ClasseCommand(), pl);
 		pl.getServer().getPluginManager().registerEvents(skillsCommand = new SkillsCommand(), pl);
 		pl.getServer().getPluginManager().registerEvents(bolistener = new BuildObjectListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(soManager = new SoundsManager(), pl);
 	}
 
 	public OdysseyPl getPl() {

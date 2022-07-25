@@ -28,6 +28,7 @@ import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.group.CommandAccept;
 import fr.eazyender.odyssey.player.group.CommandGroup;
 import fr.eazyender.odyssey.player.harvest.HarvestHandler;
+import fr.eazyender.odyssey.sounds.SoundsManager;
 import fr.eazyender.odyssey.sql.SQLManager;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.block.FileTileEntity;
@@ -73,6 +74,7 @@ private static OdysseyPl odysseypl;
 		BlockUtils.initTileEntityLoop();
 		BuildManager.initBuildManager();
 		HarvestHandler.initHandler();
+		SoundsManager.initSounds(20);
 		
 		
 		
