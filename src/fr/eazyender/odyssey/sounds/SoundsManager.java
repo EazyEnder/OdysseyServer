@@ -26,11 +26,17 @@ public class SoundsManager implements Listener{
 	public static void initSounds(int task_timer) {
 		
 		
-		CustomSound forest_ambiance = new CustomSound("forest_ambiance",new float[] {1.0f,1.0f}, 1f, 90, 85, 1.0, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 0);
+		CustomSound forest_ambiance = new CustomSound("forest_ambiance",new float[] {1.0f,1.0f}, new float[] {1f,1f}, 90, 85, 1.0, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 0);
 		sounds.add(forest_ambiance);
 		
-		CustomSound nightingale = new CustomSound("nightingale",new float[] {0.1f,0.3f}, 1f, 4, 4, 0.08, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 50);
+		CustomSound nightingale = new CustomSound("nightingale",new float[] {0.1f,0.3f}, new float[] {0.95f,1.05f}, 4, 4, 0.08, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 50);
 		sounds.add(nightingale);
+		
+		CustomSound woodpecker = new CustomSound("woodpecker",new float[] {0.025f,0.2f}, new float[] {0.85f,1.1f}, 2, 2, 0.007, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 50);
+		sounds.add(woodpecker);
+		
+		CustomSound pigeon_wings = new CustomSound("pigeon_wings",new float[] {0.6f,0.9f}, new float[] {0.87f,1.1f}, 2, 2, 0.03, SoundTrigger.BIOME, "PLAINS",new int[] {-6000,6000}, 30);
+		sounds.add(pigeon_wings);
 		
 		
 		initLoop(task_timer);
@@ -80,11 +86,15 @@ public class SoundsManager implements Listener{
 								if(play) {
 									
 									if(customSound.getRange() <= 0) {
-										player.playSound(player.getLocation(), customSound.getId(), customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0])), customSound.getPitch());
+										player.playSound(player.getLocation(), customSound.getId()
+												, customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0]))
+												, customSound.getPitch()[0] + ((float)Math.random() * (customSound.getPitch()[1] - customSound.getPitch()[0])));
 									}else {
 										Location sound_location = player.getLocation().clone();
 										sound_location.add(new Vector((Math.random() * 2 - 0.5) * customSound.getRange(), Math.random() * customSound.getRange() , (Math.random() * 2 - 0.5) * customSound.getRange()));
-										player.playSound(sound_location, customSound.getId(),  customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0])), customSound.getPitch());
+										player.playSound(sound_location, customSound.getId()
+												, customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0]))
+												, customSound.getPitch()[0] + ((float)Math.random() * (customSound.getPitch()[1] - customSound.getPitch()[0])));
 									}
 									psounds.getSounds().put(customSound.getId(), 0);
 									

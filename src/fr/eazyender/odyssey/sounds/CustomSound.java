@@ -6,7 +6,7 @@ public class CustomSound {
 	
 	private String id;
 	private float[] volume;
-	private float pitch;
+	private float[] pitch;
 	private int length;
 	private int loop;
 	private double chance;
@@ -29,7 +29,7 @@ public class CustomSound {
 	 */
 	private int[] time_spectre;
 	
-	public CustomSound(String id, float[] volume, float pitch, int length, int loop, double chance, SoundTrigger trigger, String trigger_data, int[] time_spectre, double range) {
+	public CustomSound(String id, float[] volume, float[] pitch, int length, int loop, double chance, SoundTrigger trigger, String trigger_data, int[] time_spectre, double range) {
 		this.id = id;
 		this.volume = volume;
 		this.pitch = pitch;
@@ -66,7 +66,7 @@ public class CustomSound {
 		return volume;
 	}
 
-	public float getPitch() {
+	public float[] getPitch() {
 		return pitch;
 	}
 
