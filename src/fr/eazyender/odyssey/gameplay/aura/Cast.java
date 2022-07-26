@@ -1,10 +1,12 @@
 package fr.eazyender.odyssey.gameplay.aura;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -59,7 +61,7 @@ public class Cast {
 		this.time = System.currentTimeMillis();
 
 		BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
-		bar.setTitle(generateText(false, false));
+		bar.setTitle(generateText(false, "notfound"));
 		if (castAnimation.contains(p)) {
 			bar.setColor(BarColor.YELLOW);
 			castAnimation.remove(p);
@@ -85,10 +87,25 @@ public class Cast {
 			Class<? extends Skill> skillClass = Skill.getSkill(this);
 			BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
 			if (skillClass != null) {
-				bar.setTitle(generateText(true, true));
-				bar.setColor(BarColor.RED);
-				skillClass.newInstance().launch(p, null);
+				Skill skill = skillClass.newInstance();
+				try {
+					if (skill.canCast(p, skillClass)) {
+						bar.setColor(BarColor.GREEN);
+						skill.getClass().getDeclaredMethod("launch", Player.class).invoke(skill, p);
+						bar.setTitle(generateText(true, "successful"));
+					} else {
+						bar.setColor(BarColor.RED);
+						bar.setTitle(generateText(true, "notsuccessful"));
+					}
+					
+				} catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+						| SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			} else {
+				bar.setTitle(generateText(true, "notfound"));
 				bar.setColor(BarColor.WHITE);
 				p.playSound(p.getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 1);
 			}
@@ -140,13 +157,16 @@ public class Cast {
 			return 'R';
 	}
 
-	public String generateText(boolean cast, boolean successful) {
+	public String generateText(boolean cast, String type) {
 		if (!cast)
 			return "§f" + getText();
 		else {
-			if (successful)
-				return ChatColor.of("#ff1100") + getText();
-			return ChatColor.of("&#6e6b68") + getText();
+			
+			if (type.equals("successful"))
+				return ChatColor.of("#09b82f") + getText();
+			else if (type.equals("notfound"))
+				return "§f" + getText();
+			return ChatColor.of("#f01800") + getText();
 
 		}
 	}

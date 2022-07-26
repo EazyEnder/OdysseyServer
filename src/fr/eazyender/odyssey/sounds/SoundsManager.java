@@ -44,11 +44,12 @@ public class SoundsManager implements Listener{
 	
 	private static void initLoop(int task_timer) {
 		
+		
 		new BukkitRunnable() {
 
 			@Override
 			public void run() {
-				
+
 				for (Player player : Bukkit.getOnlinePlayers()) {
 					if(!player_sounds.containsKey(player.getUniqueId()))player_sounds.put(player.getUniqueId(), new PlayerSounds());
 					
@@ -84,7 +85,6 @@ public class SoundsManager implements Listener{
 								}
 								
 								if(play) {
-									
 									if(customSound.getRange() <= 0) {
 										player.playSound(player.getLocation(), customSound.getId()
 												, customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0]))

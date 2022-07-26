@@ -14,6 +14,7 @@ import fr.eazyender.odyssey.gameplay.stats.Classe;
 public class Skill {
 
 	public static HashMap<LivingEntity, HashMap<Class<? extends Skill>, Long>> cooldowns = new HashMap<>();
+	public static HashMap<LivingEntity, Class<? extends Skill>> combos = new HashMap<>();
 
 	public int cooldown;
 	
@@ -29,7 +30,7 @@ public class Skill {
 		this.lore = lore;
 	}
 
-	public boolean launch(LivingEntity p, Class<? extends Skill> spell) {
+	public boolean canCast(LivingEntity p, Class<? extends Skill> spell) {
 		if (!cooldowns.containsKey(p) || !cooldowns.get(p).containsKey(spell)
 				|| System.currentTimeMillis() - cooldowns.get(p).get(spell) > getCooldown()) {
 			HashMap<Class<? extends Skill>, Long> newCooldown = new HashMap<>();

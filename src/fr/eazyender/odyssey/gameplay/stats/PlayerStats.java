@@ -71,6 +71,8 @@ public class PlayerStats {
 			sum += 100;
 		if (stat == Stat.REGENMP || stat == Stat.REGENAURA)
 			sum += 25;
+		if (stat == Stat.CRIT_DAMAGE)
+			sum += 150;
 		if (stat == Stat.WATER || stat == Stat.FIRE || stat == Stat.EARTH || stat == Stat.WIND || stat == Stat.LIGHT || stat == Stat.SHADOW)
 			sum += 100;
 
