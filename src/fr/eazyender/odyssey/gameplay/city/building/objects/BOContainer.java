@@ -29,6 +29,7 @@ import org.bukkit.util.Vector;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.city.building.IBuildObject;
 import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
+import fr.eazyender.odyssey.utils.CharRepo;
 import fr.eazyender.odyssey.utils.NBTEditor;
 import net.md_5.bungee.api.ChatColor;
 
@@ -165,7 +166,7 @@ public class BOContainer extends IBuildObject implements Listener{
 	 
 	 public void createGui(Player player) {
 			if(ligne > 6)ligne = 6;
-			Inventory inv = Bukkit.createInventory(new BOContainerHolder(this, 1), 9*ligne , "\uEfc8" + " §l" + ChatColor.of(new Color(124, 117, 82)) + name);
+			Inventory inv = Bukkit.createInventory(new BOContainerHolder(this, 1), 9*ligne , "§r§f"+CharRepo.BUILD_STOCKAGE_54);
 			
 			for (int i = 0; i < container.size(); i++) {
 				inv.setItem(i, container.get(i));

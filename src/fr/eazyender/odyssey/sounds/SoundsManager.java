@@ -86,7 +86,6 @@ public class SoundsManager implements Listener{
 										sound_location.add(new Vector((Math.random() * 2 - 0.5) * customSound.getRange(), Math.random() * customSound.getRange() , (Math.random() * 2 - 0.5) * customSound.getRange()));
 										player.playSound(sound_location, customSound.getId(),  customSound.getVolume()[0] + ((float)Math.random() * (customSound.getVolume()[1] - customSound.getVolume()[0])), customSound.getPitch());
 									}
-									player.sendMessage("son : " + customSound.getId() + " lancé.");
 									psounds.getSounds().put(customSound.getId(), 0);
 									
 								}
