@@ -1468,7 +1468,7 @@ public final class NBTEditor {
 			try {
 				return new NBTCompound( getMethod( "loadNBTTagCompound" ).invoke( null, json ) );
 			} catch ( IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				return null;
 			}
 		}
