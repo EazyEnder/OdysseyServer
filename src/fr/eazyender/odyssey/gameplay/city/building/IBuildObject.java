@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOContainer;
+import fr.eazyender.odyssey.gameplay.city.building.objects.BOLFurnace;
 
 public class IBuildObject {
 	
@@ -13,9 +14,7 @@ public class IBuildObject {
 	protected UUID owner;
 	protected Vector pos;
 	
-	public IBuildObject() {
-		
-	}
+	public IBuildObject() {}
 	
 	public IBuildObject(IDynamicBuild build_owner, UUID owner, Vector pos) {
 		this.build_owner = build_owner;
@@ -48,6 +47,8 @@ public class IBuildObject {
 		String type = str_a[0];
 		switch(type) {
 		case "CONTAINER": obj = BOContainer.fromString(build, str_a[1]);
+			break;
+		case "FURNACE": obj = BOLFurnace.fromString(build, str_a[1]);
 			break;
 		default:
 			break;

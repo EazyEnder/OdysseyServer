@@ -21,6 +21,7 @@ import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
 import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.player.CompassUtils;
+import fr.eazyender.odyssey.player.InteractionsManager;
 import fr.eazyender.odyssey.player.StatsListener;
 import fr.eazyender.odyssey.player.group.GroupListener;
 import fr.eazyender.odyssey.player.harvest.HarvestHandler;
@@ -48,6 +49,7 @@ public class ListenerManager {
 	BuildObjectListener bolistener;
 	SoundsManager soManager;
 	ActivationListener activListener;
+	InteractionsManager imanager;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -67,6 +69,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(skillsCommand = new SkillsCommand(), pl);
 		pl.getServer().getPluginManager().registerEvents(bolistener = new BuildObjectListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(soManager = new SoundsManager(), pl);
+		pl.getServer().getPluginManager().registerEvents(imanager = new InteractionsManager(), pl);
 		// Cancel heart particles when damaging enemies
 		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
 		manager.addPacketListener(new PacketAdapter(OdysseyPl.getOdysseyPlugin(), ListenerPriority.HIGH, PacketType.Play.Server.WORLD_PARTICLES) {

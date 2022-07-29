@@ -43,6 +43,7 @@ public class CharRepo {
 	
 	//UI
 	public static final String BUILD_STOCKAGE_54 = NEG8 +"\uF001";
+	public static final String BUILD_FURNACE_54 = NEG8 +"\uF002";
 	
 	public static String getNeg(int pixel) {
 		String binary = new StringBuilder(Integer.toBinaryString(pixel)).reverse().toString();

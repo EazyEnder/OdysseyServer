@@ -42,6 +42,8 @@ public class BuildObjectListener implements Listener{
 		switch(data.getType()) {
 		case CHEST:
 			return new BOContainer(db,owner,pos);
+		case FURNACE:
+			return new BOLFurnace(db,owner,pos);
 		default: return null;
 		}
 		

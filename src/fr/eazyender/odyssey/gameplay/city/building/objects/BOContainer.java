@@ -32,6 +32,7 @@ import fr.eazyender.odyssey.gameplay.city.building.IBuildObject;
 import fr.eazyender.odyssey.gameplay.city.building.IDynamicBuild;
 import fr.eazyender.odyssey.utils.CharRepo;
 import fr.eazyender.odyssey.utils.NBTEditor;
+import fr.eazyender.odyssey.utils.TextUtils;
 import net.md_5.bungee.api.ChatColor;
 
 public class BOContainer extends IBuildObject implements Listener{
@@ -39,10 +40,9 @@ public class BOContainer extends IBuildObject implements Listener{
 	private List<ItemStack> container;
 	private int ligne;
 	private String name;
+	private boolean isOpen = false;
 	
-	public BOContainer() {
-		
-	}
+	public BOContainer() {}
 	
 	public BOContainer(IDynamicBuild build_owner, UUID owner, Vector pos) {
 		super(build_owner, owner, pos);
@@ -83,7 +83,11 @@ public class BOContainer extends IBuildObject implements Listener{
 	
 	@Override
 	public void trigger(Player player) {
-		createGui(player);
+		if(!isOpen) {
+			createGui(player);
+		}else {
+			player.sendMessage(TextUtils.aide + "Le stockage est déjà utilisé par quelqu'un");
+		}
 	}
 	
 	 @Override
@@ -195,6 +199,7 @@ public class BOContainer extends IBuildObject implements Listener{
 		}
 	 
 	 public void createGui(Player player) {
+		 isOpen = true;
 		 BOContainerHolder holder = new BOContainerHolder(this, 0);
 		 Inventory inv = Bukkit.createInventory(holder, 9*6 , "§r§f" + CharRepo.BUILD_STOCKAGE_54 + "Page 1/"+ligne);
 			
@@ -214,6 +219,7 @@ public class BOContainer extends IBuildObject implements Listener{
 	 
 	 public static void changePage(Player player, BOContainerHolder holder,  int page) {
 		 
+		 holder.getObject().isOpen = true;
 		 Inventory inv = Bukkit.createInventory(holder, 9*6 , "§r§f" + CharRepo.BUILD_STOCKAGE_54 +  "Page " + (page+1) + "/" + holder.getObject().ligne);
 		 List<ItemStack> cut_items = holder.getObject().container.subList(page * holder.slots_perm.length, holder.slots_perm.length * (page+1));
 		 
@@ -262,6 +268,8 @@ public class BOContainer extends IBuildObject implements Listener{
 	       
 	       if(inv.getHolder() instanceof BOContainerHolder) {
 	    	   BOContainerHolder holder = (BOContainerHolder) inv.getHolder();
+	    	   holder.getObject().isOpen = false;
+	    	   
 	    	   for (int i = 0; i < holder.slots_perm.length; i++) {
 	   			
 	  			 int slot = holder.slots_perm[i];

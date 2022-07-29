@@ -30,6 +30,7 @@ import fr.eazyender.odyssey.player.group.CommandGroup;
 import fr.eazyender.odyssey.player.harvest.HarvestHandler;
 import fr.eazyender.odyssey.sounds.SoundsManager;
 import fr.eazyender.odyssey.sql.SQLManager;
+import fr.eazyender.odyssey.utils.ResourceItems;
 import fr.eazyender.odyssey.utils.block.BlockUtils;
 import fr.eazyender.odyssey.utils.block.FileTileEntity;
 import fr.eazyender.odyssey.utils.world.WorldUtils;
@@ -75,6 +76,7 @@ private static OdysseyPl odysseypl;
 		BuildManager.initBuildManager();
 		HarvestHandler.initHandler();
 		SoundsManager.initSounds(20);
+		ResourceItems.initItems();
 		
 		
 		

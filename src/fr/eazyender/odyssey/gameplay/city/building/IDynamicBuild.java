@@ -12,6 +12,7 @@ import org.bukkit.structure.Palette;
 import org.bukkit.util.Vector;
 
 import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
+import fr.eazyender.odyssey.gameplay.city.building.objects.IBuildObjectLoop;
 
 public class IDynamicBuild {
 	
@@ -37,7 +38,11 @@ public class IDynamicBuild {
 	}
 	
 	public void loop() {
-		
+		for (IBuildObject object : objects) {
+			if(object instanceof IBuildObjectLoop) {
+				((IBuildObjectLoop)(object)).loop();
+			}
+		}
 	}
 	
 	public boolean upgrade_components(Palette pal) {
