@@ -29,7 +29,7 @@ public class BuildManager {
 		List<Double> shop_work_time = new ArrayList<Double>();
 		shop_work_time.add(20.0);
 		shop_work_time.add(10.0);
-		builds.add(new IBuild("Magasin","village/shop","plain",new double[]{17,7,21},"t",new ArrayList<List<ItemStack>>(),shop_work_time));
+		builds.add(new IBuild("Magasin","village/shop","plain",new double[]{17,7,21},"METIERS",new ArrayList<List<ItemStack>>(),shop_work_time));
 		
 		loadFile();
 		

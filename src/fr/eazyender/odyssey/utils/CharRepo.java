@@ -45,6 +45,13 @@ public class CharRepo {
 	public static final String BUILD_STOCKAGE_54 = NEG8 +"\uF001";
 	public static final String BUILD_FURNACE_54 = NEG8 +"\uF002";
 	
+	public static final String BUILD_MENU = NEG8 +"\uF003";
+	public static final String BUILD_MENU_MILS = NEG8 +"\uF004";
+	public static final String BUILD_MENU_METS = NEG8 +"\uF005";
+	public static final String BUILD_MENU_HABS = NEG8 +"\uF006";
+	public static final String BUILD_MENU_INSTS = NEG8 +"\uF007";
+	public static final String BUILD_MENU_DIVS = NEG8 +"\uF008";
+	
 	public static String getNeg(int pixel) {
 		String binary = new StringBuilder(Integer.toBinaryString(pixel)).reverse().toString();
 		StringBuilder sb = new StringBuilder();

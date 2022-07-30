@@ -10,18 +10,18 @@ public class IBuild {
 	private String schem_path;
 	private String biome;
 	private double[] size = {.0,.0,.0};
-	private String job;
+	private String type;
 	
 	//Index : 0 for prebuild, 1 for T1 to T2, ...
 	private List<List<ItemStack>> upgrade;
 	private List<Double> work_time;
 	
-	public IBuild(String name, String schem_path, String biome, double[] size,String job, List<List<ItemStack>> upgrade, List<Double> work_time) {
+	public IBuild(String name, String schem_path, String biome, double[] size,String type, List<List<ItemStack>> upgrade, List<Double> work_time) {
 		this.name = name;
 		this.schem_path = schem_path;
 		this.biome = biome;
 		this.size = size;
-		this.job = job;
+		this.type = type;
 		
 		this.upgrade = upgrade;
 		this.work_time = work_time;
@@ -59,12 +59,12 @@ public class IBuild {
 		this.size = size;
 	}
 
-	public String getJob() {
-		return job;
+	public String getType() {
+		return type;
 	}
 
-	public void setJob(String job) {
-		this.job = job;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public List<List<ItemStack>> getUpgrade() {

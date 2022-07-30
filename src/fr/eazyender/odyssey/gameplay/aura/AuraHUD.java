@@ -88,7 +88,7 @@ public class AuraHUD implements Listener {
 	}
 
 	public static double getPlayerAura(Player p) {
-		return player_aura.get(p.getUniqueId());
+		return player_aura.get(p.getUniqueId()) != null ? player_aura.get(p.getUniqueId()) : 0.0;
 	}
 
 	public static void setPlayerAura(Player p, double aura) {

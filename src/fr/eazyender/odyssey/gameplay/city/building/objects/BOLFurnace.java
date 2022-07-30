@@ -76,7 +76,7 @@ public class BOLFurnace extends IBuildObjectLoop implements Listener{
 					, EntityType.ARMOR_STAND);
 			as.setGravity(false);
 			as.setCanPickupItems(false);
-			as.setCustomName("?" + " §l" + ChatColor.of(new Color(124, 117, 82)) + name);
+			as.setCustomName("\uEf10" + " §l" + ChatColor.of(new Color(124, 117, 82)) + name);
 			as.setCustomNameVisible(true);
 			as.setVisible(false);
 			

@@ -25,6 +25,10 @@ public class BuildingCommand  implements CommandExecutor {
 				if(!player.getInventory().contains(hammer)) {
 					player.getInventory().addItem(hammer);
 					player.sendMessage(TextUtils.aide + "Vous avez obtenu un maillet de construction. Pour vous en servir prenez le en main et sélectionner le bâtiment que vous voulez puis visualisez la zone avec les particules avant de commencer sa construction.");
+					player.sendMessage(TextUtils.aide + TextUtils.mouse_rc + " Changer la position");
+					player.sendMessage(TextUtils.aide + TextUtils.mouse_lc + " Tourner le bâtiment");
+					player.sendMessage(TextUtils.aide + TextUtils.keyboard_ctrl + TextUtils.mouse_lc + " Sélectionner un bâtiment");
+					player.sendMessage(TextUtils.aide + TextUtils.keyboard_ctrl + TextUtils.mouse_lc + " Placer le bâtiment");
 				}else {
 					player.sendMessage(TextUtils.aide + "Vous avez déjà un maillet de construction dans votre inventaire.");
 				}
