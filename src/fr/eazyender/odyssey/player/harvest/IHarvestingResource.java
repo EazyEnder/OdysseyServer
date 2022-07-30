@@ -13,19 +13,21 @@ public class IHarvestingResource {
 	private List<Double> drops;
 	private ItemStack resource;
 	private String tool;
+	private int tool_level;
 	private double timer;
 	
 	
-	public IHarvestingResource(String name, ItemStack resource, List<Material> blocks, List<Double> drops, String tool, double timer) {
+	public IHarvestingResource(String name, ItemStack resource, List<Material> blocks, List<Double> drops, String tool, int tool_level, double timer) {
 		this.name = name;
 		this.blocks = blocks;
 		this.drops = drops;
 		this.resource =resource;
 		this.tool = tool;
+		this.tool_level = tool_level;
 		this.timer = timer;
 	}
 	
-	public IHarvestingResource(String name, ItemStack resource, Material block, Double drop, String tool, double timer) {
+	public IHarvestingResource(String name, ItemStack resource, Material block, Double drop, String tool, int tool_level, double timer) {
 		this.name = name;
 		this.blocks = new ArrayList<Material>();
 		this.blocks.add(block);
@@ -33,7 +35,18 @@ public class IHarvestingResource {
 		this.drops.add(drop);
 		this.resource =resource;
 		this.tool = tool;
+		this.tool_level = tool_level;
 		this.timer = timer;
+	}
+	
+	
+
+	public int getTool_level() {
+		return tool_level;
+	}
+
+	public void setTool_level(int tool_level) {
+		this.tool_level = tool_level;
 	}
 
 	public String getName() {

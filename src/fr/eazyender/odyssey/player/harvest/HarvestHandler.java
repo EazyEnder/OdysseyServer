@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
@@ -35,7 +37,7 @@ public class HarvestHandler implements Listener{
 		leaves.add(Material.DARK_OAK_LEAVES); fibre_drops.add(0.5);
 		leaves.add(Material.ACACIA_LEAVES); fibre_drops.add(0.5);
 		leaves.add(Material.JUNGLE_LEAVES); fibre_drops.add(0.5);
-		IHarvestingResource fibre_rs = new IHarvestingResource("fibre", ResourceItems.getItemById("fibre"), leaves, fibre_drops, "", 60*10);
+		IHarvestingResource fibre_rs = new IHarvestingResource("fibre", ResourceItems.getItemById("fibre"), leaves, fibre_drops, null, 0, 60*10);
 		resources.add(fibre_rs);
 		
 		List<Material> woods = new ArrayList<Material>();
@@ -46,13 +48,13 @@ public class HarvestHandler implements Listener{
 		woods.add(Material.DARK_OAK_LOG); bois_drops.add(1.0);
 		woods.add(Material.ACACIA_LOG); bois_drops.add(1.0);
 		woods.add(Material.JUNGLE_LOG); bois_drops.add(1.0);
-		IHarvestingResource bois_rs = new IHarvestingResource("bois", ResourceItems.getItemById("bois"), woods, bois_drops, "", 60*60);
+		IHarvestingResource bois_rs = new IHarvestingResource("bois", ResourceItems.getItemById("bois"), woods, bois_drops, null, 0, 60*60);
 		resources.add(bois_rs);
 		
 		List<Material> stone_mat = new ArrayList<Material>();
 		List<Double> stone_drops = new ArrayList<Double>();
 		stone_mat.add(Material.COBBLESTONE); stone_drops.add(1.0);
-		IHarvestingResource stone_rs = new IHarvestingResource("stone", ResourceItems.getItemById("stone"), stone_mat, stone_drops, "", 60*60);
+		IHarvestingResource stone_rs = new IHarvestingResource("stone", ResourceItems.getItemById("stone"), stone_mat, stone_drops, "PICKAXE", 1, 60*60);
 		resources.add(stone_rs);
 		
 		
@@ -121,12 +123,26 @@ public class HarvestHandler implements Listener{
 				boolean cancel = true;
 				double max_timer = 0;
 				List<ItemStack> items = new ArrayList<ItemStack>();
+				
+				
 				for (IHarvestingResource res : resources) {
 					if(res.getBlocks().contains(block.getType())) {
 						Double chance = res.getDrops().get(res.getBlocks().indexOf(block.getType()));
 						if(Math.random() <= chance) {
-							items.add(res.getResource());
+							if(res.getTool() != null && player.getInventory().getItemInMainHand() != null
+									&& player.getInventory().getItemInMainHand().hasItemMeta()
+									&& player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(OdysseyPl.getOdysseyPlugin(), "type_data"), PersistentDataType.INTEGER)
+									&& player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().has(new NamespacedKey(OdysseyPl.getOdysseyPlugin(), "type"), PersistentDataType.STRING)) {
+								boolean toolOk = 
+									player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(OdysseyPl.getOdysseyPlugin(), "type"), PersistentDataType.STRING).equalsIgnoreCase(res.getTool());
+								if(toolOk) {
+									if(player.getInventory().getItemInMainHand().getItemMeta().getPersistentDataContainer().get(new NamespacedKey(OdysseyPl.getOdysseyPlugin(), "type_data"), PersistentDataType.INTEGER) >= res.getTool_level()) {
+										items.add(res.getResource());
+									}
+								}
+							}else if(res.getTool() == null) items.add(res.getResource());
 						}
+						
 						max_timer = Math.max(max_timer, res.getTimer());
 						cancel = false;
 					}
