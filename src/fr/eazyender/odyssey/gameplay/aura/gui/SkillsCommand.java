@@ -125,10 +125,10 @@ public class SkillsCommand implements CommandExecutor, Listener {
 		p.openInventory(inv);
 	}
 
-	public int getMastery(Player p, Classe classe) {
+	public static int getMastery(Player p, Classe classe) {
 		switch (classe) {
 		case GUERRIER:
-			return MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.WARRIOR);
+			return MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.GUERRIER);
 		case TANK:
 			return MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.TANK);
 		case ARCHER:

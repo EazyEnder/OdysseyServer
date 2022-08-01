@@ -82,7 +82,6 @@ public class AuraCastListener implements Listener {
 						e.setDamage(DamageHelper.applyVariation(CombatStats.getStats(p).getStat(Stat.DAMAGE)));
 					else 
 						e.setDamage(DamageHelper.applyVariation((int)(CombatStats.getStats(p).getStat(Stat.DAMAGE) * ((double)CombatStats.getStats(p).getStat(Stat.CRIT_DAMAGE)) / 100)));
-					Bukkit.broadcastMessage("animate");
 					DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int)e.getDamage(), isCrit);
 				}
 			}	

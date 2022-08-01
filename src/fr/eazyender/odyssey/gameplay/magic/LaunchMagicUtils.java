@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -38,6 +39,7 @@ public class LaunchMagicUtils implements Listener {
 	public void onPlayerDraw(PlayerInteractEvent event) {
 		Player p = event.getPlayer();
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+
 			if (p.getItemInHand() != null
 					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == Classe.MAGE) {
 				if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {

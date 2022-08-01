@@ -92,26 +92,29 @@ public class ClasseCommand implements CommandExecutor, Listener {
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getInventory().getHolder() instanceof ClasseCommandHolder) {
+			Player p = (Player)e.getWhoClicked();
 			if (e.getCurrentItem() == null)
 				return;
 			e.setCancelled(true);
 			if (e.getSlot() == 1)
-				e.getWhoClicked().closeInventory();
+				p.closeInventory();
 			if (e.getSlot() == 0 || e.getSlot() == 2 || e.getSlot() == 7 || e.getSlot() == 8)
 				return;
 			if (e.getCurrentItem().getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL) != 0)
 				return;
 
 			if (!cooldowns.containsKey((Player) e.getWhoClicked())
-					|| System.currentTimeMillis() - cooldowns.get((Player) e.getWhoClicked()) > 60000) {
+					|| System.currentTimeMillis() - cooldowns.get(p) > 60000) {
 				if (e.getSlot() == 3)
-					MasteryDB.setClass(e.getWhoClicked().getUniqueId().toString(), "GUERRIER");
+					MasteryDB.setClass(p.getUniqueId().toString(), "GUERRIER");
 				if (e.getSlot() == 4)
-					MasteryDB.setClass(e.getWhoClicked().getUniqueId().toString(), "MAGE");
+					MasteryDB.setClass(p.getUniqueId().toString(), "MAGE");
 				if (e.getSlot() == 5)
-					MasteryDB.setClass(e.getWhoClicked().getUniqueId().toString(), "ARCHER");
+					MasteryDB.setClass(p.getUniqueId().toString(), "ARCHER");
 				if (e.getSlot() == 6)
-					MasteryDB.setClass(e.getWhoClicked().getUniqueId().toString(), "TANK");
+					MasteryDB.setClass(p.getUniqueId().toString(), "TANK");
+				p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+				p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
 				cooldowns.put((Player) e.getWhoClicked(), System.currentTimeMillis());
 			} else {
 				e.getWhoClicked().sendMessage(

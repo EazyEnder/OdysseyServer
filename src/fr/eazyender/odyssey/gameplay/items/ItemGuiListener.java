@@ -172,6 +172,7 @@ public class ItemGuiListener implements Listener {
 						ItemCommand.openItemGui(p, holder);
 						return;
 					}
+			
 					Classe type = Classe.values()[e.getSlot() - 1];
 
 					ItemStack is = ItemDB.getItem(holder.getIdItem());
