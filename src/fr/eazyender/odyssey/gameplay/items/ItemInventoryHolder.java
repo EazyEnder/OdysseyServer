@@ -14,7 +14,7 @@ public class ItemInventoryHolder implements InventoryHolder {
 
 	
 	State state;
-	Stat stat;
+	String stat;
 	int page;
 	String idItem;
 
@@ -60,11 +60,11 @@ public class ItemInventoryHolder implements InventoryHolder {
 		return this;
 	}
 
-	public Stat getStat() {
+	public String getStat() {
 		return stat;
 	}
 
-	public ItemInventoryHolder setStat(Stat stat) {
+	public ItemInventoryHolder setStat(String stat) {
 		this.stat = stat;
 		return this;
 	}

@@ -17,7 +17,7 @@ public class MasteryLeveling implements Listener {
 	@EventHandler
 	public void onKill(MythicMobDeathEvent e) { 
 		if (ExpHandler.xpMobs.containsKey(e.getMobType().getInternalName())) {
-			if (e.getKiller() instanceof Player && !MasteryDB.getClass(e.getKiller().getUniqueId().toString()).equals("null")) {
+			if (e.getKiller() instanceof Player) {
 				Player killer = (Player) e.getKiller();
 				Random r = new Random();
 				int percentageVariance = -10 + r.nextInt(20);
@@ -28,15 +28,18 @@ public class MasteryLeveling implements Listener {
 				// Dungeons -> everyone gets the xp
 				if (DungeonInstance.getInstance(killer) != null) {
 					for(Player p : DungeonInstance.getInstance(killer).getPlayers()) {
-						giveXp(p, xpToGive, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
+						if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null"))
+							giveXp(p, xpToGive, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
 					}
 				} else {
-					giveXp(killer, xpToGive, Mastery.valueOf(MasteryDB.getClass(killer.getUniqueId().toString())));
+					if (!MasteryDB.getClass(killer.getUniqueId().toString()).equals("null"))
+						giveXp(killer, xpToGive, Mastery.valueOf(MasteryDB.getClass(killer.getUniqueId().toString())));
 					// Groupe ? 25% to every other player
 					if (PlayerGroup.getGroup(killer) != null) {
 						for(Player p : PlayerGroup.getGroup(killer).getMembers()) {
 							if (p != killer) {
-								giveXp(p, xpToGive * 0.25, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
+								if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null"))
+									giveXp(p, xpToGive * 0.25, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
 							}
 						}
 					} 

@@ -13,6 +13,7 @@ import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.magic.WandUtils;
+import fr.eazyender.odyssey.gameplay.masteries.Mastery;
 import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
 import net.md_5.bungee.api.ChatColor;
 
@@ -38,7 +39,7 @@ public class PlayerStats {
 	
 	public void warn(Player p) {
 		if (!warningCooldowns.containsKey(p) || System.currentTimeMillis() - warningCooldowns.get(p) > 30000){
-			p.sendMessage(ChatColor.of("#ff0000") + "<!> Une armure équipée n'est pas de votre classe actuelle, les effets sont annulés.");
+			p.sendMessage(ChatColor.of("#ff0000") + "<!> Vous ne pouvez pas porter une ou plusieurs pièces d'équipement, leurs effets sont annulés.");
 			warningCooldowns.put(p, System.currentTimeMillis());
 		}
 	}
@@ -48,16 +49,20 @@ public class PlayerStats {
 		for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
 			if (armorPiece != null)
 				if (ItemUtils.getType(armorPiece) == null || ItemUtils.getType(armorPiece).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
-					sum += ItemUtils.getStat(armorPiece, stat);
+					if (ItemUtils.getNumericInfo(armorPiece, "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(armorPiece, "Level"))
+						sum += ItemUtils.getStat(armorPiece, stat);
+					else warn(p);
 				else warn(p);
 		}
 		
 		if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) 
 			if (ItemUtils.getType(p.getInventory().getItemInMainHand()) == null || ItemUtils.getType(p.getInventory().getItemInMainHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
-				sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
+				if (ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level"))
+					sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
 		if (p.getInventory().getItemInOffHand() != null && p.getInventory().getItemInOffHand().getType() == Material.SHIELD && p.isBlocking())
 			if (ItemUtils.getType(p.getInventory().getItemInOffHand()) == null || ItemUtils.getType(p.getInventory().getItemInOffHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
-				sum += ItemUtils.getStat(p.getInventory().getItemInOffHand(), stat);
+				if (ItemUtils.getNumericInfo(p.getInventory().getItemInOffHand(), "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(p.getInventory().getItemInOffHand(), "Level"))
+					sum += ItemUtils.getStat(p.getInventory().getItemInOffHand(), stat);
 				
 
 		// Adding default values to sum

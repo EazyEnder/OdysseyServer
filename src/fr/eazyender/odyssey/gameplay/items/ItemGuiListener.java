@@ -3,7 +3,6 @@ package fr.eazyender.odyssey.gameplay.items;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,15 +11,18 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.items.ItemInventoryHolder.State;
 import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
 import fr.eazyender.odyssey.utils.NBTEditor;
+import net.md_5.bungee.api.ChatColor;
 
 public class ItemGuiListener implements Listener {
 
@@ -57,7 +59,7 @@ public class ItemGuiListener implements Listener {
 						return;
 					}
 					if (e.getSlot() == 18) {
-						ItemCommand.openStatEditor(p, holder, null);
+						ItemCommand.openStatEditor(p, holder, "CustomModelData");
 						return;
 					}
 
@@ -87,6 +89,7 @@ public class ItemGuiListener implements Listener {
 						ArrayList<String> lore = ItemUtils.buildLore(item);
 						ItemMeta meta = item.getItemMeta();
 						meta.setLore(lore);
+						meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 						item.setItemMeta(meta);
 						ItemDB.updateItem(holder.getIdItem(), NBTEditor.getItemNBTTag(item));
 						
@@ -94,16 +97,19 @@ public class ItemGuiListener implements Listener {
 						return;
 					}
 					
-					if (e.getSlot() == 35) {
-						ItemDB.removeItem(holder.getIdItem());
-						ItemCommand.openItemsGui(p, holder.getPage());
+					
+					if (e.getSlot() == 24) {
+						ItemCommand.openStatEditor(p, holder, "Level");
 						return;
 					}
+					
+					
+					
 
 					if (e.getCurrentItem().getItemMeta() != null && e.getCurrentItem().getItemMeta().hasDisplayName()
 							&& Stat.valueOf(e.getCurrentItem().getItemMeta().getDisplayName().split(" ")[0]) != null) {
 						ItemCommand.openStatEditor(p, holder,
-								Stat.valueOf(e.getCurrentItem().getItemMeta().getDisplayName().split(" ")[0]));
+								e.getCurrentItem().getItemMeta().getDisplayName().split(" ")[0]);
 					}
 
 				}
@@ -149,13 +155,13 @@ public class ItemGuiListener implements Listener {
 
 						ItemStack is = ItemDB.getItem(holder.getIdItem());
 
-						if (holder.getStat() == null) {
-							is = NBTEditor.set(is, ItemUtils.getNumericInfo(is, "CustomModelData") + operation,
-									"CustomModelData");
+						if (holder.getStat().equals("CustomModelData") || holder.getStat().equals("Level")) {
+							is = NBTEditor.set(is, ItemUtils.getNumericInfo(is, holder.getStat()) + operation,
+									holder.getStat());
 						} else {
 
-							is = NBTEditor.set(is, ItemUtils.getStat(is, holder.getStat()) + operation,
-									holder.getStat().name());
+							is = NBTEditor.set(is, ItemUtils.getStat(is, Stat.valueOf(holder.getStat())) + operation,
+									holder.getStat());
 						}
 						ItemDB.updateItem(holder.getIdItem(), NBTEditor.getItemNBTTag(is));
 
@@ -222,14 +228,20 @@ public class ItemGuiListener implements Listener {
 		if (ItemCommand.editingName.containsKey(e.getPlayer())) {
 			e.setCancelled(true);
 			Player p = e.getPlayer();
-			String name = e.getMessage().replace("&", "§");
+			String name = ChatColor.translateAlternateColorCodes('&', e.getMessage());
+			
 			ItemStack item = ItemDB.getItem(ItemCommand.editingName.get(p));
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName(name);
 			item.setItemMeta(meta);
 			ItemDB.updateItem(ItemCommand.editingName.get(p), NBTEditor.getItemNBTTag(item));
-			Bukkit.getScheduler().runTaskLater(OdysseyPl.getOdysseyPlugin(), () -> ItemCommand.openItemGui(p, new ItemInventoryHolder(State.ITEM, ItemCommand.editingName.get(p))), 1);
-			ItemCommand.editingName.remove(p);
+			new BukkitRunnable() {
+				public void run() {
+					ItemCommand.openItemGui(p, new ItemInventoryHolder(State.ITEM, ItemCommand.editingName.get(p)));
+					ItemCommand.editingName.remove(p);
+				}
+			}.runTaskLater(OdysseyPl.getOdysseyPlugin(), 1L);
+
 			p.sendMessage("§aNom enregistré.");
 		}
 	}

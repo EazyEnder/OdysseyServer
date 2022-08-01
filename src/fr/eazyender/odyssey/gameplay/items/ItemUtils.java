@@ -61,6 +61,7 @@ public class ItemUtils {
 		return ItemRank.valueOf(NBTEditor.getString(is, "rank"));
 	}
 
+	
 	public static int getNumericInfo(ItemStack is, String key) {
 		return NBTEditor.getInt(is, key);
 	}
@@ -115,7 +116,11 @@ public class ItemUtils {
 				lore.add(stat.getShowing() + " : §f" + sign + nf.format(value) + percentage);
 			}
 		}
-
+		if (getNumericInfo(is, "Level") != 0) {
+			lore.add("§8§m                            ");
+			lore.add(ChatColor.of("#fcff00") + "Level requis : §f" + getNumericInfo(is, "Level"));
+		}
+		
 		return lore;
 	}
 

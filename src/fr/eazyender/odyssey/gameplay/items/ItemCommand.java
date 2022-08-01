@@ -115,25 +115,26 @@ public class ItemCommand implements CommandExecutor {
 		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.SPRUCE_SIGN), "§8Name" , null, 0));
 		inv.setItem(22, ItemUtils.getItem(new ItemStack(Material.WRITABLE_BOOK), "§8Description" , null, 0));
 		inv.setItem(23, ItemUtils.getItem(new ItemStack(Material.CLOCK), "§6Update Lore" , null, 0));
+		inv.setItem(24, ItemUtils.getItem(new ItemStack(Material.EXPERIENCE_BOTTLE), "§aLevel requis" , null, 0));
 		
 		inv.setItem(35, ItemUtils.getItem(new ItemStack(Material.BARRIER), "§cSupprimer", null, 0));
 		p.openInventory(inv);
 
 	}
 	
-	public static void openStatEditor(Player p, ItemInventoryHolder holder, Stat stat) {
+	public static void openStatEditor(Player p, ItemInventoryHolder holder, String stat) {
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
 		Inventory inv = null;
-		if (stat != null)
-			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§l" + stat.name() + " : " + ItemUtils.getStat(item, stat));
+		if (!stat.equals("CustomModelData") && !stat.equals("Level"))
+			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§l" + stat + " : " + ItemUtils.getStat(item, Stat.valueOf(stat)));
 		else 
-			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§lModel data : " + ItemUtils.getNumericInfo(item, "CustomModelData"));
+			inv = Bukkit.createInventory(holder.setState(State.STAT).setStat(stat), 54, "§l" + stat + " : " + ItemUtils.getNumericInfo(item, stat));
 		
 		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
 		
-		if (stat != null)
-			inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§l" + stat.name() + " : " + ItemUtils.getStat(item, stat), null, 0));
-		else inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§lCustom model data : " +  ItemUtils.getNumericInfo(item, "CustomModelData"), null, 0));
+		if (!stat.equals("CustomModelData") && !stat.equals("Level"))
+			inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§l" + stat + " : " + ItemUtils.getStat(item,  Stat.valueOf(stat)), null, 0));
+		else inv.setItem(4, ItemUtils.getItem(new ItemStack(Material.BOOK), "§l" + stat + " : " +  ItemUtils.getNumericInfo(item, stat), null, 0));
 		
 		
 		inv.setItem(3, ItemUtils.getItem(new ItemStack(Material.RED_WOOL), "§c-1", null, 0));
