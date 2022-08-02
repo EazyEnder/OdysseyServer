@@ -11,13 +11,13 @@ public class MasteryDB {
 
 	public static void initPlayer(String uuid) {
 		try {
-			String sql = "INSERT INTO masteries (uuid, guerrier, archer, tank, mage, fire, water, earth, wind, light, shadow, classe, guerrierXP, archerXP, tankXP, mageXP) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			String sql = "INSERT INTO masteries (uuid, guerrier, archer, tank, fire, water, earth, wind, light, shadow, classe, guerrierXP, archerXP, tankXP) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
-			for(int i = 2; i < 12; i++)
+			for(int i = 2; i < 11; i++)
 				stmt.setInt(i, 1);
-			stmt.setString(12, "null");
-			for(int i = 13; i < 17; i++)
+			stmt.setString(11, "null");
+			for(int i = 12; i < 15; i++)
 				stmt.setFloat(i, 0);
 			stmt.executeUpdate();
 		} catch (SQLException e) {

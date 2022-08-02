@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.gameplay.aura;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
@@ -141,7 +142,7 @@ public class Cast {
 	}
 
 	public void cancelCast() {
-
+		expired.cancel();
 		BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
 		bar.setTitle("");
 		AuraHUD.player_bossbars.replace(p.getUniqueId(), bar);

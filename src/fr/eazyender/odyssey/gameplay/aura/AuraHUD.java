@@ -77,7 +77,10 @@ public class AuraHUD implements Listener {
 						BossBar e = player_bossbars.get(player.getUniqueId());
 						e.setVisible(false);
 						player_bossbars.replace(player.getUniqueId(), e);
-						if (AuraCastListener.casts.containsKey(player)) AuraCastListener.casts.get(player).cancelCast();
+						
+						if (AuraCastListener.casts.containsKey(player)) {
+							AuraCastListener.casts.get(player).cancelCast();
+						}
 					}
 
 				}

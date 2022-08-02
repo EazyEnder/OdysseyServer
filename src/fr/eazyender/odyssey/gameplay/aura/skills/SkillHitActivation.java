@@ -13,21 +13,7 @@ public interface SkillHitActivation {
 	
 	public static HashMap<LivingEntity, SkillHitActivation> skillsActivation = new HashMap<>();
 	
-	public void activate(EntityDamageByEntityEvent e);
+	public void activate(EntityDamageByEntityEvent e, boolean isCrit);
 	
-	public class ActivationListener implements Listener {
-		
-		@EventHandler
-		public void onDamage(EntityDamageByEntityEvent e) {
-			if (e.getDamager() instanceof Player) {
-				Player p = (Player) e.getDamager();
-				if (skillsActivation.containsKey(p)) {
-					skillsActivation.get(p).activate(e);
-					skillsActivation.remove(p);
-				}
-			}
-			
-		}
-	}
 
 }

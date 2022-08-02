@@ -2,7 +2,6 @@ package fr.eazyender.odyssey.gameplay.aura.skills.tank;
 
 import java.util.Arrays;
 
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
@@ -31,11 +30,9 @@ public class SlashVertical extends Skill implements SkillHitActivation {
 	}
 
 	@Override
-	public void activate(EntityDamageByEntityEvent e) {
+	public void activate(EntityDamageByEntityEvent e, boolean isCrit) {
 		Player p = (Player) e.getDamager();
-		e.setDamage(DamageHelper.getAuraDamage(p, power, 1, DamageHelper.isCrit(p)));
-		boolean isCrit = DamageHelper.isCrit(p);
-		DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), DamageHelper.getAuraDamage(p, power, 1, isCrit), isCrit);
+		e.setDamage(DamageHelper.getAuraDamage(p, power, 1, isCrit));
 		
 	}
 	

@@ -15,7 +15,6 @@ import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
-import fr.eazyender.odyssey.gameplay.aura.skills.SkillHitActivation.ActivationListener;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
@@ -49,7 +48,6 @@ public class ListenerManager {
 	SkillsCommand skillsCommand;
 	BuildObjectListener bolistener;
 	SoundsManager soManager;
-	ActivationListener activListener;
 	InteractionsManager imanager;
 	MasteryLeveling mLevel;
 	

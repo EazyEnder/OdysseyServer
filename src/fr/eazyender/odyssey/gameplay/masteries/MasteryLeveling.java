@@ -28,17 +28,17 @@ public class MasteryLeveling implements Listener {
 				// Dungeons -> everyone gets the xp
 				if (DungeonInstance.getInstance(killer) != null) {
 					for(Player p : DungeonInstance.getInstance(killer).getPlayers()) {
-						if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null"))
+						if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE"))
 							giveXp(p, xpToGive, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
 					}
 				} else {
-					if (!MasteryDB.getClass(killer.getUniqueId().toString()).equals("null"))
+					if (!MasteryDB.getClass(killer.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(killer.getUniqueId().toString()).equals("MAGE"))
 						giveXp(killer, xpToGive, Mastery.valueOf(MasteryDB.getClass(killer.getUniqueId().toString())));
 					// Groupe ? 25% to every other player
 					if (PlayerGroup.getGroup(killer) != null) {
 						for(Player p : PlayerGroup.getGroup(killer).getMembers()) {
 							if (p != killer) {
-								if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null"))
+								if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE"))
 									giveXp(p, xpToGive * 0.25, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
 							}
 						}

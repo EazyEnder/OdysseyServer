@@ -59,7 +59,7 @@ public class DamageHelper {
 		Random r = new Random();
 		double var = -5 + r.nextInt(10);
 		double damageWithVar = damage += (var / 100) * damage;
-		return (int) damageWithVar;
+		return (int) Math.round(damageWithVar);
 	}
 	
 	public static boolean isCrit(Player p) {

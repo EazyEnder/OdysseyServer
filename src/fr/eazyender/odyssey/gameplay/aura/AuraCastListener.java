@@ -2,7 +2,6 @@ package fr.eazyender.odyssey.gameplay.aura;
 
 import java.util.HashMap;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -69,6 +68,7 @@ public class AuraCastListener implements Listener {
 		if (e.getDamager() instanceof Player) {
 			Player p = (Player) e.getDamager();
 			ItemStack item = p.getInventory().getItemInMainHand();
+			boolean isCrit = DamageHelper.isCrit(p);
 			if (item != null && (ItemUtils.getType(item) == Classe.GUERRIER || ItemUtils.getType(item) == Classe.ARCHER
 					|| ItemUtils.getType(item) == Classe.TANK)) {
 				Cast cast = casts.get(p);
@@ -77,17 +77,19 @@ public class AuraCastListener implements Listener {
 					cast.animate();
 				}
 				if (!SkillHitActivation.skillsActivation.containsKey(p)) {
-					boolean isCrit = DamageHelper.isCrit(p);
+				
 					if (!isCrit)
 						e.setDamage(DamageHelper.applyVariation(CombatStats.getStats(p).getStat(Stat.DAMAGE)));
 					else 
 						e.setDamage(DamageHelper.applyVariation((int)(CombatStats.getStats(p).getStat(Stat.DAMAGE) * ((double)CombatStats.getStats(p).getStat(Stat.CRIT_DAMAGE)) / 100)));
-					DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int)e.getDamage(), isCrit);
+				} else {
+					SkillHitActivation.skillsActivation.get(p).activate(e, isCrit);
 				}
 			}	
+			if (!(e.getEntity() instanceof Player))
+				DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int)e.getDamage(), isCrit);
 		}
 	}
-
 	
 	@EventHandler
 	public void onSneak(PlayerToggleSneakEvent e) {

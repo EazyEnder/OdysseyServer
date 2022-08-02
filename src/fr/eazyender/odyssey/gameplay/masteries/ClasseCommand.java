@@ -71,7 +71,7 @@ public class ClasseCommand implements CommandExecutor, Listener {
 		meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		isRenvoi.setItemMeta(meta);
 		if (glow) {
-			
+
 			isRenvoi.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
 			return isRenvoi;
 		} else
@@ -92,7 +92,7 @@ public class ClasseCommand implements CommandExecutor, Listener {
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		if (e.getInventory().getHolder() instanceof ClasseCommandHolder) {
-			Player p = (Player)e.getWhoClicked();
+			Player p = (Player) e.getWhoClicked();
 			if (e.getCurrentItem() == null)
 				return;
 			e.setCancelled(true);
@@ -113,8 +113,14 @@ public class ClasseCommand implements CommandExecutor, Listener {
 					MasteryDB.setClass(p.getUniqueId().toString(), "ARCHER");
 				if (e.getSlot() == 6)
 					MasteryDB.setClass(p.getUniqueId().toString(), "TANK");
-				p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
-				p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+				if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
+					p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(),
+							Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+					p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+				} else {
+					p.setLevel(0);
+					p.setExp(0);
+				}
 				cooldowns.put((Player) e.getWhoClicked(), System.currentTimeMillis());
 			} else {
 				e.getWhoClicked().sendMessage(
