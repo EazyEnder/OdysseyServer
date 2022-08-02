@@ -29,7 +29,8 @@ public class AuraCastListener implements Listener {
 		if (e.getItem() != null && (ItemUtils.getType(e.getItem()) == Classe.GUERRIER
 				|| ItemUtils.getType(e.getItem()) == Classe.ARCHER || ItemUtils.getType(e.getItem()) == Classe.TANK)) {
 
-			if (e.getAction().name().contains("LEFT") || e.getAction().name().contains("RIGHT")) {
+			if (e.getAction().name().contains("LEFT") || e.getAction().name().contains("RIGHT") && !ItemUtils.isArmor(e.getItem())) {
+				
 				Cast cast = casts.get(e.getPlayer());
 				if (cast != null) {
 					if (cast.getTime() == 0 || System.currentTimeMillis() - cast.getTime() > 30) {
@@ -71,26 +72,29 @@ public class AuraCastListener implements Listener {
 			boolean isCrit = DamageHelper.isCrit(p);
 			if (item != null && (ItemUtils.getType(item) == Classe.GUERRIER || ItemUtils.getType(item) == Classe.ARCHER
 					|| ItemUtils.getType(item) == Classe.TANK)) {
-				Cast cast = casts.get(p);
-				if (cast != null) {
-					cast.setPattern(cast.getPattern() + "L");
-					cast.animate();
+				if (!ItemUtils.isArmor(item)) {
+					Cast cast = casts.get(p);
+					if (cast != null) {
+						cast.setPattern(cast.getPattern() + "L");
+						cast.animate();
+					}
 				}
 				if (!SkillHitActivation.skillsActivation.containsKey(p)) {
-				
+
 					if (!isCrit)
 						e.setDamage(DamageHelper.applyVariation(CombatStats.getStats(p).getStat(Stat.DAMAGE)));
-					else 
-						e.setDamage(DamageHelper.applyVariation((int)(CombatStats.getStats(p).getStat(Stat.DAMAGE) * ((double)CombatStats.getStats(p).getStat(Stat.CRIT_DAMAGE)) / 100)));
+					else
+						e.setDamage(DamageHelper.applyVariation((int) (CombatStats.getStats(p).getStat(Stat.DAMAGE)
+								* ((double) CombatStats.getStats(p).getStat(Stat.CRIT_DAMAGE)) / 100)));
 				} else {
 					SkillHitActivation.skillsActivation.get(p).activate(e, isCrit);
 				}
-			}	
+			}
 			if (!(e.getEntity() instanceof Player))
-				DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int)e.getDamage(), isCrit);
+				DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int) e.getDamage(), isCrit);
 		}
 	}
-	
+
 	@EventHandler
 	public void onSneak(PlayerToggleSneakEvent e) {
 		if (casts.containsKey(e.getPlayer())) {

@@ -55,7 +55,7 @@ public class PlayerStats {
 				else warn(p);
 		}
 		
-		if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) 
+		if (p.getInventory().getItemInMainHand() != null && !ItemUtils.isArmor(p.getInventory().getItemInMainHand())) 
 			if (ItemUtils.getType(p.getInventory().getItemInMainHand()) == null || ItemUtils.getType(p.getInventory().getItemInMainHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
 				if (ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level"))
 					sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
@@ -128,11 +128,11 @@ public class PlayerStats {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					
 						if (!isSame(itemHeld.get(p), p.getInventory().getItemInMainHand())) {
-							if (itemHeld.get(p) != null && !isArmor(itemHeld.get(p))) {
+							if (itemHeld.get(p) != null && !ItemUtils.isArmor(itemHeld.get(p))) {
 								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) - ItemUtils.getStat(itemHeld.get(p), Stat.AURA));
 								WandUtils.setMana(p, WandUtils.getMana(p) - ItemUtils.getStat(itemHeld.get(p), Stat.MP));
 							}
-							if (p.getInventory().getItemInMainHand() != null && !isArmor(p.getInventory().getItemInMainHand())) {
+							if (p.getInventory().getItemInMainHand() != null && !ItemUtils.isArmor(p.getInventory().getItemInMainHand())) {
 								AuraHUD.setPlayerAura(p, AuraHUD.getPlayerAura(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.AURA));
 								WandUtils.setMana(p, WandUtils.getMana(p) + ItemUtils.getStat(p.getInventory().getItemInMainHand(), Stat.MP));
 							}
@@ -175,18 +175,6 @@ public class PlayerStats {
 		return false;
 	}
 	
-    public static boolean isArmor(final ItemStack itemStack) {
-        if (itemStack == null)
-            return false;
-        final String typeNameString = itemStack.getType().name();
-        if (typeNameString.endsWith("_HELMET")
-                || typeNameString.endsWith("_CHESTPLATE")
-                || typeNameString.endsWith("_LEGGINGS")
-                || typeNameString.endsWith("_BOOTS")) {
-            return true;
-            }
 
-        return false;
-    }
 	
 }

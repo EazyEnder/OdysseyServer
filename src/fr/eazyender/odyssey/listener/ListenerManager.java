@@ -18,6 +18,7 @@ import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
+import fr.eazyender.odyssey.gameplay.items.armorevent.ArmorListener;
 import fr.eazyender.odyssey.gameplay.masteries.ClasseCommand;
 import fr.eazyender.odyssey.gameplay.masteries.MasteryLeveling;
 import fr.eazyender.odyssey.player.CompassUtils;
@@ -50,6 +51,7 @@ public class ListenerManager {
 	SoundsManager soManager;
 	InteractionsManager imanager;
 	MasteryLeveling mLevel;
+	ArmorListener armorListener;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -71,6 +73,7 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(soManager = new SoundsManager(), pl);
 		pl.getServer().getPluginManager().registerEvents(imanager = new InteractionsManager(), pl);
 		pl.getServer().getPluginManager().registerEvents(mLevel = new MasteryLeveling(), pl);
+		pl.getServer().getPluginManager().registerEvents(armorListener = new ArmorListener(), pl);
 		
 		// Cancel heart particles when damaging enemies
 		ProtocolManager manager = ProtocolLibrary.getProtocolManager();

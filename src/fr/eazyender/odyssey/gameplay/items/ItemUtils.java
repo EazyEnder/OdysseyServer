@@ -158,5 +158,19 @@ public class ItemUtils {
 			matcher.appendReplacement(buffer, ChatColor.of("#" + matcher.group(1)).toString());
 		return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
 	}
+	
+	 public static boolean isArmor(ItemStack itemStack) {
+	        if (itemStack == null)
+	            return false;
+	        final String typeNameString = itemStack.getType().name();
+	        if (typeNameString.endsWith("_HELMET")
+	                || typeNameString.endsWith("_CHESTPLATE")
+	                || typeNameString.endsWith("_LEGGINGS")
+	                || typeNameString.endsWith("_BOOTS")) {
+	            return true;
+	            }
+
+	        return false;
+	    }
 
 }
