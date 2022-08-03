@@ -9,7 +9,9 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.eazyender.odyssey.gameplay.aura.skills.tank.SlashVertical;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.masteries.Mastery;
 import fr.eazyender.odyssey.gameplay.stats.Classe;
+import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 
 public class Skill {
 
@@ -17,11 +19,12 @@ public class Skill {
 	public static HashMap<LivingEntity, Class<? extends Skill>> combos = new HashMap<>();
 
 	public int cooldown;
-	
+
 	int modelData;
 	String name;
 	List<String> lore;
-	
+	Mastery mastery;
+	CombatStats stats;
 
 	public Skill(int cooldown, int modelData, String name, List<String> lore) {
 		this.cooldown = cooldown;
@@ -93,34 +96,51 @@ public class Skill {
 	@SuppressWarnings("rawtypes")
 	public static Class[] getSkills(Classe classe, int mastery) {
 		switch (classe) {
-			case TANK: {
-				switch (mastery) {
-					case 0:
-						return new Class[] { SlashVertical.class };
+		case TANK: {
+			switch (mastery) {
+			case 0:
+				return new Class[] { SlashVertical.class };
 
-				}
 			}
-			case GUERRIER: {
-				switch (mastery) {
+		}
+		case GUERRIER: {
+			switch (mastery) {
 
-
-				}
 			}
-			case ARCHER: {
-				switch (mastery) {
+		}
+		case ARCHER: {
+			switch (mastery) {
 
-
-				}
 			}
-			default:
-				break;
+		}
+		default:
+			break;
 		}
 		return null;
 
 	}
-	
+
 	public ItemStack getItem() {
 		return ItemUtils.getItem(new ItemStack(Material.YELLOW_DYE), name, lore, modelData);
 	}
 
+	public Mastery getMastery() {
+		return mastery;
+	}
+
+	public void setMastery(Mastery mastery) {
+		this.mastery = mastery;
+	}
+
+	public CombatStats getStats() {
+		return stats;
+	}
+
+	public void setStats(CombatStats stats) {
+		this.stats = stats;
+	}
+
+	
+	
+	
 }

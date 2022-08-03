@@ -31,6 +31,8 @@ import net.md_5.bungee.api.ChatColor;;
  */
 public class ArmorListener implements Listener {
 
+
+	
 	// Event Priority is highest because other plugins might cancel the events
 	// before we check.
 
@@ -196,6 +198,7 @@ public class ArmorListener implements Listener {
 		 */
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void itemBreakEvent(PlayerItemBreakEvent e) {
 		ArmorType type = ArmorType.matchType(e.getBrokenItem());

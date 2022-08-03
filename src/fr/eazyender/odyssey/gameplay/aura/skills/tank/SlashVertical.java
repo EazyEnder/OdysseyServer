@@ -25,14 +25,13 @@ public class SlashVertical extends Skill implements SkillHitActivation {
 			
 		skillsActivation.put(p, this);
 		combos.put(p, SlashVertical.class);
-
 		return true;
 	}
 
 	@Override
 	public void activate(EntityDamageByEntityEvent e, boolean isCrit) {
 		Player p = (Player) e.getDamager();
-		e.setDamage(DamageHelper.getAuraDamage(p, power, 1, isCrit));
+		e.setDamage(DamageHelper.getAuraDamage(p, getStats(), power, 1, isCrit));
 		
 	}
 	

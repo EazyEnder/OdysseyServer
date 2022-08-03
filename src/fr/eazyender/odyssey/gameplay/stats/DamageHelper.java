@@ -26,7 +26,7 @@ import net.md_5.bungee.api.ChatColor;
 public class DamageHelper {
 	
 	// Def
-	public static int getDamageDealt(double damage, double defense) {
+	public static int getDamageDealtWithDefense(double damage, double defense) {
 		// 100 attack 100 defense = 50 damage
 		// 50 attack 100 defense = 16 damage
 		// 200 attack 50 defense = 160 damage
@@ -34,26 +34,31 @@ public class DamageHelper {
 		
 	}
 	
-	// Aura
-	public static int getAuraDamage(Player p, double power, double percentage, boolean crit) {
-		// Power = puissance du skill (peut changer avec combo)
-		// Attaque du joueur
-		// Pourcentage demandé par le skill
-		// Coup critiqueo u non
-		
-		// power 100 attack 10 percentage 100% = 20 damage
-		
-		double attack = CombatStats.getStats(p).getStat(Stat.DAMAGE);
-		double damage =  percentage * (attack * (power / 50));
-		
-		if (crit) 
-			damage = damage * ((double)CombatStats.getStats(p).getStat(Stat.CRIT_DAMAGE) / 100);
-		
 
+	public static void dealDamage(LivingEntity to, Player from, int damage) {
+		if (to instanceof Player)
+			to.damage(getDamageDealtWithDefense(damage, (double)CombatStats.getStats((Player)to).getStat(Stat.DEFENSE)));
+		else
+			to.damage(damage);
+		
+	}
+	
+	
+	// AURA SKILLS
+	public static int getAuraDamage(Player p, CombatStats stats, int mastery, double power, boolean crit) {
+		// Power = power of the skill (can change with combo)
+		// Mastery level
+		
+		double damage =  (1 + ((double)mastery / 30)) * stats.getStat(Stat.DAMAGE) * (power / 50);
+		// mastery lvl 30 player will deal twice the damage with same stuff and stats
+		//             60                  thrice
+		if (crit) 
+			damage = damage * ((double)stats.getStat(Stat.CRIT_DAMAGE) / 100);
 		return applyVariation(damage);
 		
 	}
 	
+	// Smallr random damage  variation
 	public static int applyVariation(double damage) {
 		// +5% -5%
 		Random r = new Random();
@@ -62,6 +67,8 @@ public class DamageHelper {
 		return (int) Math.round(damageWithVar);
 	}
 	
+	
+	// Get a crit chance
 	public static boolean isCrit(Player p) {
 		Random r = new Random();
 		if (r.nextInt(100) < CombatStats.getStats(p).getStat(Stat.CRIT_CHANCE)) 
@@ -127,15 +134,6 @@ public class DamageHelper {
         
         
 	}
-
-	public static void dealDamage(LivingEntity to, Player from, int damage) {
-		if (to instanceof Player)
-			to.damage(getDamageDealt(damage, (double)CombatStats.getStats((Player)to).getStat(Stat.DEFENSE)));
-		else
-			to.damage(damage);
-		
-	}
-	
 
 	
 }

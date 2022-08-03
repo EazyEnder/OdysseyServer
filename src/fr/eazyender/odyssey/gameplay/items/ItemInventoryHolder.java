@@ -3,7 +3,6 @@ package fr.eazyender.odyssey.gameplay.items;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import fr.eazyender.odyssey.gameplay.stats.Stat;
 
 public class ItemInventoryHolder implements InventoryHolder {
 

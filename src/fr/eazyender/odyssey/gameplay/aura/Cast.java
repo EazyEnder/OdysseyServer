@@ -3,18 +3,18 @@ package fr.eazyender.odyssey.gameplay.aura;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.masteries.Mastery;
 import fr.eazyender.odyssey.gameplay.stats.Classe;
+import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 import net.md_5.bungee.api.ChatColor;
 
 public class Cast {
@@ -89,6 +89,8 @@ public class Cast {
 			BossBar bar = AuraHUD.player_bossbars.get(p.getUniqueId());
 			if (skillClass != null) {
 				Skill skill = skillClass.newInstance();
+				skill.setMastery(Mastery.valueOf(type.name()));
+				skill.setStats(CombatStats.getStats(p));
 				try {
 					if (skill.canCast(p, skillClass)) {
 						bar.setColor(BarColor.GREEN);

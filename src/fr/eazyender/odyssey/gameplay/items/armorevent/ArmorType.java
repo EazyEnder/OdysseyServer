@@ -1,6 +1,5 @@
 package fr.eazyender.odyssey.gameplay.items.armorevent;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**

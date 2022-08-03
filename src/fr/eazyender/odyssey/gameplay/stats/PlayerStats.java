@@ -66,8 +66,9 @@ public class PlayerStats {
 				
 
 		// Adding default values to sum
-		if (stat == Stat.DAMAGE)
+		if (stat == Stat.DAMAGE) {
 			sum += 1;
+		}
 		if (stat == Stat.POWER)
 			sum += 1;
 		if (stat == Stat.HEALTH)

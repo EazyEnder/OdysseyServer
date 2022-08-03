@@ -113,6 +113,7 @@ public class ItemUtils {
 				else if (stat == Stat.FIRE || stat == Stat.WATER || stat == Stat.EARTH || stat == Stat.WIND || stat == Stat.LIGHT || stat == Stat.SHADOW) {
 					percentage = "%";
 				} 
+				
 				lore.add(stat.getShowing() + " : §f" + sign + nf.format(value) + percentage);
 			}
 		}
