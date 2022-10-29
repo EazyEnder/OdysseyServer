@@ -182,7 +182,7 @@ public class ItemGuiListener implements Listener {
 					Classe type = Classe.values()[e.getSlot() - 1];
 
 					ItemStack is = ItemDB.getItem(holder.getIdItem());
-					is = NBTEditor.set(is, type.name(), "type");
+					is = NBTEditor.set(is, type.name(), "classe");
 					ItemDB.updateItem(holder.getIdItem(), NBTEditor.getItemNBTTag(is));
 
 					ItemCommand.openTypeEditor(p, holder);

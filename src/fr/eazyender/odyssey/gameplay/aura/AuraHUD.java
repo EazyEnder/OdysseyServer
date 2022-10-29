@@ -52,7 +52,7 @@ public class AuraHUD implements Listener {
 					}
 
 					if (player.getItemInHand() != null) {
-						Classe type = ItemUtils.getType(player.getItemInHand());
+						Classe type = ItemUtils.getClass(player.getItemInHand());
 						if (type != null
 								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK)) {
 							if (!player_bossbars.containsKey(player.getUniqueId())) {

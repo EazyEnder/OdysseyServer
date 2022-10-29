@@ -49,10 +49,10 @@ public class ItemUtils {
 		return NBTEditor.getInt(is, stat.name());
 	}
 
-	public static Classe getType(ItemStack is) {
-		if (NBTEditor.getString(is, "type") == null)
+	public static Classe getClass(ItemStack is) {
+		if (NBTEditor.getString(is, "classe") == null)
 			return null;
-		return Classe.valueOf(NBTEditor.getString(is, "type"));
+		return Classe.valueOf(NBTEditor.getString(is, "classe"));
 	}
 
 	public static ItemRank getRank(ItemStack is) {
@@ -72,12 +72,12 @@ public class ItemUtils {
 
 	public static ArrayList<String> buildLore(ItemStack is) {
 		ArrayList<String> lore = new ArrayList<>();
-		if (getRank(is) != null && getType(is) != null) {
+		if (getRank(is) != null && getClass(is) != null) {
 			ItemRank rank = getRank(is);
 			lore.add("§8§m                            ");
 			lore.add("       " + rank.getColor() + "[" + rank.name() + "]");
 			lore.add("       " + 
-					"§f" + getType(is).name().substring(0, 1) + getType(is).name().substring(1).toLowerCase());
+					"§f" + getClass(is).name().substring(0, 1) + getClass(is).name().substring(1).toLowerCase());
 			lore.add("§8§m                            ");
 			lore.add(" ");
 

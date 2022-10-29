@@ -26,8 +26,8 @@ public class AuraCastListener implements Listener {
 
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
-		if (e.getItem() != null && (ItemUtils.getType(e.getItem()) == Classe.GUERRIER
-				|| ItemUtils.getType(e.getItem()) == Classe.ARCHER || ItemUtils.getType(e.getItem()) == Classe.TANK)) {
+		if (e.getItem() != null && (ItemUtils.getClass(e.getItem()) == Classe.GUERRIER
+				|| ItemUtils.getClass(e.getItem()) == Classe.ARCHER || ItemUtils.getClass(e.getItem()) == Classe.TANK)) {
 
 			if (e.getAction().name().contains("LEFT") || e.getAction().name().contains("RIGHT") && !ItemUtils.isArmor(e.getItem())) {
 				
@@ -39,21 +39,22 @@ public class AuraCastListener implements Listener {
 						e.setCancelled(true);
 					}
 				} else {
-					if (ItemUtils.getType(e.getItem()) == Classe.GUERRIER && e.getAction().name().contains("LEFT"))
+					if (ItemUtils.getClass(e.getItem()) == Classe.GUERRIER && e.getAction().name().contains("LEFT"))
 						return;
-					if (ItemUtils.getType(e.getItem()) == Classe.TANK && e.getAction().name().contains("LEFT"))
+					if (ItemUtils.getClass(e.getItem()) == Classe.TANK && e.getAction().name().contains("LEFT"))
 						return;
-					if (ItemUtils.getType(e.getItem()) == Classe.ARCHER && e.getAction().name().contains("RIGHT"))
+					if (ItemUtils.getClass(e.getItem()) == Classe.ARCHER && e.getAction().name().contains("RIGHT"))
 						return;
 
-					if (ItemUtils.getType(e.getItem()).name()
+					if (ItemUtils.getClass(e.getItem()).name()
 							.equals(MasteryDB.getClass(e.getPlayer().getUniqueId().toString()))) {
 
-						cast = new Cast(e.getPlayer(), ItemUtils.getType(e.getItem()));
+						cast = new Cast(e.getPlayer(), ItemUtils.getClass(e.getItem()));
 						cast.setPattern("" + Cast.getClick(e.getAction()));
 						cast.animate();
 						e.setCancelled(true);
 					} else {
+						if (!e.getItem().getType().name().contains("HELMET") && !e.getItem().getType().name().contains("CHESTPLATE") && !e.getItem().getType().name().contains("LEGGINGS") && !e.getItem().getType().name().contains("BOOTS"))
 						e.getPlayer().sendMessage(
 								ChatColor.of("#FF0000") + "Tu ne peux pas utiliser cet item avec ta classe actuelle !");
 					}
@@ -70,8 +71,8 @@ public class AuraCastListener implements Listener {
 			Player p = (Player) e.getDamager();
 			ItemStack item = p.getInventory().getItemInMainHand();
 			boolean isCrit = DamageHelper.isCrit(p);
-			if (item != null && (ItemUtils.getType(item) == Classe.GUERRIER || ItemUtils.getType(item) == Classe.ARCHER
-					|| ItemUtils.getType(item) == Classe.TANK)) {
+			if (item != null && (ItemUtils.getClass(item) == Classe.GUERRIER || ItemUtils.getClass(item) == Classe.ARCHER
+					|| ItemUtils.getClass(item) == Classe.TANK)) {
 				if (!ItemUtils.isArmor(item)) {
 					Cast cast = casts.get(p);
 					if (cast != null) {

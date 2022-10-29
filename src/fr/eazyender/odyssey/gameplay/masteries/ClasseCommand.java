@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import net.md_5.bungee.api.ChatColor;
 
 public class ClasseCommand implements CommandExecutor, Listener {
@@ -105,33 +106,50 @@ public class ClasseCommand implements CommandExecutor, Listener {
 
 			if (!cooldowns.containsKey((Player) e.getWhoClicked())
 					|| System.currentTimeMillis() - cooldowns.get(p) > 60000) {
+				
 				if (e.getSlot() == 3)
-					MasteryDB.setClass(p.getUniqueId().toString(), "GUERRIER");
+					setClassWithArmorCheck(p, Classe.GUERRIER);
 				if (e.getSlot() == 4)
-					MasteryDB.setClass(p.getUniqueId().toString(), "MAGE");
+					setClassWithArmorCheck(p, Classe.MAGE);
 				if (e.getSlot() == 5)
-					MasteryDB.setClass(p.getUniqueId().toString(), "ARCHER");
+					setClassWithArmorCheck(p, Classe.ARCHER);
 				if (e.getSlot() == 6)
-					MasteryDB.setClass(p.getUniqueId().toString(), "TANK");
-				if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
-					p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(),
-							Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
-					p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
-				} else {
-					p.setLevel(0);
-					p.setExp(0);
-				}
-				cooldowns.put((Player) e.getWhoClicked(), System.currentTimeMillis());
+					setClassWithArmorCheck(p, Classe.TANK);
+
 			} else {
-				e.getWhoClicked().sendMessage(
-						ChatColor.of("#FF0000") + "Tu dois attendre avant de pouvoir changer de classe à nouveau !");
-				return;
+				p.sendMessage(
+						ChatColor.of("#FF0000") + "<!> Tu dois attendre avant de pouvoir changer de classe à nouveau !");
 			}
 
-			e.getWhoClicked().closeInventory();
-			e.getWhoClicked().sendMessage(ChatColor.of("#fc03eb") + "Vous avez changé de classe !");
 
 		}
+	}
+	
+	public void setClassWithArmorCheck(Player p, Classe classe) {
+		
+		for(ItemStack armor : p.getInventory().getArmorContents()) {
+			if (armor != null) {
+				if (ItemUtils.getClass(armor) != null && ItemUtils.getClass(armor) != classe) {
+					p.sendMessage(
+							ChatColor.of("#FF0000") + "<!> Vous ne pouvez pas changer de classe avec cet équipement !");
+					return;
+				}
+			}
+		}
+		MasteryDB.setClass(p.getUniqueId().toString(), classe);
+		if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
+			p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(),
+					Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+			p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+		} else {
+			p.setLevel(0);
+			p.setExp(0);
+		}
+		cooldowns.put(p, System.currentTimeMillis());
+		p.closeInventory();
+		p.sendMessage(ChatColor.of("#fc03eb") + "Vous avez changé de classe !");
+		return;
+		
 	}
 
 }

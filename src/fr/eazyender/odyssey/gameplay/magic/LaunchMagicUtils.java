@@ -41,7 +41,7 @@ public class LaunchMagicUtils implements Listener {
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 
 			if (p.getItemInHand() != null
-					&& ItemUtils.getType(p.getItemInHand()) != null && ItemUtils.getType(p.getItemInHand()) == Classe.MAGE) {
+					&& ItemUtils.getClass(p.getItemInHand()) != null && ItemUtils.getClass(p.getItemInHand()) == Classe.MAGE) {
 				if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
 					event.setCancelled(true);
 					p.sendMessage(ChatColor.of("#FF0000") + "Tu ne peux pas utiliser cet item avec ta classe actuelle !");

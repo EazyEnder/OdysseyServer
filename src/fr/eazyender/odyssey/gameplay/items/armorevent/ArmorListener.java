@@ -251,10 +251,11 @@ public class ArmorListener implements Listener {
 		Player p = e.getPlayer();
 		ItemStack armorPiece = e.getNewArmorPiece();
 		if (armorPiece != null) {
-			if (ItemUtils.getType(armorPiece) != null
-					&& !ItemUtils.getType(armorPiece).name().equals(MasteryDB.getClass(p.getUniqueId().toString()))) {
+			if (ItemUtils.getClass(armorPiece) != null
+					&& !ItemUtils.getClass(armorPiece).name().equals(MasteryDB.getClass(p.getUniqueId().toString()))) {
 				p.sendMessage(ChatColor.of("#ff0000") + "<!> Vous n'avez pas la bonne classe pour équiper cet item !");
 				e.setCancelled(true);
+			
 				return;
 			}
 			if (ItemUtils.getNumericInfo(armorPiece, "Level") != 0 && MasteryDB.getMastery(p.getUniqueId().toString(),

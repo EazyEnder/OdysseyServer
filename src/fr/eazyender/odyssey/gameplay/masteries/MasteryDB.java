@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import org.bukkit.entity.Player;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 public class MasteryDB {
 
 	public static void initPlayer(String uuid) {
@@ -95,13 +96,13 @@ public class MasteryDB {
 	}
 	
 	
-	public static void setClass(String uuid, String classe) {
+	public static void setClass(String uuid, Classe classe) {
 		
 		if (!hasMasteryInit(uuid)) initPlayer(uuid);
 		try {
 			String sql = "UPDATE masteries SET classe=? WHERE uuid=?;";
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
-			stmt.setString(1, classe);
+			stmt.setString(1, classe.name());
 			stmt.setString(2, uuid);
 			
 			stmt.executeUpdate();

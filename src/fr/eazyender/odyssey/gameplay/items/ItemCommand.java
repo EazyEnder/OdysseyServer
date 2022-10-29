@@ -110,7 +110,7 @@ public class ItemCommand implements CommandExecutor {
 			slot++;
 		}
 		inv.setItem(18, ItemUtils.getItem(new ItemStack(Material.OAK_SIGN), "§8Model data : " + ItemUtils.getNumericInfo(item, "CustomModelData") , null, 0));
-		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "§8Type : " + ItemUtils.getInfo(item, "type") , null, 0));
+		inv.setItem(19, ItemUtils.getItem(new ItemStack(Material.REDSTONE), "§8Type : " + ItemUtils.getInfo(item, "classe") , null, 0));
 		inv.setItem(20, ItemUtils.getItem(new ItemStack(Material.BLAZE_ROD), "§8Rank : " + ItemUtils.getInfo(item, "rank") , null, 0));
 		inv.setItem(21, ItemUtils.getItem(new ItemStack(Material.SPRUCE_SIGN), "§8Name" , null, 0));
 		inv.setItem(22, ItemUtils.getItem(new ItemStack(Material.WRITABLE_BOOK), "§8Description" , null, 0));
@@ -156,7 +156,7 @@ public class ItemCommand implements CommandExecutor {
 	
 	public static void openTypeEditor(Player p, ItemInventoryHolder holder) {
 		ItemStack item = ItemDB.getItem(holder.getIdItem());
-		Inventory inv = Bukkit.createInventory(holder.setState(State.TYPE), 9, "§lType : "  + ItemUtils.getInfo(item, "type"));
+		Inventory inv = Bukkit.createInventory(holder.setState(State.TYPE), 9, "§lType : "  + ItemUtils.getInfo(item, "classe"));
 		inv.setItem(0, ItemUtils.getItem(new ItemStack(Material.ARROW), "§8Retour", null, 0));
 		inv.setItem(1, ItemUtils.getItem(new ItemStack(Material.GLASS_BOTTLE), "§eMagie", null, 0));
 		inv.setItem(2, ItemUtils.getItem(new ItemStack(Material.IRON_SWORD), "§eGuerrier", null, 0));
