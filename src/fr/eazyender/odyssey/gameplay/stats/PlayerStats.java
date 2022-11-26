@@ -55,11 +55,11 @@ public class PlayerStats {
 				else warn(p);
 		}
 		
-		if (p.getInventory().getItemInMainHand() != null && !ItemUtils.isArmor(p.getInventory().getItemInMainHand())) 
+		if (p.getInventory().getItemInMainHand() != null && !ItemUtils.isArmor(p.getInventory().getItemInMainHand()) && ItemUtils.getClass(p.getInventory().getItemInMainHand()) != null) 
 			if (ItemUtils.getClass(p.getInventory().getItemInMainHand()) == null || ItemUtils.getClass(p.getInventory().getItemInMainHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
 				if (ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(p.getInventory().getItemInMainHand(), "Level"))
 					sum += ItemUtils.getStat(p.getInventory().getItemInMainHand(), stat);
-		if (p.getInventory().getItemInOffHand() != null && p.getInventory().getItemInOffHand().getType() == Material.SHIELD && p.isBlocking())
+		if (p.getInventory().getItemInOffHand() != null && p.getInventory().getItemInOffHand().getType() == Material.SHIELD && p.isBlocking() && ItemUtils.getClass(p.getInventory().getItemInOffHand()) != null)
 			if (ItemUtils.getClass(p.getInventory().getItemInOffHand()) == null || ItemUtils.getClass(p.getInventory().getItemInOffHand()).name().equals(MasteryDB.getClass(p.getUniqueId().toString())))
 				if (ItemUtils.getNumericInfo(p.getInventory().getItemInOffHand(), "Level") == 0 || MasteryDB.getMastery(p.getUniqueId().toString(), Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) >= ItemUtils.getNumericInfo(p.getInventory().getItemInOffHand(), "Level"))
 					sum += ItemUtils.getStat(p.getInventory().getItemInOffHand(), stat);

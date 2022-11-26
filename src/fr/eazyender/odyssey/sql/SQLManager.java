@@ -71,6 +71,7 @@ public class SQLManager {
 			if (this.connection == null || this.connection.isClosed())
 				return false;
 			execute("CREATE TABLE IF NOT EXISTS items (id VARCHAR(20) PRIMARY KEY, itemNBT TEXT)");
+			execute("CREATE TABLE IF NOT EXISTS jobs (uuid VARCHAR(36) PRIMARY KEY, forgeron INT)");
 			execute("CREATE TABLE IF NOT EXISTS masteries (uuid VARCHAR(36) PRIMARY KEY, guerrier float, archer float, tank float, fire float, water float, earth float, wind float, light float, shadow float, classe VARCHAR(20), guerrierXP float, archerXP float, tankXP float)");
 			
 		}

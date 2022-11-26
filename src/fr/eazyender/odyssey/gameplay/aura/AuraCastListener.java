@@ -90,7 +90,7 @@ public class AuraCastListener implements Listener {
 				} else {
 					SkillHitActivation.skillsActivation.get(p).activate(e, isCrit);
 				}
-			}
+			} else e.setDamage(DamageHelper.applyVariation(CombatStats.getStats(p).getStat(Stat.DAMAGE)));
 			if (!(e.getEntity() instanceof Player))
 				DamageHelper.animateDamage(p, (LivingEntity) e.getEntity(), (int) e.getDamage(), isCrit);
 		}

@@ -72,12 +72,17 @@ public class ItemUtils {
 
 	public static ArrayList<String> buildLore(ItemStack is) {
 		ArrayList<String> lore = new ArrayList<>();
-		if (getRank(is) != null && getClass(is) != null) {
+		if (getRank(is) != null) {
+			String classe = null;
+			if (getClass(is) != null)
+				classe = getClass(is).name().substring(0, 1) + getClass(is).name().substring(1).toLowerCase();
+			else classe = "Classe Commune";
 			ItemRank rank = getRank(is);
+			
 			lore.add("§8§m                            ");
 			lore.add("       " + rank.getColor() + "[" + rank.name() + "]");
 			lore.add("       " + 
-					"§f" + getClass(is).name().substring(0, 1) + getClass(is).name().substring(1).toLowerCase());
+					"§f" + classe);
 			lore.add("§8§m                            ");
 			lore.add(" ");
 
