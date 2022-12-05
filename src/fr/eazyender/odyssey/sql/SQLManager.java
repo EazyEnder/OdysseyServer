@@ -73,6 +73,7 @@ public class SQLManager {
 			execute("CREATE TABLE IF NOT EXISTS items (id VARCHAR(20) PRIMARY KEY, itemNBT TEXT)");
 			execute("CREATE TABLE IF NOT EXISTS jobs (uuid VARCHAR(36) PRIMARY KEY, forgeron INT)");
 			execute("CREATE TABLE IF NOT EXISTS masteries (uuid VARCHAR(36) PRIMARY KEY, guerrier float, archer float, tank float, fire float, water float, earth float, wind float, light float, shadow float, classe VARCHAR(20), guerrierXP float, archerXP float, tankXP float)");
+			execute("CREATE TABLE IF NOT EXISTS skills (uuid VARCHAR(36) PRIMARY KEY, skill1 VARCHAR(20), skill2 VARCHAR(20), skill3 VARCHAR(20), skill4 VARCHAR(20), skill5 VARCHAR(20), skill6 VARCHAR(20), skill7 VARCHAR(20), skill8 VARCHAR(20), skill9 VARCHAR(20), skill10 VARCHAR(20))");
 			
 		}
 		return true;

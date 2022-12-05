@@ -121,41 +121,41 @@ public class StatsListener implements Listener {
 					water += deltawater;
 					thirst_player.replace(player.getUniqueId(), water);
 
-					// Action Bar
-					DecimalFormat df = new DecimalFormat("###");
-					if (AuraCastListener.casts.get(player) == null) {
-						String action_bar = "";
-						
-							String temp_color = ""+ChatColor.of(new Color(106, 176, 76));
-							if(temperature > 0 && temperature <= 20) {temp_color = ""+ChatColor.of(new Color(250, 211, 144));}
-							else if(temperature > 20 && temperature <= 30) {temp_color = ""+ChatColor.of(new Color(246, 185, 59));}
-							else if(temperature > 30 && temperature <= 45) {temp_color = ""+ChatColor.of(new Color(250, 152, 58));}
-							else if(temperature > 45 && temperature <= 60) {temp_color = ""+ChatColor.of(new Color(229, 80, 57));}
-							else if(temperature > 60) {temp_color = ""+ChatColor.of(new Color(160, 19, 19));}
-							else if(temperature > -10 && temperature <= 0) {temp_color = ""+ChatColor.of(new Color(130, 204, 221));}
-							else if(temperature > -20 && temperature <= -10) {temp_color = ""+ChatColor.of(new Color(106, 137, 204));}
-							else if(temperature > -35 && temperature <= -20) {temp_color = ""+ChatColor.of(new Color(74, 105, 189));}
-							else if(temperature > -50 && temperature <= -35) {temp_color = ""+ChatColor.of(new Color(30, 55, 153));}
-							else if(temperature <= 50) {temp_color = ""+ChatColor.of(new Color(12, 36, 97));}
-							String tempRound = df.format(temperature);
-						
-						if(temperature <= 0) {
-						action_bar += "\uEAA3" + temp_color + " §l" + tempRound + "°C§r ";
-						}else {
-						action_bar += "\uEAA2" + temp_color + " §l" + tempRound + "°C§r ";
-						}
-						
-							String water_color = ""+ChatColor.of(new Color(106, 176, 76));
-							if(water > 80 && water <= 100) {water_color = ""+ChatColor.of(new Color(186, 220, 88));}
-							else if(water > 60 && water <= 80) {water_color = ""+ChatColor.of(new Color(246, 229, 141));}
-							else if(water > 40 && water <= 60) {water_color = ""+ChatColor.of(new Color(240, 147, 43));}
-							else if(water > 20 && water < 40) {water_color = ""+ChatColor.of(new Color(235, 77, 75));}
-							else if(water <= 20) {water_color = ""+ChatColor.of(new Color(160, 19, 19));}
-							String water_round = df.format(water);
-							action_bar += "\uEAA4" + water_color + " §l" + water_round + "%§r ";
+				// Action Bar
+				DecimalFormat df = new DecimalFormat("###");
+
+					String action_bar = "";
 					
-							player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(action_bar));
+						String temp_color = ""+ChatColor.of(new Color(106, 176, 76));
+						if(temperature > 0 && temperature <= 20) {temp_color = ""+ChatColor.of(new Color(250, 211, 144));}
+						else if(temperature > 20 && temperature <= 30) {temp_color = ""+ChatColor.of(new Color(246, 185, 59));}
+						else if(temperature > 30 && temperature <= 45) {temp_color = ""+ChatColor.of(new Color(250, 152, 58));}
+						else if(temperature > 45 && temperature <= 60) {temp_color = ""+ChatColor.of(new Color(229, 80, 57));}
+						else if(temperature > 60) {temp_color = ""+ChatColor.of(new Color(160, 19, 19));}
+						else if(temperature > -10 && temperature <= 0) {temp_color = ""+ChatColor.of(new Color(130, 204, 221));}
+						else if(temperature > -20 && temperature <= -10) {temp_color = ""+ChatColor.of(new Color(106, 137, 204));}
+						else if(temperature > -35 && temperature <= -20) {temp_color = ""+ChatColor.of(new Color(74, 105, 189));}
+						else if(temperature > -50 && temperature <= -35) {temp_color = ""+ChatColor.of(new Color(30, 55, 153));}
+						else if(temperature <= 50) {temp_color = ""+ChatColor.of(new Color(12, 36, 97));}
+						String tempRound = df.format(temperature);
+					
+					if(temperature <= 0) {
+					action_bar += "\uEAA3" + temp_color + " §l" + tempRound + "°C§r ";
+					}else {
+					action_bar += "\uEAA2" + temp_color + " §l" + tempRound + "°C§r ";
 					}
+					
+						String water_color = ""+ChatColor.of(new Color(106, 176, 76));
+						if(water > 80 && water <= 100) {water_color = ""+ChatColor.of(new Color(186, 220, 88));}
+						else if(water > 60 && water <= 80) {water_color = ""+ChatColor.of(new Color(246, 229, 141));}
+						else if(water > 40 && water <= 60) {water_color = ""+ChatColor.of(new Color(240, 147, 43));}
+						else if(water > 20 && water < 40) {water_color = ""+ChatColor.of(new Color(235, 77, 75));}
+						else if(water <= 20) {water_color = ""+ChatColor.of(new Color(160, 19, 19));}
+						String water_round = df.format(water);
+						action_bar += "\uEAA4" + water_color + " §l" + water_round + "%§r ";
+				
+						player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(action_bar));
+					
 				}
 			}
 

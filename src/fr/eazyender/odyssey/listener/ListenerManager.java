@@ -15,6 +15,7 @@ import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
 import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
+import fr.eazyender.odyssey.gameplay.aura.gui.SkillsGuiListener;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;
 import fr.eazyender.odyssey.gameplay.items.ItemGuiListener;
@@ -46,12 +47,12 @@ public class ListenerManager {
 	DungeonGuiListener dungeonGuiListener;
 	ClasseCommand classeCommand;
 	HarvestHandler harvestListener;
-	SkillsCommand skillsCommand;
 	BuildObjectListener bolistener;
 	SoundsManager soManager;
 	InteractionsManager imanager;
 	MasteryLeveling mLevel;
 	ArmorListener armorListener;
+	SkillsGuiListener skillsGuiListener;
 	
 
 	public ListenerManager(OdysseyPl pl) {
@@ -68,12 +69,13 @@ public class ListenerManager {
 		pl.getServer().getPluginManager().registerEvents(dungeonGuiListener = new DungeonGuiListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(harvestListener = new HarvestHandler(), pl);
 		pl.getServer().getPluginManager().registerEvents(classeCommand = new ClasseCommand(), pl);
-		pl.getServer().getPluginManager().registerEvents(skillsCommand = new SkillsCommand(), pl);
 		pl.getServer().getPluginManager().registerEvents(bolistener = new BuildObjectListener(), pl);
 		pl.getServer().getPluginManager().registerEvents(soManager = new SoundsManager(), pl);
 		pl.getServer().getPluginManager().registerEvents(imanager = new InteractionsManager(), pl);
 		pl.getServer().getPluginManager().registerEvents(mLevel = new MasteryLeveling(), pl);
 		pl.getServer().getPluginManager().registerEvents(armorListener = new ArmorListener(), pl);
+		pl.getServer().getPluginManager().registerEvents(skillsGuiListener = new SkillsGuiListener(), pl);
+		
 		
 		// Cancel heart particles when damaging enemies
 		ProtocolManager manager = ProtocolLibrary.getProtocolManager();
@@ -92,25 +94,6 @@ public class ListenerManager {
 		return pl;
 	}
 
-	public TchatListener getChatListener() {
-		return chatListener;
-	}
-
-	public ZoneUtils getZoneUtils() {
-		return zUtils;
-	}
-
-	public CompassUtils getCompassUtils() {
-		return cUtils;
-	}
-
-	public StatsListener getStatsListener() {
-		return sListener;
-	}
-
-	public BlockUtils getBlockUtils() {
-		return bUtils;
-	}
 
 	
 	
