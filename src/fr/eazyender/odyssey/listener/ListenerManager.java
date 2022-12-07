@@ -14,7 +14,6 @@ import com.comphenix.protocol.events.PacketEvent;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.dungeons.gui.DungeonGuiListener;
 import fr.eazyender.odyssey.gameplay.aura.AuraCastListener;
-import fr.eazyender.odyssey.gameplay.aura.gui.SkillsCommand;
 import fr.eazyender.odyssey.gameplay.aura.gui.SkillsGuiListener;
 import fr.eazyender.odyssey.gameplay.city.building.HammerHandler;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BuildObjectListener;

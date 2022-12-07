@@ -25,11 +25,13 @@ import net.md_5.bungee.api.ChatColor;
 
 public class DamageHelper {
 	
-	// Def
+	// Defense formula
 	public static int getDamageDealtWithDefense(double damage, double defense) {
-		// 100 attack 100 defense = 50 damage
-		// 50 attack 100 defense = 16 damage
+		
+		// Examples
 		// 200 attack 50 defense = 160 damage
+		// 2000 attack 4000 defense =  666 damage
+		
 		return (int) (damage*(damage/(damage+defense)));
 		
 	}
@@ -39,26 +41,42 @@ public class DamageHelper {
 		if (to instanceof Player)
 			to.damage(getDamageDealtWithDefense(damage, (double)CombatStats.getStats((Player)to).getStat(Stat.DEFENSE)));
 		else
+			//WIP, do with defense from mob (Mythicmobs)
 			to.damage(damage);
 		
 	}
 	
 	
 	// AURA SKILLS
-	public static int getAuraDamage(Player p, CombatStats stats, int mastery, double power, boolean crit) {
+	public static int getAuraDamage(CombatStats stats, int mastery, double power, boolean crit) {
+		// 
 		// Power = power of the skill (can change with combo)
 		// Mastery level
 		
-		double damage =  (1 + ((double)mastery / 30)) * stats.getStat(Stat.DAMAGE) * (power / 50);
-		// mastery lvl 30 player will deal twice the damage with same stuff and stats
-		//             60                  thrice
+		double damage =  (1 + ((double)mastery / 30)) * stats.getStat(Stat.DAMAGE) * (power / 100);
+		// mastery lvl 30 player will deal 2x the damage with same stats
+		//             60                  3x
 		if (crit) 
 			damage = damage * ((double)stats.getStat(Stat.CRIT_DAMAGE) / 100);
+		
 		return applyVariation(damage);
 		
 	}
 	
-	// Smallr random damage  variation
+	// Basic attack damage (Tank, Warrior, Ranger)
+	public static int getBasicAttackDamage(CombatStats stats, int mastery, boolean crit) {
+		
+		// + 10 damage per lvl
+		// might change for something more scaly
+		double damage = stats.getStat(Stat.DAMAGE) + 10*mastery;
+				
+		if (crit)
+			damage = damage * ((double)stats.getStat(Stat.CRIT_DAMAGE) / 100);
+		return applyVariation(damage);
+	}
+	
+	
+	// Small random damage  variation
 	public static int applyVariation(double damage) {
 		// +5% -5%
 		Random r = new Random();
@@ -68,14 +86,17 @@ public class DamageHelper {
 	}
 	
 	
-	// Get a crit chance
-	public static boolean isCrit(Player p) {
+	// Get a crit chance with stat from player
+	
+	public static boolean rollCrit(Player p) {
 		Random r = new Random();
 		if (r.nextInt(100) < CombatStats.getStats(p).getStat(Stat.CRIT_CHANCE)) 
 			return true;
 		 return false;
 	}
 	
+	
+	// Packets for damage animation
 	
 	public static void animateDamage(Player p, LivingEntity e, int damage, boolean crit) {
 		Random r = new Random();

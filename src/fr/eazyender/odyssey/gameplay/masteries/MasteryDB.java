@@ -78,20 +78,22 @@ public class MasteryDB {
 		
 	}
 	
-	public static String getClass(String uuid) {
+	public static Classe getClass(String uuid) {
 		
 		try {
 			String sql = "SELECT * FROM masteries WHERE uuid=?;";
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return set.getString("classe");
+			while (set.next()) {
+				if (set.getString("classe") == null) return null;
+				return Classe.valueOf(set.getString("classe"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		initPlayer(uuid);
-		return "null";
+		return null;
 		
 	}
 	

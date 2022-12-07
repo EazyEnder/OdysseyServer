@@ -38,4 +38,5 @@ commands:
     permission: player.use
   skills:
     description: Voir ses skills
+    aliases: sorts
     permission: player.use

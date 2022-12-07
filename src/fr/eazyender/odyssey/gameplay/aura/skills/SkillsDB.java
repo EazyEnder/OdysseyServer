@@ -3,6 +3,10 @@ package fr.eazyender.odyssey.gameplay.aura.skills;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import fr.eazyender.odyssey.OdysseyPl;
 public class SkillsDB {
 
@@ -66,11 +70,30 @@ public class SkillsDB {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		initPlayer(uuid);
 		return "null";
 		
 	}
 	
+	public static HashMap<Integer, String> getSkills(String uuid) {
+		if (!hasSkillsInit(uuid)) initPlayer(uuid);
+		try {
+			HashMap<Integer, String> skills = new HashMap<>();
+			String sql = "SELECT * FROM skills WHERE uuid=?;";
+			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
+			stmt.setString(1, uuid);
+			ResultSet set = stmt.executeQuery();
+			int i = 1;
+			while (set.next()) {
+				skills.put(i, set.getString("skill" + i));
+				i++;
+			}
+			return skills;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 
 	
 }

@@ -11,14 +11,14 @@ public class Taillade extends BasicSkill {
 	
 	
 	public Taillade(Player p) {
-		super(p, 10000, "Taillade");
+		super(p, 8000, "Taillade", 10);
 	}
 
 
 	@Override
 	public boolean launch() {
 		// Effect
-		Bukkit.broadcastMessage("Lancé");
+		Bukkit.broadcastMessage("Lancé Taillade");
 		
 		Skills.combos.put(p, Taillade.class);
 		return true;

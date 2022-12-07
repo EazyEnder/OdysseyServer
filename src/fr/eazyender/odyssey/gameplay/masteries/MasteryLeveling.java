@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import fr.eazyender.odyssey.dungeons.DungeonInstance;
+import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.player.group.PlayerGroup;
 import io.lumine.mythic.bukkit.events.MythicMobDeathEvent;
 import net.md_5.bungee.api.ChatColor;
@@ -28,18 +29,18 @@ public class MasteryLeveling implements Listener {
 				// Dungeons -> everyone gets the xp
 				if (DungeonInstance.getInstance(killer) != null) {
 					for(Player p : DungeonInstance.getInstance(killer).getPlayers()) {
-						if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE"))
-							giveXp(p, xpToGive, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
+						if (MasteryDB.getClass(p.getUniqueId().toString()) != null && MasteryDB.getClass(p.getUniqueId().toString()) != Classe.MAGE)
+							giveXp(p, xpToGive,MasteryDB.getClass(p.getUniqueId().toString()).getMastery());
 					}
 				} else {
-					if (!MasteryDB.getClass(killer.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(killer.getUniqueId().toString()).equals("MAGE"))
-						giveXp(killer, xpToGive, Mastery.valueOf(MasteryDB.getClass(killer.getUniqueId().toString())));
+					if (MasteryDB.getClass(killer.getUniqueId().toString()) != null && MasteryDB.getClass(killer.getUniqueId().toString()) != Classe.MAGE)
+						giveXp(killer, xpToGive, MasteryDB.getClass(killer.getUniqueId().toString()).getMastery());
 					// Groupe ? 25% to every other player
 					if (PlayerGroup.getGroup(killer) != null) {
 						for(Player p : PlayerGroup.getGroup(killer).getMembers()) {
 							if (p != killer) {
-								if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null") && !MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE"))
-									giveXp(p, xpToGive * 0.25, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString())));
+								if (MasteryDB.getClass(p.getUniqueId().toString()) != null && MasteryDB.getClass(p.getUniqueId().toString()) != Classe.MAGE)
+									giveXp(p, xpToGive * 0.25, MasteryDB.getClass(p.getUniqueId().toString()).getMastery());
 							}
 						}
 					} 

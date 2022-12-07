@@ -49,22 +49,22 @@ public class ClasseCommand implements CommandExecutor, Listener {
 	}
 
 	public ItemStack getGlow(Player p, ItemStack is, int classeNum) {
-		String classe = MasteryDB.getClass(p.getUniqueId().toString());
-		if (classe == "null")
+		Classe classe = MasteryDB.getClass(p.getUniqueId().toString());
+		if (classe == null)
 			return is;
 
 		boolean glow = false;
 		if (classeNum == 1)
-			if (classe.equals("GUERRIER"))
+			if (classe == Classe.GUERRIER)
 				glow = true;
 		if (classeNum == 2)
-			if (classe.equals("MAGE"))
+			if (classe == Classe.MAGE)
 				glow = true;
 		if (classeNum == 3)
-			if (classe.equals("ARCHER"))
+			if (classe == Classe.ARCHER)
 				glow = true;
 		if (classeNum == 4)
-			if (classe.equals("TANK"))
+			if (classe == Classe.TANK)
 				glow = true;
 		ItemStack isRenvoi = is.clone();
 		ItemMeta meta = isRenvoi.getItemMeta();
@@ -137,10 +137,10 @@ public class ClasseCommand implements CommandExecutor, Listener {
 			}
 		}
 		MasteryDB.setClass(p.getUniqueId().toString(), classe);
-		if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("MAGE")) {
+		if (MasteryDB.getClass(p.getUniqueId().toString()) != Classe.MAGE) {
 			p.setLevel(MasteryDB.getMastery(p.getUniqueId().toString(),
-					Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
-			p.setExp(MasteryDB.getXp(p, Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))));
+					MasteryDB.getClass(p.getUniqueId().toString()).getMastery()));
+			p.setExp(MasteryDB.getXp(p, MasteryDB.getClass(p.getUniqueId().toString()).getMastery()));
 		} else {
 			p.setLevel(0);
 			p.setExp(0);

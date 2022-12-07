@@ -1,5 +1,6 @@
 package fr.eazyender.odyssey.gameplay.aura.gui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.eazyender.odyssey.gameplay.aura.Skills;
 import fr.eazyender.odyssey.gameplay.aura.skills.SkillsDB;
@@ -33,7 +35,7 @@ public class SkillsCommand implements CommandExecutor, Listener {
 
 		if (!MasteryDB.getClass(p.getUniqueId().toString()).equals("null")) {
 
-			Classe classe = Classe.valueOf(MasteryDB.getClass(p.getUniqueId().toString()));
+			Classe classe = MasteryDB.getClass(p.getUniqueId().toString());
 			if (classe != null && classe != Classe.MAGE) {
 				openSkills(p);
 			}
@@ -114,7 +116,7 @@ public class SkillsCommand implements CommandExecutor, Listener {
 				inv.setItem(i, ItemUtils.getItem(new ItemStack(Material.LIME_WOOL),
 						ChatColor.of("#2ffa44") + "[✓] Ajouter un sort", null, 0));
 			else
-				inv.setItem(i, Skills.getSkillItem(SkillsDB.getSkill(p.getUniqueId().toString(), slot)));
+				inv.setItem(i, addSkillLore(Skills.getSkillItem(SkillsDB.getSkill(p.getUniqueId().toString(), slot))));
 			slot++;
 		}
 
@@ -204,4 +206,16 @@ public class SkillsCommand implements CommandExecutor, Listener {
 		return spell;
 	}
 	
+	public static ItemStack addSkillLore(ItemStack skillItem) {
+		ItemStack newIs = skillItem.clone();
+		ArrayList<String> lore = (ArrayList<String>) skillItem.getItemMeta().getLore();
+		lore.add(" ");
+		lore.add(ChatColor.of("#4f5f82") + "Clic Gauche pour changer");
+		lore.add(ChatColor.of("#4f5f82") + "Clic Droit pour retirer");
+		ItemMeta meta = newIs.getItemMeta();
+		meta.setLore(lore);
+		newIs.setItemMeta(meta);
+		return newIs;
+		
+	}
 }

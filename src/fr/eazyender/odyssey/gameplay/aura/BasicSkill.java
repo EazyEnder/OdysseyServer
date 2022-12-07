@@ -18,13 +18,15 @@ public class BasicSkill implements Skill {
 	public Player p;
 	Mastery mastery;
 	CombatStats stats;
+	int auraCost;
 
-	public BasicSkill(Player p, int cooldown, String id) {
+	public BasicSkill(Player p, int cooldown, String id, int auraCost) {
 		this.p = p;
 		this.cooldown = cooldown;
-		mastery = Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()));
+		mastery = MasteryDB.getClass(p.getUniqueId().toString()).getMastery();
 		stats = CombatStats.getStats(p);
 		this.id = id;
+		this.auraCost = auraCost;
 	}
 
 	public boolean canCast() {
@@ -47,6 +49,7 @@ public class BasicSkill implements Skill {
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
+
 
 	public int getRemainingCooldown(LivingEntity p) {
 		int cooldownSkill = getCooldown();
@@ -79,6 +82,18 @@ public class BasicSkill implements Skill {
 	public boolean launch() {
 		
 		return false;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public int getAuraCost() {
+		return auraCost;
 	}
 
 	

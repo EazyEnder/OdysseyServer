@@ -14,6 +14,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
+import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
 import fr.eazyender.odyssey.gameplay.stats.Classe;
 import fr.eazyender.odyssey.gameplay.stats.CombatStats;
 import fr.eazyender.odyssey.gameplay.stats.Stat;
@@ -54,10 +55,10 @@ public class AuraHUD implements Listener {
 					if (player.getItemInHand() != null) {
 						Classe type = ItemUtils.getClass(player.getItemInHand());
 						if (type != null
-								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK)) {
+								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK) && MasteryDB.getClass(player.getUniqueId().toString()) == type) {
 							if (!player_bossbars.containsKey(player.getUniqueId())) {
 								BossBar bossBar = Bukkit.createBossBar("", BarColor.YELLOW, BarStyle.SOLID);
-										bossBar.addPlayer(player);
+								bossBar.addPlayer(player);
 								bossBar.setProgress((double) (0));
 								bossBar.setVisible(true);
 								player_bossbars.put(player.getUniqueId(),

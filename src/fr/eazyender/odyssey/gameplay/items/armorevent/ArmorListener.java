@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.items.armorevent.ArmorEquipEvent.EquipMethod;
-import fr.eazyender.odyssey.gameplay.masteries.Mastery;
 import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
 import net.md_5.bungee.api.ChatColor;;
 
@@ -252,14 +251,14 @@ public class ArmorListener implements Listener {
 		ItemStack armorPiece = e.getNewArmorPiece();
 		if (armorPiece != null) {
 			if (ItemUtils.getClass(armorPiece) != null
-					&& !ItemUtils.getClass(armorPiece).name().equals(MasteryDB.getClass(p.getUniqueId().toString()))) {
+					&& ItemUtils.getClass(armorPiece) != MasteryDB.getClass(p.getUniqueId().toString())) {
 				p.sendMessage(ChatColor.of("#ff0000") + "<!> Vous n'avez pas la bonne classe pour équiper cet item !");
 				e.setCancelled(true);
 			
 				return;
 			}
 			if (ItemUtils.getNumericInfo(armorPiece, "Level") != 0 && MasteryDB.getMastery(p.getUniqueId().toString(),
-					Mastery.valueOf(MasteryDB.getClass(p.getUniqueId().toString()))) < ItemUtils
+					MasteryDB.getClass(p.getUniqueId().toString()).getMastery()) < ItemUtils
 							.getNumericInfo(armorPiece, "Level")) {
 				p.sendMessage(
 						ChatColor.of("#ff0000") + "<!> Vous n'avez pas le niveau nécessaire pour équiper cet item !");
