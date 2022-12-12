@@ -24,6 +24,8 @@ public class AuraHUD implements Listener {
 	public static Map<UUID, BossBar> player_bossbars = new HashMap<>();
 	public static Map<UUID, Double> player_aura = new HashMap<UUID, Double>();
 
+	public static HashMap<UUID, Classe> playerClasses = new HashMap<>();
+	
 	public static void initHUD() {
 		new BukkitRunnable() {
 
@@ -54,8 +56,9 @@ public class AuraHUD implements Listener {
 
 					if (player.getItemInHand() != null) {
 						Classe type = ItemUtils.getClass(player.getItemInHand());
+						if (!playerClasses.containsKey(player.getUniqueId())) playerClasses.put(player.getUniqueId(), MasteryDB.getClass(player.getUniqueId().toString()));
 						if (type != null
-								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK) && MasteryDB.getClass(player.getUniqueId().toString()) == type) {
+								&& (type == Classe.ARCHER || type == Classe.GUERRIER || type == Classe.TANK) && playerClasses.get(player.getUniqueId()) == type) {
 							if (!player_bossbars.containsKey(player.getUniqueId())) {
 								BossBar bossBar = Bukkit.createBossBar("", BarColor.YELLOW, BarStyle.SOLID);
 								bossBar.addPlayer(player);

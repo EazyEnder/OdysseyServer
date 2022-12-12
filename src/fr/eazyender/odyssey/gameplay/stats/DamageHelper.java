@@ -21,6 +21,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject;
 
 import fr.eazyender.odyssey.OdysseyPl;
+import fr.eazyender.odyssey.gameplay.masteries.MasteryDB;
 import net.md_5.bungee.api.ChatColor;
 
 public class DamageHelper {
@@ -46,12 +47,20 @@ public class DamageHelper {
 		
 	}
 	
+	// Animate
+	
+	public static void damage(Player p, double damage, LivingEntity e, boolean isCrit) {
+		e.damage(damage);
+		DamageHelper.animateDamage(p, e, (int) damage, isCrit);
+	}
 	
 	// AURA SKILLS
-	public static int getAuraDamage(CombatStats stats, int mastery, double power, boolean crit) {
+	public static double getAuraDamage(Player p, double power, boolean crit) {
 		// 
 		// Power = power of the skill (can change with combo)
 		// Mastery level
+		double mastery = MasteryDB.getMastery(p.getUniqueId().toString(), MasteryDB.getClass(p.getUniqueId().toString()).getMastery());
+		CombatStats stats = CombatStats.getStats(p);
 		
 		double damage =  (1 + ((double)mastery / 30)) * stats.getStat(Stat.DAMAGE) * (power / 100);
 		// mastery lvl 30 player will deal 2x the damage with same stats

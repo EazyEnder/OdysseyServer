@@ -23,6 +23,7 @@ public class ItemDB {
 			stmt.setString(1, id);
 			stmt.setString(2, is.toJson());
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -38,6 +39,7 @@ public class ItemDB {
 			stmt.setString(2, id);
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +52,7 @@ public class ItemDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -64,8 +67,12 @@ public class ItemDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, id);
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return NBTEditor.getItemFromTag(NBTEditor.NBTCompound.fromJson(set.getString("itemNBT")));
+			while (set.next()) {
+				ItemStack is = NBTEditor.getItemFromTag(NBTEditor.NBTCompound.fromJson(set.getString("itemNBT")));
+				stmt.close();
+				return is;
+			
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -80,8 +87,10 @@ public class ItemDB {
 			String sql = "SELECT * FROM items";
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			ResultSet set = stmt.executeQuery();
+			
 			while (set.next())
 				items.add(NBTEditor.getItemFromTag(NBTEditor.NBTCompound.fromJson(set.getString("itemNBT"))));
+			stmt.close();
 			return items;
 		} catch (SQLException e) {
 			e.printStackTrace();

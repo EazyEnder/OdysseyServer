@@ -21,6 +21,7 @@ public class MasteryDB {
 			for(int i = 12; i < 15; i++)
 				stmt.setFloat(i, 0);
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -34,9 +35,14 @@ public class MasteryDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			if (!set.next()) 
+			
+			if (!set.next()) {
+				stmt.close();
 				return false;
-			else return true;
+			} else {
+				stmt.close();
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -54,6 +60,7 @@ public class MasteryDB {
 			stmt.setString(2, uuid);
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -68,8 +75,12 @@ public class MasteryDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return set.getInt(mastery.name().toLowerCase());
+			while (set.next()) {
+				int masteryLvl = set.getInt(mastery.name().toLowerCase());
+				stmt.close();
+				return masteryLvl;
+				
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -85,9 +96,12 @@ public class MasteryDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
+			
 			while (set.next()) {
-				if (set.getString("classe") == null) return null;
-				return Classe.valueOf(set.getString("classe"));
+				String classe = set.getString("classe");
+				stmt.close();
+				if (classe == null) return null;
+				return Classe.valueOf(classe);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,6 +122,7 @@ public class MasteryDB {
 			stmt.setString(2, uuid);
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -125,6 +140,7 @@ public class MasteryDB {
 			stmt.setString(2, p.getUniqueId().toString());
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -139,8 +155,14 @@ public class MasteryDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, p.getUniqueId().toString());
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return set.getFloat(classe.name().toLowerCase() + "XP");
+		
+			while (set.next()) {
+				
+				float xp = set.getFloat(classe.name().toLowerCase() + "XP");
+				stmt.close();
+				return xp;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

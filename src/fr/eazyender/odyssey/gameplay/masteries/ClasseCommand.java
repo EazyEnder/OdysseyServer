@@ -18,6 +18,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.eazyender.odyssey.gameplay.aura.AuraHUD;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
 import fr.eazyender.odyssey.gameplay.stats.Classe;
 import net.md_5.bungee.api.ChatColor;
@@ -145,6 +146,7 @@ public class ClasseCommand implements CommandExecutor, Listener {
 			p.setLevel(0);
 			p.setExp(0);
 		}
+		AuraHUD.playerClasses.put(p.getUniqueId(), classe);
 		cooldowns.put(p, System.currentTimeMillis());
 		p.closeInventory();
 		p.sendMessage(ChatColor.of("#fc03eb") + "Vous avez changé de classe !");

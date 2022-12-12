@@ -19,6 +19,7 @@ public class JobsDB {
 			for(int i = 2; i < 3; i++)
 				stmt.setInt(i, 0);
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,9 +32,14 @@ public class JobsDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			if (!set.next()) 
+			
+			if (!set.next()) {
+				stmt.close();
 				return false;
-			else return true;
+			} else {
+				stmt.close();
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,6 +56,7 @@ public class JobsDB {
 			stmt.setString(2, uuid);
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -63,8 +70,12 @@ public class JobsDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, p.getUniqueId().toString());
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return set.getInt(job.name().toLowerCase());
+			
+			while (set.next()) {
+				int xpJob = set.getInt(job.name().toLowerCase());
+				stmt.close();
+				return xpJob;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

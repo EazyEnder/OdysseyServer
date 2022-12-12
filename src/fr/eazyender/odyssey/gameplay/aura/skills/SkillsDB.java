@@ -18,6 +18,7 @@ public class SkillsDB {
 			for(int i = 2; i < 12; i++)
 				stmt.setString(i, "null");
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,12 +32,19 @@ public class SkillsDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			if (!set.next()) 
+			if (!set.next()) {
+				stmt.close();
+
 				return false;
-			else return true;
+			}
+			else {
+				stmt.close();
+				return true;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return false;
 	}
 	
@@ -51,6 +59,7 @@ public class SkillsDB {
 			stmt.setString(2, uuid);
 			
 			stmt.executeUpdate();
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -65,8 +74,12 @@ public class SkillsDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			while (set.next())
-				return set.getString("skill" + slot);
+			
+			while (set.next()) {
+				String skill = set.getString("skill" + slot);
+				stmt.close();
+				return skill;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -82,11 +95,11 @@ public class SkillsDB {
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();
-			int i = 1;
-			while (set.next()) {
-				skills.put(i, set.getString("skill" + i));
-				i++;
-			}
+			
+			if (set.next())
+				for(int i = 1; i < 11; i++)
+					skills.put(i, set.getString("skill" + i));
+			stmt.close();
 			return skills;
 		} catch (SQLException e) {
 			e.printStackTrace();

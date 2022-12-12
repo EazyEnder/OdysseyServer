@@ -3,10 +3,15 @@ package fr.eazyender.odyssey.gameplay.aura;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.EulerAngle;
 
 import fr.eazyender.odyssey.gameplay.aura.skills.tank.Taillade;
 import fr.eazyender.odyssey.gameplay.items.ItemUtils;
@@ -79,4 +84,30 @@ public class Skills {
 		return null;
 
 	}
+	
+	public static ItemStack getSkillModel(int modelData) {
+		ItemStack is = new ItemStack(Material.COAL);
+		ItemMeta meta = is.getItemMeta();
+		meta.setCustomModelData(modelData);
+		is.setItemMeta(meta);
+		return is;
+	}
+	
+	public static ArmorStand spawnModel(Location loc, EulerAngle angle) {                 
+		ArmorStand stand = (ArmorStand) loc.getWorld().spawn(loc, ArmorStand.class, armorstand->{            
+			
+			armorstand.setVisible(false);                      
+			armorstand.setGravity(false);                          
+			armorstand.setMarker(true);                          
+			armorstand.setInvulnerable(true);
+			armorstand.setHeadPose(angle);
+		});
+		return stand;
+	}
+	
+	public static boolean isTarget(Player p, Entity e) {
+		return true;
+	}
+	
+	
 }
