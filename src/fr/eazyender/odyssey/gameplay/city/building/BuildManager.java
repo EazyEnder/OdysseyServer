@@ -18,6 +18,7 @@ import org.bukkit.util.Vector;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOContainer;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOLFurnace;
+import fr.eazyender.odyssey.gameplay.city.building.objects.BOWorkBench;
 
 public class BuildManager {
 
@@ -35,6 +36,7 @@ public class BuildManager {
 		
 		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOContainer(), OdysseyPl.getOdysseyPlugin());
 		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOLFurnace(), OdysseyPl.getOdysseyPlugin());
+		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOWorkBench(), OdysseyPl.getOdysseyPlugin());
 		
 		initLoopDynamicBuild();
 	}
