@@ -24,6 +24,7 @@ import fr.eazyender.odyssey.gameplay.masteries.MasteryLeveling;
 import fr.eazyender.odyssey.player.CompassUtils;
 import fr.eazyender.odyssey.player.InteractionsManager;
 import fr.eazyender.odyssey.player.StatsListener;
+import fr.eazyender.odyssey.player.TchatListener;
 import fr.eazyender.odyssey.player.group.GroupListener;
 import fr.eazyender.odyssey.player.harvest.HarvestHandler;
 import fr.eazyender.odyssey.sounds.SoundsManager;

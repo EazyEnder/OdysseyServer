@@ -1,4 +1,4 @@
-package fr.eazyender.odyssey.listener;
+package fr.eazyender.odyssey.player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,19 +90,25 @@ public class TchatListener implements Listener {
 	
 	public static void createBubble(Player player,String text) {
 		
-		ArmorStand as = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(new Vector(0,0.5,0)), EntityType.ARMOR_STAND);
-		as.setGravity(false);
-		as.setCanPickupItems(false);
-		as.setCustomName("\uEAD4");
-		as.setCustomNameVisible(true);
-		as.setVisible(false);
-		ArmorStand as1 = (ArmorStand) player.getWorld().spawnEntity(player.getLocation().add(new Vector(0, 0.5, 0)),
-				EntityType.ARMOR_STAND);
-		as1.setGravity(false);
-		as1.setCanPickupItems(false);
-		as1.setCustomName(text);
-		as1.setCustomNameVisible(true);
-		as1.setVisible(false);
+		ArmorStand as = (ArmorStand) player.getWorld().spawn(player.getLocation().add(new Vector(0,0.5,0)), ArmorStand.class, armorstand -> {
+			
+		
+		armorstand.setGravity(false);
+		armorstand.setCanPickupItems(false);
+		armorstand.setCustomName("\uEAD4");
+		armorstand.setMarker(true);
+		armorstand.setCustomNameVisible(true);
+		armorstand.setVisible(false);});
+		
+		ArmorStand as1 = (ArmorStand) player.getWorld().spawn(player.getLocation().add(new Vector(0,0.5,0)), ArmorStand.class, armorstand -> {
+			
+			
+			armorstand.setGravity(false);
+			armorstand.setCanPickupItems(false);
+			armorstand.setCustomName(text);
+			armorstand.setMarker(true);
+			armorstand.setCustomNameVisible(true);
+			armorstand.setVisible(false);});
 		
 		player.addPassenger(as);
 		player.addPassenger(as1);
