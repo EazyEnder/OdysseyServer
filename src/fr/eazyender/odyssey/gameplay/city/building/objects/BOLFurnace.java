@@ -2,6 +2,7 @@ package fr.eazyender.odyssey.gameplay.city.building.objects;
 
 import java.awt.Color;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -236,26 +238,47 @@ public class BOLFurnace extends IBuildObjectLoop implements Listener{
 		}
 	 
 	 @EventHandler
-	 public static void onClick(InventoryClickEvent event) {
-		 Inventory inv = event.getInventory();
-		 
-		 if(inv.getHolder() instanceof BOLFurnaceHolder) {
-	    	   BOLFurnaceHolder holder = (BOLFurnaceHolder) inv.getHolder();
-	    	   
-	    	   if(event.isShiftClick())event.setCancelled(true);
-	    	   
-	    	   if(!(event.getClickedInventory() instanceof PlayerInventory) && !Arrays.stream(holder.slots_perm).anyMatch(i -> i == event.getSlot())) {
-	    		   event.setCancelled(true); 
-	    		   
-	    	   }
-	    	   else if(event.getSlot() == 24 || event.getSlot() == 42) {
-	    		   if (!(event.getCursor() == null && event.getCurrentItem() != null))
-	    	        {
-	    	            event.setCancelled(true);
-	    	        } 
-	    	   }
-		 }
-	 }
+	  public static void onClick(InventoryClickEvent event) {
+	    Inventory inv = event.getInventory();
+	    if (inv.getHolder() instanceof BOLFurnaceHolder) {
+	      BOLFurnaceHolder holder = (BOLFurnaceHolder)inv.getHolder();
+	      if (event.isShiftClick())
+	        event.setCancelled(true); 
+	      if (!(event.getClickedInventory() instanceof org.bukkit.inventory.PlayerInventory) && !Arrays.stream(holder.slots_perm).anyMatch(i -> (i == event.getSlot()))) {
+	        event.setCancelled(true);
+	      } else if ((event.getSlot() == 24 || event.getSlot() == 42) && (
+	        event.getCursor() != null || event.getCurrentItem() == null)) {
+	        event.setCancelled(true);
+	      } 
+	    } 
+	  }
+	  
+	  @EventHandler
+	  public static void onDragClick(InventoryDragEvent event) {
+	    Inventory inv = event.getInventory();
+	    if (inv.getHolder() instanceof BOLFurnaceHolder) {
+	      BOLFurnaceHolder holder = (BOLFurnaceHolder)inv.getHolder();
+	      boolean flag = false;
+	      for (Iterator<Integer> iterator = event.getInventorySlots().iterator(); iterator.hasNext(); ) {
+	        int s = ((Integer)iterator.next()).intValue();
+	        boolean holder_contain = false;
+	        byte b;
+	        int i, arrayOfInt[];
+	        for (i = (arrayOfInt = holder.slots_perm).length, b = 0; b < i; ) {
+	          int s2 = arrayOfInt[b];
+	          if (s2 == s) {
+	            holder_contain = true;
+	            break;
+	          } 
+	          b++;
+	        } 
+	        if (!holder_contain)
+	          flag = true; 
+	      } 
+	      if (!(inv instanceof org.bukkit.inventory.PlayerInventory) && flag)
+	        event.setCancelled(true); 
+	    } 
+	  }
 	
 	
 }

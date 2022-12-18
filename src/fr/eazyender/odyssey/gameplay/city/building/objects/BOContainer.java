@@ -3,6 +3,7 @@ package fr.eazyender.odyssey.gameplay.city.building.objects;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -238,29 +240,51 @@ public class BOContainer extends IBuildObject implements Listener{
 	 }
 	 
 	 @EventHandler
-	 public static void onClick(InventoryClickEvent event) {
-		 Inventory inv = event.getInventory();
-		 
-		 if(inv.getHolder() instanceof BOContainerHolder) {
-	    	   BOContainerHolder holder = (BOContainerHolder) inv.getHolder();
-	    	   
-	    	   if(event.isShiftClick())event.setCancelled(true);
-	    	   
-	    	   if(!(event.getClickedInventory() instanceof PlayerInventory) && !Arrays.stream(holder.slots_perm).anyMatch(i -> i == event.getSlot())) {
-	    		   event.setCancelled(true);
-	    		   
-	    		   if(event.getSlot() == 0) {
-	    			   if(holder.getPage() > 0) {
-	    				   changePage((Player)(event.getWhoClicked()), holder, holder.getPage()-1);
-	    			   }
-	    		   }else if(event.getSlot() == 36) {
-	    			   if(holder.getPage() < holder.getObject().ligne - 1) {
-	    				   changePage((Player)(event.getWhoClicked()), holder, holder.getPage()+1);
-	    			   }
-	    		   }
-	    	   }
-		 }
-	 }
+	 public static void onClick(InventoryClickEvent event){
+		    Inventory inv = event.getInventory();
+		    if (inv.getHolder() instanceof BOContainerHolder) {
+		      BOContainerHolder holder = (BOContainerHolder)inv.getHolder();
+		      if (event.isShiftClick())
+		        event.setCancelled(true); 
+		      if (!(event.getClickedInventory() instanceof org.bukkit.inventory.PlayerInventory) && !Arrays.stream(holder.slots_perm).anyMatch(i -> (i == event.getSlot()))) {
+		        event.setCancelled(true);
+		        if (event.getSlot() == 0) {
+		          if (holder.getPage() > 0)
+		            changePage((Player)event.getWhoClicked(), holder, holder.getPage() - 1); 
+		        } else if (event.getSlot() == 36 && 
+		          holder.getPage() < (holder.getObject()).ligne - 1) {
+		          changePage((Player)event.getWhoClicked(), holder, holder.getPage() + 1);
+		        } 
+		      } 
+		    } 
+		  }
+	 
+	 @EventHandler
+	  public static void onDragClick(InventoryDragEvent event) {
+	    Inventory inv = event.getInventory();
+	    if (inv.getHolder() instanceof BOContainerHolder) {
+	      BOContainerHolder holder = (BOContainerHolder)inv.getHolder();
+	      boolean flag = false;
+	      for (Iterator<Integer> iterator = event.getInventorySlots().iterator(); iterator.hasNext(); ) {
+	        int s = ((Integer)iterator.next()).intValue();
+	        boolean holder_contain = false;
+	        byte b;
+	        int i, arrayOfInt[];
+	        for (i = (arrayOfInt = holder.slots_perm).length, b = 0; b < i; ) {
+	          int s2 = arrayOfInt[b];
+	          if (s2 == s) {
+	            holder_contain = true;
+	            break;
+	          } 
+	          b++;
+	        } 
+	        if (!holder_contain)
+	          flag = true; 
+	      } 
+	      if (!(inv instanceof org.bukkit.inventory.PlayerInventory) && flag)
+	        event.setCancelled(true); 
+	    } 
+	  }
 		
 	@EventHandler
 	 public static void leaveGui(InventoryCloseEvent event) {

@@ -44,6 +44,8 @@ public class BuildObjectListener implements Listener{
 			return new BOContainer(db,owner,pos);
 		case FURNACE:
 			return new BOLFurnace(db,owner,pos);
+		case LEGACY_WORKBENCH:
+			return new BOWorkBench(db,owner,pos);
 		default: return null;
 		}
 		
