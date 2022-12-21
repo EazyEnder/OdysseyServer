@@ -169,7 +169,7 @@ public class IBuildUnderConstruction {
 		String shem_name = build.getSchem_path() + "_" + next_tier;
 		Palette block_pal = gen(shem_name);
 		
-		dynamicbuild.upgrade_components(block_pal);
+		dynamicbuild.upgrade(block_pal);
 		
 		HammerHandler.in_works.remove(owner);
 		

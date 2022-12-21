@@ -24,13 +24,27 @@ public class BuildManager {
 
 	public static List<IBuild> builds = new ArrayList<IBuild>();
 	public static List<IDynamicBuild> dynamic_builds = new ArrayList<IDynamicBuild>();
+	public static List<IRuin> ruins = new ArrayList<IRuin>();
 	
 	public static void initBuildManager()
 	{
-		List<Double> shop_work_time = new ArrayList<Double>();
-		shop_work_time.add(20.0);
-		shop_work_time.add(10.0);
-		builds.add(new IBuild("Magasin","village/shop","plain",new double[]{17,7,21},"METIERS",new ArrayList<List<ItemStack>>(),shop_work_time));
+		//List<Double> shop_work_time = new ArrayList<Double>();
+		//shop_work_time.add(20.0);
+		//shop_work_time.add(10.0);
+		//builds.add(new IBuild("Magasin","village/shop","plain",new double[]{17,7,21},"METIERS",new ArrayList<List<ItemStack>>(),shop_work_time));
+		
+		List<Double> house_work_time = new ArrayList<Double>();
+		house_work_time.add(0.0);
+		house_work_time.add(20.0);
+		List<Integer> house_decay_time = new ArrayList<Integer>();
+		house_decay_time.add(30);
+		house_decay_time.add(30);
+		house_decay_time.add(30);
+		
+		builds.add(new IBuild("Maison","village/house","plain",new double[]{11,8,19},"HABITATION",
+				/**RESSOURCES*/ new ArrayList<List<ItemStack>>(),
+				/**TEMPS DE CONSTRUCTION*/ house_work_time,
+				/**TEMPS DE RUINE*/ house_decay_time));
 		
 		loadFile();
 		
@@ -91,14 +105,32 @@ public class BuildManager {
         try {
         	Scanner reader = new Scanner(file.getAbsoluteFile());
         
-        while(reader.hasNextLine()) {
-        	String data = reader.nextLine();
-        	data = data.split("\n")[0];
-        	
-        	dynamic_builds.add(IDynamicBuild.fromString(data));
+	        while(reader.hasNextLine()) {
+	        	String data = reader.nextLine();
+	        	data = data.split("\n")[0];
+	        	
+	        	dynamic_builds.add(IDynamicBuild.fromString(data));
+	        }
+        
+	        reader.close();
+        } catch (FileNotFoundException  e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
         
-        reader.close();
+        File file2 = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(), "/ruins"+".txt");
+        
+        try {
+        	Scanner reader = new Scanner(file2.getAbsoluteFile());
+        
+	        while(reader.hasNextLine()) {
+	        	String data = reader.nextLine();
+	        	data = data.split("\n")[0];
+	        	
+	        	ruins.add(IRuin.fromString(data));
+	        }
+        
+	        reader.close();
         } catch (FileNotFoundException  e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
@@ -108,17 +140,33 @@ public class BuildManager {
 	public static void saveFile() {
         File file = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(), "/builds"+".txt");
         
+        try {
+	        FileWriter writer = new FileWriter(file.getAbsoluteFile());
+	        
+	        for (IDynamicBuild build : dynamic_builds) {
+				String str = build.toString() + "\n";
+				writer.write(str);
+			}
+	        
+	        writer.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        
+        File file2 = new File(OdysseyPl.getOdysseyPlugin().getDataFolder(), "/ruins"+".txt");
+        
         //file.delete();
         
         try {
-        FileWriter writer = new FileWriter(file.getAbsoluteFile());
-        
-        for (IDynamicBuild build : dynamic_builds) {
-			String str = build.toString() + "\n";
-			writer.write(str);
-		}
-        
-        writer.close();
+	        FileWriter writer = new FileWriter(file2.getAbsoluteFile());
+	        
+	        for (IRuin ruin : ruins) {
+				String str = ruin.toString() + "\n";
+				writer.write(str);
+			}
+	        
+	        writer.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

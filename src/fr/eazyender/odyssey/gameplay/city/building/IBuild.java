@@ -16,7 +16,10 @@ public class IBuild {
 	private List<List<ItemStack>> upgrade;
 	private List<Double> work_time;
 	
-	public IBuild(String name, String schem_path, String biome, double[] size,String type, List<List<ItemStack>> upgrade, List<Double> work_time) {
+	private List<Integer> decay_time;
+	
+	
+	public IBuild(String name, String schem_path, String biome, double[] size,String type, List<List<ItemStack>> upgrade, List<Double> work_time, List<Integer> decay_time) {
 		this.name = name;
 		this.schem_path = schem_path;
 		this.biome = biome;
@@ -25,7 +28,22 @@ public class IBuild {
 		
 		this.upgrade = upgrade;
 		this.work_time = work_time;
+		this.decay_time = decay_time;
 	}
+	
+	
+
+	public List<Integer> getDecay_time() {
+		return decay_time;
+	}
+
+
+
+	public void setDecay_time(List<Integer> decay_time) {
+		this.decay_time = decay_time;
+	}
+
+
 
 	public String getName() {
 		return name;
