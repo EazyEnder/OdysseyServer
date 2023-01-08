@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Furnace;
@@ -55,6 +56,11 @@ public class BOLFurnace extends IBuildObjectLoop implements Listener{
 		this.holder = new BOLFurnaceHolder(this);
 		this.inv = Bukkit.createInventory(holder, 9*6 , "§r§f" + CharRepo.BUILD_FURNACE_54);
 		this.worktime = 0;
+	}
+	
+	@Override
+	public Material getIcon() {
+		return Material.FURNACE;
 	}
 	
 	@Override

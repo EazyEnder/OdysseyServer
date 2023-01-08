@@ -93,6 +93,7 @@ public class MasteryDB {
 		
 		try {
 			String sql = "SELECT * FROM masteries WHERE uuid=?;";
+			if(OdysseyPl.getOdysseyPlugin().getSqlManager() == null || OdysseyPl.getOdysseyPlugin().getSqlManager().connection == null) return null;
 			PreparedStatement stmt = OdysseyPl.getOdysseyPlugin().getSqlManager().connection.prepareStatement(sql);
 			stmt.setString(1, uuid);
 			ResultSet set = stmt.executeQuery();

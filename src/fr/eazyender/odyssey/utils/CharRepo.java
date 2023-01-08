@@ -44,7 +44,9 @@ public class CharRepo {
 	//UI
 	public static final String BUILD_STOCKAGE_54 = NEG8 +"\uF001";
 	public static final String BUILD_FURNACE_54 = NEG8 +"\uF002";
-	public static final String BUILD_WORKBENCH_54 = NEG8 + "UN TRUC";
+	public static final String BUILD_WORKBENCH_54 = NEG8 + "\uF011";
+	public static final String BUILD_MANAGER_54 = NEG8 + "\uF009";
+	public static final String NEUTRAL_LIST_54 = NEG8 + "\uF010";
 	
 	public static final String BUILD_MENU = NEG8 +"\uF003";
 	public static final String BUILD_MENU_MILS = NEG8 +"\uF004";

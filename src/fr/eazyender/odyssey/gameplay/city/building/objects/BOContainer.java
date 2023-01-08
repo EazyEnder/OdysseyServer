@@ -55,6 +55,17 @@ public class BOContainer extends IBuildObject implements Listener{
 	}
 	
 	@Override
+	public Material getIcon() {
+		return Material.CHEST;
+	}
+	
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	
+	@Override
 	public void render() {
 		
 		ArmorStand as = null;
@@ -162,7 +173,7 @@ public class BOContainer extends IBuildObject implements Listener{
 				   20,21,22,23,24,25,
 				   29,30,31,32,33,34,
 				   38,39,40,41,42,43};
-		while(items.size() < ligne*slots_perm.length) {
+		while(items.size() < ligne*slots_perm.length-1) {
 			items.add(null);
 		}
 		 

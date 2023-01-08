@@ -18,6 +18,7 @@ import org.bukkit.util.Vector;
 import fr.eazyender.odyssey.OdysseyPl;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOContainer;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOLFurnace;
+import fr.eazyender.odyssey.gameplay.city.building.objects.BOManager;
 import fr.eazyender.odyssey.gameplay.city.building.objects.BOWorkBench;
 
 public class BuildManager {
@@ -37,9 +38,9 @@ public class BuildManager {
 		house_work_time.add(0.0);
 		house_work_time.add(20.0);
 		List<Integer> house_decay_time = new ArrayList<Integer>();
-		house_decay_time.add(30);
-		house_decay_time.add(30);
-		house_decay_time.add(30);
+		house_decay_time.add(9999);
+		house_decay_time.add(9999);
+		house_decay_time.add(9999);
 		
 		builds.add(new IBuild("Maison","village/house","plain",new double[]{11,8,19},"HABITATION",
 				/**RESSOURCES*/ new ArrayList<List<ItemStack>>(),
@@ -51,6 +52,7 @@ public class BuildManager {
 		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOContainer(), OdysseyPl.getOdysseyPlugin());
 		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOLFurnace(), OdysseyPl.getOdysseyPlugin());
 		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOWorkBench(), OdysseyPl.getOdysseyPlugin());
+		OdysseyPl.getOdysseyPlugin().getServer().getPluginManager().registerEvents(new BOManager(), OdysseyPl.getOdysseyPlugin());
 		
 		initLoopDynamicBuild();
 	}
